@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.widget.EditText;
 
 
+import com.example.fitrecipes.Models.CategoryModel;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.IngredientModel;
 import com.example.fitrecipes.Models.RecipeModel;
@@ -34,13 +36,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_RECIPES = "tbl_recipes";
     private static final String TABLE_INGREDIENTS = "tbl_ingredients";
     private static final String TABLE_IMAGES = "tbl_images";
-
+    private static final String TABLE_CATEGORY = "CATEGORY_TABLE";
 
 
     //	Field names
     private static final String KEY_ID = "id";
     private static final String KEY_RECIPE_ID = "recipe_id";
     private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_CATEGORY_ID = "KEY_CATEGORY_ID";
+    private static final String KEY_RECIPE_CATEGORY = "KEY_RECIPE_CATAGORY";
     private static final String KEY_name = "name";
     private static final String KEY_email = "email";
     private static final String KEY_phone = "phone";
@@ -98,6 +102,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    private static final String CREATE_TABLE_CATEGORY = "CREATE TABLE "
+                + TABLE_CATEGORY
+                + " (" + KEY_CATEGORY_ID
+                + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_RECIPE_CATEGORY + " TEXT" +
+                ")";
+
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -111,10 +124,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_RECIPES);
         db.execSQL(CREATE_TABLE_INGREDIENTS);
         db.execSQL(CREATE_TABLE_IMAGES);
+        db.execSQL(CREATE_TABLE_CATEGORY);
+        insertData(1,"Chinese",db);
+        insertData(2,"Italian",db);
+        insertData(3,"Thai",db);
+        insertData(4,"Pakistani",db);
+        insertData(5,"Russian",db);
+        insertData(6,"Indian",db);
+        insertData(7,"Mexican",db);
+        insertData(8,"African",db);
+        insertData(9,"American",db);
+        insertData(10,"Japanese",db);
         /** create your category table */
         /** call the insert method and add 10 values for cateogries*/
 
     }
+    public boolean insertData(int categoryId, String categoryName,SQLiteDatabase db) {
+
+       // SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_CATEGORY_ID, categoryId);
+        cv.put(KEY_RECIPE_CATEGORY,categoryName);
+        long insert = db.insert(TABLE_CATEGORY, null, cv);
+
+        if (insert == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     @Override
     public void onOpen(SQLiteDatabase db) {
@@ -130,17 +169,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INGREDIENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
-
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
 
 
         // create new tables
         onCreate(db);
     }
 
-
-
     public String saveUserData(UserModel c) {
         String returnValue="added";
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery1 = "SELECT  * FROM " + TABLE_USERS+ " WHERE "
@@ -552,6 +590,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("delete from " + TABLE_INGREDIENTS + " where recipe_id='" + Integer.parseInt(ing) + "'");
 
         db.close();
+    }
+
+    public List<CategoryModel> getAllCategories(){
+
+        List<CategoryModel> returnList = new ArrayList<>();
+
+        // get data from the database
+
+        String queryString = "SELECT * FROM " + TABLE_CATEGORY;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            do {
+                int categoryID = cursor.getInt(0);
+                String categoryText = cursor.getString(1);
+                CategoryModel categoryModel = new CategoryModel(categoryID,categoryText);
+                returnList.add(categoryModel);
+            } while (cursor.moveToNext());
+
+        }
+        else {
+            // Failure. Do not add anything to the list.
+        }
+
+        // Close both the cursor and the db when done.
+        cursor.close();
+        db.close();
+        return returnList;
     }
 
 

@@ -83,23 +83,25 @@
                                 android:paddingStart="@dimen/_16sdp"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
+
                             <EditText
                                 android:id="@+id/serving"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_55sdp"
-                                android:background="@drawable/edit_text_without_strock"
-                                android:hint="Serving persons"
-                                
-                                android:clickable="false"
-                                android:textColorHint="@color/black"
-                                android:text=""
-                                android:inputType="number"
-                                android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:layout_marginTop="@dimen/_8sdp"
+                                android:background="@drawable/edit_text_without_strock"
+
+                                android:clickable="false"
                                 android:fontFamily="@font/poppins_regular"
+                                android:hint="Serving persons"
+                                android:inputType="number"
                                 android:paddingStart="@dimen/_16sdp"
-                                android:textSize="@dimen/_12ssp"
-                                android:paddingLeft="@dimen/_16sdp" />
+                                android:paddingLeft="@dimen/_16sdp"
+                                android:text=""
+                                android:textColorHint="@color/black"
+                                android:textCursorDrawable="@drawable/cursor_drawable"
+                                android:textSize="@dimen/_12ssp" />
+
                             <EditText
                                 android:id="@+id/time"
                                 android:layout_width="match_parent"

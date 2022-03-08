@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fitrecipes.Activities.MainActivity;
 import com.example.fitrecipes.Adapters.ImagesAdapter;
 import com.example.fitrecipes.Adapters.IngredientAdapter;
+import com.example.fitrecipes.Models.CategoryModel;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.IngredientModel;
 import com.example.fitrecipes.Models.RecipeModel;
@@ -49,12 +50,17 @@ public class AddRecipeFragment extends Fragment {
     private IngredientAdapter ingredientAdapter;
     private ImagesAdapter imagesAdapter;
     ArrayList<IngredientModel> ingredientModelArrayList;
+    ArrayList<CategoryModel> categoryModelArrayList;
     ArrayList<ImagesModel> imagesModelArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         /** fetch list of categories here in a arrayList*/
+        categoryModelArrayList = new ArrayList();
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        categoryModelArrayList.addAll(databaseHelper.getAllCategories());
+        // ToDo Make Array of string Items.
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.layout_add_recipe, container, false);
         recyclerImages = view.findViewById(R.id.recyclerImages);
@@ -62,6 +68,7 @@ public class AddRecipeFragment extends Fragment {
         btn = view.findViewById(R.id.btn);
         addIng = view.findViewById(R.id.adding);
         spin = view.findViewById(R.id.spin);
+        // ToDo Assign Array to spinner
         profile_image = view.findViewById(R.id.profile_image);
         name = view.findViewById(R.id.name);
         time = view.findViewById(R.id.time);
