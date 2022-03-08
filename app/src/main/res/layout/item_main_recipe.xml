@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/wholecard"
+    android:clickable="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_3sdp"
+    app:cardElevation="@dimen/_7sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:background="@drawable/white_background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:clipToPadding="false"
+            android:clickable="true"
+            >
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:fitsSystemWindows="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/i3"/>
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="@dimen/_130sdp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:minLines="2"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:padding="@dimen/_5sdp"
+                android:text="Kausanya Cafe"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:paddingRight="@dimen/_15sdp" />
+
+        </FrameLayout>
+       <LinearLayout
+           android:background="@color/red"
+           android:padding="6dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <TextView
+               android:textSize="12sp"
+               android:textColor="@color/white"
+               android:text="Uploaded by"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+
+           <TextView
+               android:id="@+id/tv_user_name"
+               android:textColor="@color/white"
+               android:textStyle="bold"
+               android:text="MasterCheff"
+               android:gravity="right"
+               android:layout_weight="1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"/>
+       </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/red"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:text="Category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="Pakistani"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

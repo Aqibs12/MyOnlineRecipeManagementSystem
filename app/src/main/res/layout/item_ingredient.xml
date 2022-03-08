@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/wholecard"
+    android:clickable="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_3sdp"
+    app:cardElevation="@dimen/_7sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:background="@drawable/white_background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:clickable="true"
+            >
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_baseline_close_24"/>
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_11ssp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:minLines="2"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:padding="@dimen/_5sdp"
+                android:text="Kausanya Cafe"
+                android:layout_marginLeft="@dimen/_2sdp"
+                android:paddingRight="@dimen/_15sdp" />
+
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
