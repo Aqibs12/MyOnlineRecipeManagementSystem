@@ -54,6 +54,7 @@ public class AddRecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /** fetch list of categories here in a arrayList*/
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.layout_add_recipe, container, false);
         recyclerImages = view.findViewById(R.id.recyclerImages);

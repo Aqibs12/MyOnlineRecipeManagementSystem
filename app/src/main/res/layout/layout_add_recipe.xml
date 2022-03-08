@@ -123,7 +123,6 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Cooking time"
-                                
                                 android:clickable="false"
                                 android:entries="@array/cats"
                                 android:textColorHint="@color/black"

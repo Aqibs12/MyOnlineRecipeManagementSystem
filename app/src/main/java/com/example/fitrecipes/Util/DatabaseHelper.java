@@ -111,7 +111,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_RECIPES);
         db.execSQL(CREATE_TABLE_INGREDIENTS);
         db.execSQL(CREATE_TABLE_IMAGES);
-
+        /** create your category table */
+        /** call the insert method and add 10 values for cateogries*/
 
     }
 
@@ -423,7 +424,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return list;
     }
-    public List<RecipeModel> getAllRecipeData(String usrId) {
+    public List<RecipeModel> getAllRecipeData() {
 
         List<RecipeModel> list = new ArrayList<RecipeModel>();
         String selectQuery1 = "SELECT  * FROM " + TABLE_RECIPES;

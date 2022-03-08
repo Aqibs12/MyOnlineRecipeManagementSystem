@@ -31,6 +31,8 @@ import com.example.fitrecipes.Util.SessionManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -66,7 +68,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(recipeAdapter);
         DatabaseHelper databaseHelper=new DatabaseHelper(getContext());
         recipeModelArrayList.clear();
-        recipeModelArrayList.addAll(databaseHelper.getAllRecipeData(SessionManager.getStringPref(HelperKeys.USER_ID, getContext())));
+        recipeModelArrayList.addAll(databaseHelper.getAllRecipeData());
+        Collections.shuffle(recipeModelArrayList);
         recipeAdapter.notifyDataSetChanged();
 
         HashMap<String,String> file_maps = new HashMap<String, String>();
@@ -74,11 +77,13 @@ public class HomeFragment extends Fragment {
         if (recipeModelArrayList.size()==0){
             Toast.makeText(getContext(), "Please add some recipe data first", Toast.LENGTH_SHORT).show();
         }
+        
 
-
+        /** here you need to implement the logic to limit the size to maximum 8*/
         for (int i=0;i<recipeModelArrayList.size();i++){
             file_maps.put(recipeModelArrayList.get(i).getName(),recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
         }
+
         for(String name : file_maps.keySet()){
             TextSliderView textSliderView = new TextSliderView(getContext());
             // initialize a SliderLayout
@@ -91,6 +96,13 @@ public class HomeFragment extends Fragment {
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
                     .putString("extra",name);
+
+            textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                @Override
+                public void onSliderClick(BaseSliderView slider) {
+                    /** open detail page activity and pass the clicked recipe object in the intent */
+                }
+            });
 
             sliderLayout.addSlider(textSliderView);
         }
