@@ -1,10 +1,13 @@
 package com.example.fitrecipes.Fragments;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.fitrecipes.Activities.LoginActivity;
+import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Adapters.RecipeAdapter;
@@ -36,55 +40,70 @@ import java.util.Collections;
 import java.util.HashMap;
 
 
-
 public class HomeFragment extends Fragment {
-
-
+    private RecipeModel recipeModel;
+    int totalsize;
     private SliderLayout sliderLayout;
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     ArrayList<RecipeModel> recipeModelArrayList;
+    ArrayList<RecipeModel> recipeModelArrayList2;
     private EditText et_search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.home_fragment, container, false);
 
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+//        recipeModel= (RecipeModel) getActivity().getIntent().getSerializableExtra("model");
         //slider code start
         TextView name1 = view.findViewById(R.id.name);
         et_search = view.findViewById(R.id.et_search);
-        name1.setText("Hi "+"" + SessionManager.getStringPref(HelperKeys.USER_NAME, getContext())+" ,Welcome to FitRecipes");
+        name1.setText("Hi " + "" + SessionManager.getStringPref(HelperKeys.USER_NAME, getContext()) + " ,Welcome to FitRecipes");
         sliderLayout = view.findViewById(R.id.slider);
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(3333);
-        recyclerView=view.findViewById(R.id.recyclerview);
-        recipeModelArrayList=new ArrayList();
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        recipeAdapter=new RecipeAdapter(recipeModelArrayList,getContext());
+        recyclerView = view.findViewById(R.id.recyclerview);
+        recipeModelArrayList = new ArrayList();
+        recipeModelArrayList2 = new ArrayList();
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recipeAdapter = new RecipeAdapter(recipeModelArrayList, getContext());
         recyclerView.setAdapter(recipeAdapter);
-        DatabaseHelper databaseHelper=new DatabaseHelper(getContext());
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         recipeModelArrayList.clear();
         recipeModelArrayList.addAll(databaseHelper.getAllRecipeData());
         Collections.shuffle(recipeModelArrayList);
         recipeAdapter.notifyDataSetChanged();
 
-        HashMap<String,String> file_maps = new HashMap<String, String>();
+        HashMap<String, String> file_maps = new HashMap<String, String>();
 
-        if (recipeModelArrayList.size()==0){
+        if (recipeModelArrayList.size() == 0) {
             Toast.makeText(getContext(), "Please add some recipe data first", Toast.LENGTH_SHORT).show();
         }
-        
-
-        /** here you need to implement the logic to limit the size to maximum 8*/
-        for (int i=0;i<recipeModelArrayList.size();i++){
-            file_maps.put(recipeModelArrayList.get(i).getName(),recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
+        // limit to nth number logic
+        if (recipeModelArrayList.size() > 8) {
+            for (int i = 0; i < recipeModelArrayList.size(); i++) {
+                //file_maps.put(recipeModelArrayList.get(i).getName(), recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
+                int size = 8;
+                if (i == size) {
+                    totalsize = i;
+                    Log.d(TAG, "TotalSize" + totalsize);
+                    break;
+                }
+            }
         }
 
-        for(String name : file_maps.keySet()){
+
+        /** here you need to implement the logic to limit the size to maximum 8*/
+        for (int i = 0; i < recipeModelArrayList.size() && i < totalsize; i++) {
+            file_maps.put(recipeModelArrayList.get(i).getName(), recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
+
+        }
+
+        for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getContext());
             // initialize a SliderLayout
             textSliderView
@@ -95,17 +114,22 @@ public class HomeFragment extends Fragment {
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",name);
+                    .putString("extra", name);
 
             textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
                     /** open detail page activity and pass the clicked recipe object in the intent */
+                    Toast.makeText(getContext(), "Slider Cicked", Toast.LENGTH_SHORT).show();
+                    Intent it=new Intent(getActivity(), RecipeDetailsActivity.class);
+                    it.putExtra("model",file_maps);
+                    startActivity(it);
                 }
             });
 
             sliderLayout.addSlider(textSliderView);
         }
+
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,8 +138,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(recipeAdapter!=null)
-                {
+                if (recipeAdapter != null) {
 
                     recipeAdapter.getFilter().filter(s);
                 }
@@ -124,8 +147,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(recipeAdapter!=null)
-                {
+                if (recipeAdapter != null) {
                     recipeAdapter.getFilter().filter(s);
                 }
             }
