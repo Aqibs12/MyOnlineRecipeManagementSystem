@@ -38,6 +38,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,6 +65,10 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         categoryModelArrayList = new ArrayList();
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         categoryModelArrayList.addAll(databaseHelper.getAllCategories());
+        // ToDo Make Array of string Items.
+       /* DatabaseHelper databaseHelper1 = new DatabaseHelper(getContext());*/
+        List<CategoryModel> labels = new ArrayList<>();
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.layout_add_recipe, container, false);
         recyclerImages = view.findViewById(R.id.recyclerImages);
@@ -71,6 +76,7 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         btn = view.findViewById(R.id.btn);
         addIng = view.findViewById(R.id.adding);
         spin = view.findViewById(R.id.spin);
+        // ToDo Assign Array to spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.cats, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
