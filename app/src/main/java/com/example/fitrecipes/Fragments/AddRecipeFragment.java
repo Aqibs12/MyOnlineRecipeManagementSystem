@@ -67,7 +67,17 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         categoryModelArrayList.addAll(databaseHelper.getAllCategories());
         // ToDo Make Array of string Items.
        /* DatabaseHelper databaseHelper1 = new DatabaseHelper(getContext());*/
-        List<CategoryModel> labels = new ArrayList<>();
+        String[] cats = new String[categoryModelArrayList.size()];
+        for(int i=0;i<categoryModelArrayList.size();i++){
+            CategoryModel categoryModel = categoryModelArrayList.get(i);
+            cats[i] = categoryModel.getCategory();
+        }
+
+        List<String> categoryList = new ArrayList<>();
+        for(CategoryModel categoryModel:categoryModelArrayList)
+        {
+            categoryList.add(categoryModel.getCategory());
+        }
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.layout_add_recipe, container, false);
@@ -77,9 +87,8 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         addIng = view.findViewById(R.id.adding);
         spin = view.findViewById(R.id.spin);
         // ToDo Assign Array to spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.cats, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,categoryList);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
         profile_image = view.findViewById(R.id.profile_image);

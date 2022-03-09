@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -47,7 +48,6 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     ArrayList<RecipeModel> recipeModelArrayList;
-    ArrayList<RecipeModel> recipeModelArrayList2;
     private EditText et_search;
 
     @Override
@@ -68,7 +68,6 @@ public class HomeFragment extends Fragment {
         sliderLayout.setDuration(3333);
         recyclerView = view.findViewById(R.id.recyclerview);
         recipeModelArrayList = new ArrayList();
-        recipeModelArrayList2 = new ArrayList();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recipeAdapter = new RecipeAdapter(recipeModelArrayList, getContext());
         recyclerView.setAdapter(recipeAdapter);
@@ -83,27 +82,21 @@ public class HomeFragment extends Fragment {
         if (recipeModelArrayList.size() == 0) {
             Toast.makeText(getContext(), "Please add some recipe data first", Toast.LENGTH_SHORT).show();
         }
-        // limit to nth number logic
-        if (recipeModelArrayList.size() > 8) {
-            for (int i = 0; i < recipeModelArrayList.size(); i++) {
-                //file_maps.put(recipeModelArrayList.get(i).getName(), recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
-                int size = 8;
-                if (i == size) {
-                    totalsize = i;
-                    Log.d(TAG, "TotalSize" + totalsize);
-                    break;
-                }
-            }
-        }
+
+        if(recipeModelArrayList.size()>=8)
+            totalsize = 8;
+        else
+            totalsize = recipeModelArrayList.size();
 
 
         /** here you need to implement the logic to limit the size to maximum 8*/
-        for (int i = 0; i < recipeModelArrayList.size() && i < totalsize; i++) {
+        for (int i = 0;  i < totalsize; i++) {
             file_maps.put(recipeModelArrayList.get(i).getName(), recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
-
         }
 
-        for (String name : file_maps.keySet()) {
+
+        for (Map.Entry<String, String> entry : file_maps.entrySet()) {
+            String name = entry.getValue();
             TextSliderView textSliderView = new TextSliderView(getContext());
             // initialize a SliderLayout
             textSliderView
@@ -116,18 +109,20 @@ public class HomeFragment extends Fragment {
             textSliderView.getBundle()
                     .putString("extra", name);
 
+
             textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
                     /** open detail page activity and pass the clicked recipe object in the intent */
                     Toast.makeText(getContext(), "Slider Cicked", Toast.LENGTH_SHORT).show();
                     Intent it=new Intent(getActivity(), RecipeDetailsActivity.class);
-                    it.putExtra("model",file_maps);
+                    //it.putExtra("model",recipeModelArrayList.get(finalI));
                     startActivity(it);
                 }
             });
 
             sliderLayout.addSlider(textSliderView);
+
         }
 
         et_search.addTextChangedListener(new TextWatcher() {
