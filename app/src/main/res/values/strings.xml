@@ -6,7 +6,7 @@
     <string name="hint_email_address">Email Address</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_upload_profile">Upload Profile</string>
-    <array name="cats">
+    <string-array name="cats">
         <item>Select a category</item>
         <item>Chinese</item>
         <item>Thai</item>
@@ -17,7 +17,8 @@
         <item>American</item>
         <item>Japanese</item>
         <item>Mexican</item>
-        </array>
+        <item>Russian</item>
+        </string-array>
 
     <string name="logout"><u>Logout</u></string>
     <string name="my_recipes"><u>My Recipes</u></string>

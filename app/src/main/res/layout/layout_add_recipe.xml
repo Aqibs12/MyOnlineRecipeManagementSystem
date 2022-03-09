@@ -126,7 +126,6 @@
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Cooking time"
                                 android:clickable="false"
-                                android:entries="@array/cats"
                                 android:textColorHint="@color/black"
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:layout_marginTop="@dimen/_8sdp"

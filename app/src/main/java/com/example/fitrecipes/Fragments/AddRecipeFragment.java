@@ -2,6 +2,7 @@ package com.example.fitrecipes.Fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,7 +42,8 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AddRecipeFragment extends Fragment {
+public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+    Context context;
     Spinner spin;
     CircleImageView profile_image;
     EditText name, serving, time, desc, instructions, ingredient;
@@ -60,7 +64,6 @@ public class AddRecipeFragment extends Fragment {
         categoryModelArrayList = new ArrayList();
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         categoryModelArrayList.addAll(databaseHelper.getAllCategories());
-        // ToDo Make Array of string Items.
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.layout_add_recipe, container, false);
         recyclerImages = view.findViewById(R.id.recyclerImages);
@@ -68,7 +71,11 @@ public class AddRecipeFragment extends Fragment {
         btn = view.findViewById(R.id.btn);
         addIng = view.findViewById(R.id.adding);
         spin = view.findViewById(R.id.spin);
-        // ToDo Assign Array to spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.cats, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter);
+        spin.setOnItemSelectedListener(this);
         profile_image = view.findViewById(R.id.profile_image);
         name = view.findViewById(R.id.name);
         time = view.findViewById(R.id.time);
@@ -176,5 +183,17 @@ public class AddRecipeFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(adapterView.getContext(),text, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 
 }
