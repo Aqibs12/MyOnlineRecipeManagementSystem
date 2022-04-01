@@ -44,7 +44,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    Context context;
     Spinner spin;
     CircleImageView profile_image;
     EditText name, serving, time, desc, instructions, ingredient;
@@ -193,16 +192,11 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
             } else {
                 Toast.makeText(getContext(), "Data already exists", Toast.LENGTH_SHORT).show();
             }
-
-
         }
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        Toast.makeText(adapterView.getContext(),text, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--<color name="purple_200">#000</color>
+    <color name="purple_500">#000</color>-->
     <color name="purple_200">#000</color>
     <color name="purple_500">#000</color>
     <color name="purple_700">#e8332e</color>

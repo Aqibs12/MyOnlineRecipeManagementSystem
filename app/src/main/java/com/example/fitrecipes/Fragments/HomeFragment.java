@@ -24,6 +24,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.fitrecipes.Activities.LoginActivity;
+import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -48,6 +50,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     ArrayList<RecipeModel> recipeModelArrayList;
+    ArrayList<RecipeModel> sliderRecipeList;
     private EditText et_search;
 
     @Override
@@ -68,55 +71,59 @@ public class HomeFragment extends Fragment {
         sliderLayout.setDuration(3333);
         recyclerView = view.findViewById(R.id.recyclerview);
         recipeModelArrayList = new ArrayList();
+        sliderRecipeList = new ArrayList();
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recipeAdapter = new RecipeAdapter(recipeModelArrayList, getContext());
         recyclerView.setAdapter(recipeAdapter);
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         recipeModelArrayList.clear();
-        recipeModelArrayList.addAll(databaseHelper.getAllRecipeData());
-        Collections.shuffle(recipeModelArrayList);
+        recipeModelArrayList.addAll(databaseHelper.getAllRecipes());
         recipeAdapter.notifyDataSetChanged();
 
-        HashMap<String, String> file_maps = new HashMap<String, String>();
+       // HashMap<String, String> file_maps = new HashMap<String, String>();
 
+        List<RecipeModel> recipeModelList2 = new ArrayList<>(recipeModelArrayList);
+        Collections.shuffle(recipeModelList2);
         if (recipeModelArrayList.size() == 0) {
             Toast.makeText(getContext(), "Please add some recipe data first", Toast.LENGTH_SHORT).show();
         }
 
-        if(recipeModelArrayList.size()>=8)
+        if(recipeModelList2.size()>=8)
             totalsize = 8;
         else
-            totalsize = recipeModelArrayList.size();
+            totalsize = recipeModelList2.size();
 
 
         /** here you need to implement the logic to limit the size to maximum 8*/
         for (int i = 0;  i < totalsize; i++) {
-            file_maps.put(recipeModelArrayList.get(i).getName(), recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
+            Log.d("abc",i+"");
+            //file_maps.put(i+"", recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
+            sliderRecipeList.add(recipeModelList2.get(i));
         }
 
 
-        for (Map.Entry<String, String> entry : file_maps.entrySet()) {
-            String name = entry.getValue();
+       for (RecipeModel recipeModel:sliderRecipeList) {
+
             TextSliderView textSliderView = new TextSliderView(getContext());
             // initialize a SliderLayout
             textSliderView
-                    .description(name)
-                    .image(new File(file_maps.get(name)))
+                    .description(recipeModel.getName())
+                    .image(new File(recipeModel.getImagesModelArrayList().get(0).getImage()))
                     .setScaleType(BaseSliderView.ScaleType.Fit);
 
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra", name);
+                    .putString("extra", recipeModel.getName());
 
 
             textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
+
                     /** open detail page activity and pass the clicked recipe object in the intent */
-                    Toast.makeText(getContext(), "Slider Cicked", Toast.LENGTH_SHORT).show();
                     Intent it=new Intent(getActivity(), RecipeDetailsActivity.class);
-                    //it.putExtra("model",recipeModelArrayList.get(finalI));
+                    it.putExtra("model",recipeModel);
                     startActivity(it);
                 }
             });
@@ -128,7 +135,6 @@ public class HomeFragment extends Fragment {
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -154,6 +160,12 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+        view.findViewById(R.id.tv_my_recipes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), MyRecipesActivity.class));
             }
         });
         return view;

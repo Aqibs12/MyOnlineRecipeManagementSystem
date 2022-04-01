@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-                }, 3000);//screen timeout time of splash
+                }, 500);//screen timeout time of splash
 
     }
 

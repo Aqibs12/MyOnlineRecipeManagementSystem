@@ -462,10 +462,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return list;
     }
-    public List<RecipeModel> getAllRecipeData() {
+
+    public List<RecipeModel> getAllRecipes(){
+        String selectQuery = "SELECT  * FROM " + TABLE_RECIPES;
+        return getAllRecipeData(selectQuery);
+    }
+
+    public List<RecipeModel> getAllRecipes(int userID){
+        String queryString = "SELECT * FROM " + TABLE_RECIPES +" WHERE "+ KEY_USER_ID +" = "+userID;
+        return getAllRecipeData(queryString);
+    }
+    public List<RecipeModel> getAllRecipeData(String selectQuery1) {
 
         List<RecipeModel> list = new ArrayList<RecipeModel>();
-        String selectQuery1 = "SELECT  * FROM " + TABLE_RECIPES;
+
 
 
         SQLiteDatabase db1 = this.getReadableDatabase();
@@ -595,10 +605,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<CategoryModel> getAllCategories(){
 
         List<CategoryModel> returnList = new ArrayList<>();
-
-        // get data from the database
-
         String queryString = "SELECT * FROM " + TABLE_CATEGORY;
+        // get data from the database
 
         SQLiteDatabase db = this.getReadableDatabase();
 

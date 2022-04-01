@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.fitrecipes.Activities.MainActivity;
+import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.DatabaseHelper;
@@ -25,6 +27,7 @@ public class ProfileFragment extends Fragment {
 
 
     MaterialButton btn_update;
+    TextView tvTotalRecipes;
     EditText name,phone,email,password,question,answer;
     ValidationChecks validationChecks = new ValidationChecks();
     @Override
@@ -38,7 +41,12 @@ public class ProfileFragment extends Fragment {
         password=view.findViewById(R.id.password);
         email=view.findViewById(R.id.email);
         phone=view.findViewById(R.id.phone);
-
+        tvTotalRecipes = view.findViewById(R.id.tv_total_recipes);
+        int userID =  Integer.parseInt(SessionManager.getStringPref(HelperKeys.USER_ID,getContext()));
+        //get all the recipes of this user id from the database and set text to tvTotalRecipes
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        final int totalRecipes = databaseHelper.getAllRecipes(userID).size();
+        tvTotalRecipes.setText(totalRecipes+"");
         name.setText(SessionManager.getStringPref(HelperKeys.USER_NAME, getContext()));
         answer.setText(SessionManager.getStringPref(HelperKeys.USER_A, getContext()));
         question.setText(SessionManager.getStringPref(HelperKeys.USER_Q, getContext()));
@@ -50,6 +58,12 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 validationCheck();
+            }
+        });
+        view.findViewById(R.id.tv_view_all_recipes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),MyRecipesActivity.class));
             }
         });
         return view;

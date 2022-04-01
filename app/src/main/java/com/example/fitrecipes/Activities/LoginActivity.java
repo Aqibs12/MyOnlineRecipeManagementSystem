@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         final String userId = SessionManager.getStringPref(HelperKeys.USER_ID, getApplicationContext());
         if (!userId.equals("")) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
@@ -116,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             SessionManager.putStringPref(HelperKeys.USER_PASSWORD, String.valueOf(userModelList.get(0).getPassword()), LoginActivity.this);
             SessionManager.putStringPref(HelperKeys.USER_Q, String.valueOf(userModelList.get(0).getSecurity_question()), LoginActivity.this);
             SessionManager.putStringPref(HelperKeys.USER_A, String.valueOf(userModelList.get(0).getSecurity_answer()), LoginActivity.this);
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, HomeActivity.class);
             context.startActivity(intent);
             finish();
         }

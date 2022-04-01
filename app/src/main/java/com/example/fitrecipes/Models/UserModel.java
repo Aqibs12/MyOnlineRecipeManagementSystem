@@ -80,7 +80,7 @@ public class UserModel implements Serializable {
     }
 
     public static UserModel getAnonymousUser(){
-        UserModel anonymousUser = new UserModel("Anonymous","anonymous@gmail.com","012345678","","","");
+        UserModel anonymousUser = new UserModel("Anonymous","anonymous@gmail.com","+1923450678","","","");
         anonymousUser.isAnonymous = true;
         return anonymousUser;
     }

@@ -20,13 +20,15 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/_50sdp"
         >
+
         <ProgressBar
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="50dp"
+            android:foregroundTint="@color/black"
             android:background="@drawable/loading_bar"
             android:padding="@dimen/_10sdp"
             android:progressTint="@color/white"
-            android:layout_marginTop="50dp"
 
             />
     </RelativeLayout>
