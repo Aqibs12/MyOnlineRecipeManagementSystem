@@ -65,12 +65,12 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         categoryModelArrayList.addAll(databaseHelper.getAllCategories());
         // ToDo Make Array of string Items.
-       /* DatabaseHelper databaseHelper1 = new DatabaseHelper(getContext());*/
+  /*     *//* DatabaseHelper databaseHelper1 = new DatabaseHelper(getContext());*//*
         String[] cats = new String[categoryModelArrayList.size()];
-        for(int i=0;i<categoryModelArrayList.size();i++){
+    *//*    for(int i=0;i<categoryModelArrayList.size();i++){
             CategoryModel categoryModel = categoryModelArrayList.get(i);
             cats[i] = categoryModel.getCategory();
-        }
+        }*/
 
         List<String> categoryList = new ArrayList<>();
         for(CategoryModel categoryModel:categoryModelArrayList)
@@ -87,7 +87,6 @@ public class AddRecipeFragment extends Fragment implements AdapterView.OnItemSel
         spin = view.findViewById(R.id.spin);
         // ToDo Assign Array to spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_dropdown_item,categoryList);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
         profile_image = view.findViewById(R.id.profile_image);

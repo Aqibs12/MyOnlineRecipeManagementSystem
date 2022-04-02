@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,18 +23,25 @@ import com.example.fitrecipes.Util.DatabaseHelper;
 import com.example.fitrecipes.Util.HelperKeys;
 import com.example.fitrecipes.Util.SessionManager;
 import com.example.fitrecipes.Util.ValidationChecks;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
+    private FirebaseAuth myauth;
+    Button btn_login;
     ValidationChecks validationChecks = new ValidationChecks();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        myauth = FirebaseAuth.getInstance();
         final String userId = SessionManager.getStringPref(HelperKeys.USER_ID, getApplicationContext());
         if (!userId.equals("")) {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -40,7 +50,40 @@ public class LoginActivity extends AppCompatActivity {
         }
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
+        btn_login = findViewById(R.id.btn_login);
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String emailAddress = login_email.getText().toString().trim();
+                String password = login_password.getText().toString().trim();
+                if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
+                    login_email.setError("Email Address is Invalid");
+                    login_email.requestFocus();
+                    return;
+                }
 
+                if (!password.equals(password)) {
+                    login_password.setError("Password Does not matches....");
+                    login_password.requestFocus();
+                    return;
+                }
+                myauth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+            }
+
+        });
         login_email.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -79,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btn_login_guest_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser(LoginActivity.this, "", "", "");
+     //           loginUser(LoginActivity.this, "", "", "");
             }
         });
 
@@ -96,33 +139,8 @@ public class LoginActivity extends AppCompatActivity {
                 && (validationChecks.validateAnyName(login_password, "Please Enter Password"))
         ) {
 
-            loginUser(this, login_email.getText().toString(), login_password.getText().toString(), "user");
+         //   loginUser(this, login_email.getText().toString(), login_password.getText().toString(), "user");
         }
     }
 
-    public void loginUser(final Activity context, String email, String password, String type) {
-        List<UserModel> userModelList = new ArrayList<>();
-        if (email.isEmpty() && password.isEmpty()) {
-            userModelList.add(UserModel.getAnonymousUser());
-        } else {
-            DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-            userModelList.addAll(databaseHelper.getLoginData(email, password));
-        }
-        if (userModelList.size() > 0) {
-            SessionManager.putStringPref(HelperKeys.USER_ID, String.valueOf(userModelList.get(0).getId()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_NAME, String.valueOf(userModelList.get(0).getName()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_EMAIL, String.valueOf(userModelList.get(0).getEmail()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_PHONE_NO, String.valueOf(userModelList.get(0).getPhone()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_PASSWORD, String.valueOf(userModelList.get(0).getPassword()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_Q, String.valueOf(userModelList.get(0).getSecurity_question()), LoginActivity.this);
-            SessionManager.putStringPref(HelperKeys.USER_A, String.valueOf(userModelList.get(0).getSecurity_answer()), LoginActivity.this);
-            Intent intent = new Intent(context, HomeActivity.class);
-            context.startActivity(intent);
-            finish();
-        }
-        else {
-            Toast.makeText(context, "Incorrect username or password", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 }

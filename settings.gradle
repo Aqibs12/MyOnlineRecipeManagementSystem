@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Online Recipe Management System"
+rootProject.name = " My Online Recipe Management System"

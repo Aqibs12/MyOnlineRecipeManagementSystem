@@ -82,19 +82,19 @@
                     android:autofillHints="@string/hint_enter_password"
                     android:background="@drawable/edit_text_without_stroke"
                     android:drawableStart="@drawable/ic_lock"
+                    android:drawableLeft="@drawable/ic_lock"
                     android:drawablePadding="@dimen/_16sdp"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/hint_enter_password"
                     android:inputType="textPassword"
                     android:paddingStart="30dp"
+                    android:paddingLeft="30dp"
                     android:paddingEnd="0dp"
+                    android:paddingRight="0dp"
                     android:textColor="@color/black"
                     android:textColorHint="@android:color/black"
                     android:textCursorDrawable="@drawable/cursor_drawable"
-                    android:textSize="@dimen/_12sdp"
-                    android:drawableLeft="@drawable/ic_lock"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="0dp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <EditText
                     android:id="@+id/sign_up_cPassword"

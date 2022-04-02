@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,12 +25,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.DatabaseHelper;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class SignUpActivity extends AppCompatActivity {
     private TextView tv_signIn;
     private EditText et_fullName, et_emailAddress, et_password, et_cPassword, et_phoneNumber,sign_up_question,sign_up_ans;
     private Button btn_signUp;
+    private FirebaseAuth myauth;
+
 
 
 
@@ -37,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-       
+        myauth = FirebaseAuth.getInstance();
         initViews();
         onClickListeners();
     }
@@ -54,77 +62,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         btn_signUp = findViewById(R.id.btn_signUp);
     }
-
-
-    public void validations() {
-        boolean check = false;
-        //making variable for validations
-        String fullName = et_fullName.getText().toString().trim();
-        String emailAddress = et_emailAddress.getText().toString().trim();
-        String password = et_password.getText().toString().trim();
-        String cPassword = et_cPassword.getText().toString().trim();
-        String phoneNumber = et_phoneNumber.getText().toString().trim();
-        //validate data here
-        if (TextUtils.isEmpty(fullName)) {
-            check = true;
-            et_fullName.setError("Please Enter your Name");
-        }
-        if (fullName.length() < 3) {
-            et_fullName.setError("Please Enter Name");
-            return;
-        }
-        if (sign_up_question.length() < 3) {
-            sign_up_question.setError("Please Enter Question");
-            return;
-        }
-        if (sign_up_ans.length() < 3) {
-            sign_up_ans.setError("Please Enter Answer");
-            return;
-        }
-        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 10) {
-            et_phoneNumber.setError("Please Enter Phone Number");
-            return;
-        }
-        if (phoneNumber.length() < 9) {
-            et_phoneNumber.setError("Please Enter a valid Phone Number with at least 10 digits");
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
-            et_emailAddress.setError("Email Address is Invalid");
-            return;
-        }
-
-        if (!password.equals(cPassword)) {
-            et_cPassword.setError("Password Does not matches....");
-            return;
-        }
-
-        DatabaseHelper databaseHelper=new DatabaseHelper(getApplicationContext());
-        UserModel userModel = new UserModel(
-                et_fullName.getText().toString(),
-                et_emailAddress.getText().toString(),
-                et_phoneNumber.getText().toString(),
-                et_password.getText().toString(),
-                sign_up_question.getText().toString(),
-                sign_up_ans.getText().toString()
-        );
-        String s =databaseHelper.saveUserData(userModel);
-        if (s.equals("added")){
-            Toast.makeText(getApplicationContext(), "UserModel Registered Successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }else {
-            Toast.makeText(getApplicationContext(), "UserModel Already Registered", Toast.LENGTH_SHORT).show();
-
-        }
-
-
-    }
-
-
- 
-
     public void onClickListeners() {
 
         tv_signIn.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +74,75 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validations();
+                boolean check = false;
+                //making variable for validations
+                String fullName = et_fullName.getText().toString().trim();
+                String emailAddress = et_emailAddress.getText().toString().trim();
+                String password = et_password.getText().toString().trim();
+                String cPassword = et_cPassword.getText().toString().trim();
+                String phoneNumber = et_phoneNumber.getText().toString().trim();
+                //validate data here
+                if (TextUtils.isEmpty(fullName)) {
+                    check = true;
+                    et_fullName.setError("Please Enter your Name");
+                }
+                if (fullName.length() < 3) {
+                    et_fullName.setError("Please Enter Name");
+                    return;
+                }
+                if (sign_up_question.length() < 3) {
+                    sign_up_question.setError("Please Enter Question");
+                    return;
+                }
+                if (sign_up_ans.length() < 3) {
+                    sign_up_ans.setError("Please Enter Answer");
+                    return;
+                }
+                if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 10) {
+                    et_phoneNumber.setError("Please Enter Phone Number");
+                    return;
+                }
+                if (phoneNumber.length() < 9) {
+                    et_phoneNumber.setError("Please Enter a valid Phone Number with at least 10 digits");
+                    return;
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
+                    et_emailAddress.setError("Email Address is Invalid");
+                    return;
+                }
+
+                if (!password.equals(cPassword)) {
+                    et_cPassword.setError("Password Does not matches....");
+                    return;
+                }
+                myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            UserModel userModel = new UserModel();
+                            FirebaseDatabase.getInstance().getReference("users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                        startActivity(intent);
+
+                                    } else {
+
+                                        Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+                        }else {
+                            Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
         et_fullName.setOnTouchListener(new View.OnTouchListener() {
