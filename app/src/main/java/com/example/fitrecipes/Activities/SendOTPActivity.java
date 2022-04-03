@@ -20,10 +20,11 @@ import java.util.concurrent.TimeUnit;
 public class SendOTPActivity extends AppCompatActivity {
     EditText etInput;
     Button btnGetOtp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_verify_otpactivity);
+        setContentView(R.layout.activity_send_otpactivity);
         init();
         setListeners();
     }

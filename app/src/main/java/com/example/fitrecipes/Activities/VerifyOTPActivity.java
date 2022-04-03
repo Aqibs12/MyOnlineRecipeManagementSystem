@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 public class VerifyOTPActivity extends AppCompatActivity {
 
-    EditText et_input1, et_input2, et_input3,et_input4;
+    EditText et_input1, et_input2, et_input3,et_input4,et_input5,et_input6;
     TextView textMobile;
     Button btn_Verify;
     private String verificationId;
@@ -34,9 +34,10 @@ public class VerifyOTPActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_otpactivity);
+        setContentView(R.layout.activity_verify_otpactivity);
         init();
         setUpOtpInputs();
+        setListeners();
         textMobile.setText(String.format("+92-%s",getIntent().getStringExtra("mobile")));
         verificationId = getIntent().getStringExtra("verificationId");
     }
@@ -46,6 +47,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
         et_input2 = findViewById(R.id.inputCode2);
         et_input3 = findViewById(R.id.inputCode3);
         et_input4 = findViewById(R.id.inputCode4);
+        et_input5 = findViewById(R.id.inputCode5);
+        et_input6 = findViewById(R.id.inputCode6);
         textMobile = findViewById(R.id.tv_mobile);
         btn_Verify = findViewById(R.id.btn_verify_otp);
     }
@@ -108,6 +111,46 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
             }
         });
+
+        et_input4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().trim().isEmpty()){
+                    et_input5.requestFocus();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et_input5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!charSequence.toString().trim().isEmpty()){
+                    et_input6.requestFocus();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void setListeners(){
@@ -117,7 +160,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 if (et_input1.getText().toString().trim().isEmpty()
                 || et_input2.getText().toString().trim().isEmpty()
                 || et_input3.getText().toString().trim().isEmpty()
-                || et_input4.getText().toString().trim().isEmpty())
+                || et_input4.getText().toString().trim().isEmpty()
+                || et_input5.getText().toString().trim().isEmpty()
+                || et_input6.getText().toString().trim().isEmpty())
                 {
                     Toast.makeText(VerifyOTPActivity.this, "Please Enter Valid Code", Toast.LENGTH_SHORT).show();
                     return;
@@ -125,7 +170,9 @@ public class VerifyOTPActivity extends AppCompatActivity {
                 String code = et_input1.getText().toString()
                         + et_input2.getText().toString()
                         + et_input3.getText().toString()
-                        +et_input4.getText().toString();
+                        +et_input4.getText().toString()
+                        + et_input5.getText().toString()
+                        +et_input6.getText().toString();
 
                 if (verificationId != null) {
                     PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(verificationId, code);
