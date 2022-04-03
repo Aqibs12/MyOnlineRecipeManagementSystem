@@ -81,9 +81,9 @@ public class HomeActivity extends AppCompatActivity {
 
         name.setText(SessionManager.getStringPref(HelperKeys.USER_NAME, context));
         email.setText(SessionManager.getStringPref(HelperKeys.USER_EMAIL, context));
-        phone.setText("Phone#  "+SessionManager.getStringPref(HelperKeys.USER_PHONE_NO, context));
+       /* phone.setText("Phone#  "+SessionManager.getStringPref(HelperKeys.USER_PHONE_NO, context));
         firstLetter.setText(name.getText().toString().charAt(0)+"");
-
+*/
 
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
