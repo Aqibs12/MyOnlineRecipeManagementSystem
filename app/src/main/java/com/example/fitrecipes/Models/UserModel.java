@@ -2,7 +2,7 @@ package com.example.fitrecipes.Models;
 
 import java.io.Serializable;
 
-public class UserModel implements Serializable {
+public class UserModel {
 
     public UserModel() {
     }
@@ -20,6 +20,12 @@ public class UserModel implements Serializable {
     int id;
     String name,email,phone,password,security_question,security_answer;
 
+    public UserModel(String fullName, String emailAddress, String password, String phoneNumber) {
+        this.name = fullName;
+        this.email = emailAddress;
+        this.password = password;
+        this.phone = phoneNumber;
+    }
 
 
     public String getName() {

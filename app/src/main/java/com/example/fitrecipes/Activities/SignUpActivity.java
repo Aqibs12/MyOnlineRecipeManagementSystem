@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
@@ -37,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText et_fullName, et_emailAddress, et_password, et_cPassword, et_phoneNumber,sign_up_question,sign_up_ans;
     private Button btn_signUp;
     private FirebaseAuth myauth;
+    private DatabaseReference mDatabase;
 
 
 
@@ -46,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         myauth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         initViews();
         onClickListeners();
     }
@@ -59,7 +62,6 @@ public class SignUpActivity extends AppCompatActivity {
         et_phoneNumber = findViewById(R.id.sign_up_phoneNumber);
         sign_up_question = findViewById(R.id.sign_up_question);
         sign_up_ans = findViewById(R.id.sign_up_ans);
-
         btn_signUp = findViewById(R.id.btn_signUp);
     }
     public void onClickListeners() {
@@ -119,7 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserModel userModel = new UserModel();
+                            UserModel userModel = new UserModel(fullName,emailAddress,password,phoneNumber);
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {

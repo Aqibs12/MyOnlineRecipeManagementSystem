@@ -34,7 +34,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
     private FirebaseAuth myauth;
-    Button btn_login;
+    Button btnlogin;
     ValidationChecks validationChecks = new ValidationChecks();
 
     @Override
@@ -44,14 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         myauth = FirebaseAuth.getInstance();
         final String userId = SessionManager.getStringPref(HelperKeys.USER_ID, getApplicationContext());
         if (!userId.equals("")) {
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SendOTPActivity.class);
             startActivity(intent);
             finish();
         }
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
-        btn_login = findViewById(R.id.btn_login);
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        btnlogin = findViewById(R.id.btn_login);
+        btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String emailAddress = login_email.getText().toString().trim();
@@ -71,14 +71,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            try {
+                                startActivity(new Intent(getApplicationContext(), SendOTPActivity.class));
+                            }catch (Exception e){}
+
+                            /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);*/
 
                         } else {
                             Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
+
 
                 });
             }
