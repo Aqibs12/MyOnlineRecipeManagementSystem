@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "452605933486",
+    "firebase_url": "https://recipes-app-5a9a5-default-rtdb.firebaseio.com",
+    "project_id": "recipes-app-5a9a5",
+    "storage_bucket": "recipes-app-5a9a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452605933486:android:d95c2d1937588f15787a3f",
+        "android_client_info": {
+          "package_name": "com.example.fitrecipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452605933486-4pknct8bcs0sslfnprji21hfcto8j6br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL132iyWy4LWfHJyVg8LC2GPG6HR98Xms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452605933486-4pknct8bcs0sslfnprji21hfcto8j6br.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

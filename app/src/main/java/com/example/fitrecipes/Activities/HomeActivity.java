@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,6 +28,13 @@ import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.DatabaseHelper;
 import com.example.fitrecipes.Util.HelperKeys;
 import com.example.fitrecipes.Util.SessionManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -44,16 +52,20 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<RecipeModel> recipeModelArrayList;
     ArrayList<RecipeModel> sliderRecipeList;
     SlidingRootNav slidingRootNav;
-    TextView name,phone,email, firstLetter;
+    TextView name,phone,emailAddress, firstLetter;
     Context context;
     private EditText et_search;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private static final String USERS = "users";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
         slidingRootNav = new SlidingRootNavBuilder(this)
-                .withMenuLayout(R.layout.drawer)
+                .withMenuLayout(R.layout.activity_drawer)
                 .withMenuOpened(false)
                 .inject();
 
@@ -72,19 +84,29 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recipeAdapter = new RecipeAdapter(recipeModelArrayList,context);
         recyclerView.setAdapter(recipeAdapter);
-
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
         name=findViewById(R.id.tv_name);
-        email=findViewById(R.id.tv_email);
+        emailAddress=findViewById(R.id.tv_email);
         phone=findViewById(R.id.tv_phone);
         firstLetter = findViewById(R.id.tv_first_letter);
-
-
-        name.setText(SessionManager.getStringPref(HelperKeys.USER_NAME, context));
-        email.setText(SessionManager.getStringPref(HelperKeys.USER_EMAIL, context));
-       /* phone.setText("Phone#  "+SessionManager.getStringPref(HelperKeys.USER_PHONE_NO, context));
-        firstLetter.setText(name.getText().toString().charAt(0)+"");
-*/
-
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference(USERS);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    if(ds.child("email").getValue().equals(email));
+                    emailAddress.setText(ds.child("email").getValue(String.class));
+                    name.setText(ds.child("name").getValue(String.class));
+                    phone.setText(ds.child("phone").getValue(String.class));
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -109,10 +131,8 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SessionManager.clearsession(context);
-                Intent intent = new Intent(context, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                mAuth.signOut();
+                signOutUser();
             }
         });
         findViewById(R.id.tv_my_recipes).setOnClickListener(new View.OnClickListener() {
@@ -155,6 +175,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void signOutUser() {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void updateView (){

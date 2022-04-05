@@ -28,9 +28,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
     private FirebaseAuth myauth;
@@ -67,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     login_password.requestFocus();
                     return;
                 }
+
                 myauth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -144,8 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 && (validationChecks.validateAnyName(login_password, "Please Enter Password"))
         ) {
 
-         //   loginUser(this, login_email.getText().toString(), login_password.getText().toString(), "user");
+            //   loginUser(this, login_email.getText().toString(), login_password.getText().toString(), "user");
         }
     }
-
 }
