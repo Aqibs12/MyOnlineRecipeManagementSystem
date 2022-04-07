@@ -1,6 +1,6 @@
 package com.example.fitrecipes.Models;
 
-import java.io.Serializable;
+import android.widget.EditText;
 
 public class UserModel {
 
@@ -18,7 +18,12 @@ public class UserModel {
 
     boolean isAnonymous = false;
     int id;
-    String name,email,phone,password,security_question,security_answer;
+    String name;
+    String email;
+    String phone;
+    String password;
+    String security_question;
+    String security_answer;
 
     public UserModel(String fullName, String emailAddress, String password, String phoneNumber) {
         this.name = fullName;

@@ -74,9 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(new Intent(getApplicationContext(), SendOTPActivity.class));
                             }catch (Exception e){}
 
-                            /*Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);*/
-
                         } else {
                             Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

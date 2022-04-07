@@ -84,6 +84,8 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = et_password.getText().toString().trim();
                 String cPassword = et_cPassword.getText().toString().trim();
                 String phoneNumber = et_phoneNumber.getText().toString().trim();
+                String signUpQ =  sign_up_question.getText().toString().trim();
+                String signUpA = sign_up_ans.getText().toString().trim();
                 //validate data here
                 if (TextUtils.isEmpty(fullName)) {
                     check = true;
@@ -123,7 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserModel userModel = new UserModel(fullName,emailAddress,password,phoneNumber);
+                            UserModel userModel = new UserModel(fullName,emailAddress,password,phoneNumber,signUpQ,signUpA);
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
