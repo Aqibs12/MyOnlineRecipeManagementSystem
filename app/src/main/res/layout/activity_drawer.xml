@@ -100,7 +100,6 @@
             android:drawableLeft="@drawable/ic_baseline_edit_24"
             android:text="Edit Profile" />
 
-
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"

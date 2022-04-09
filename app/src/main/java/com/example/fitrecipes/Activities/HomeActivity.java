@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,17 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.example.fitrecipes.Adapters.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.DatabaseHelper;
-import com.example.fitrecipes.Util.HelperKeys;
 import com.example.fitrecipes.Util.SessionManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,10 +40,7 @@ import com.google.firebase.storage.UploadTask;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
@@ -60,11 +48,10 @@ public class HomeActivity extends AppCompatActivity {
     int totalsize;
     private SliderLayout sliderLayout;
     private RecyclerView recyclerView;
-    private RecipeAdapter recipeAdapter;
     ArrayList<RecipeModel> recipeModelArrayList;
     ArrayList<RecipeModel> sliderRecipeList;
     SlidingRootNav slidingRootNav;
-    TextView name,phone,emailAddress,password,answer,question;
+    TextView name,phone,emailAddress,tv_changePass;
     ImageView iv_pic;
     public Uri imageUri;
     private FirebaseStorage storage;
@@ -88,7 +75,6 @@ public class HomeActivity extends AppCompatActivity {
         context = this;
         TextView name1 = findViewById(R.id.name);
         et_search = findViewById(R.id.et_search);
-        name1.setText("Hi " + "" + SessionManager.getStringPref(HelperKeys.USER_NAME, context) + " ,Welcome to FitRecipes");
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -98,8 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList = new ArrayList();
         sliderRecipeList = new ArrayList();
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
-        recipeAdapter = new RecipeAdapter(recipeModelArrayList, context);
-        recyclerView.setAdapter(recipeAdapter);
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         name = findViewById(R.id.tv_name);
@@ -127,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        et_search.addTextChangedListener(new TextWatcher() {
+     /*   et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -147,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
                     recipeAdapter.getFilter().filter(s);
                 }
             }
-        });
+        });*/
         findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,12 +139,19 @@ public class HomeActivity extends AppCompatActivity {
                 signOutUser();
             }
         });
-        findViewById(R.id.tv_my_recipes).setOnClickListener(new View.OnClickListener() {
+        tv_changePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+     /*   findViewById(R.id.tv_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context, MyRecipesActivity.class));
             }
-        });
+        });*/
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,12 +165,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 slidingRootNav.closeMenu();
             }
-        });
+        });*/
 
         findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,70 +248,10 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-    private void updateView (){
-        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-        recipeModelArrayList.clear();
-        recipeModelArrayList.addAll(databaseHelper.getAllRecipes());
-        recipeAdapter.notifyDataSetChanged();
-
-        // HashMap<String, String> file_maps = new HashMap<String, String>();
-
-        List<RecipeModel> recipeModelList2 = new ArrayList<>(recipeModelArrayList);
-        Collections.shuffle(recipeModelList2);
-        if (recipeModelArrayList.size() == 0) {
-            Toast.makeText(context, "Please add some recipe data first", Toast.LENGTH_SHORT).show();
-        }
-
-        if(recipeModelList2.size()>=8)
-            totalsize = 8;
-        else
-            totalsize = recipeModelList2.size();
-
-
-        /** here you need to implement the logic to limit the size to maximum 8*/
-        for (int i = 0;  i < totalsize; i++) {
-            Log.d("abc",i+"");
-            //file_maps.put(i+"", recipeModelArrayList.get(i).getImagesModelArrayList().get(0).getImage());
-            sliderRecipeList.add(recipeModelList2.get(i));
-        }
-
-
-        sliderLayout.removeAllSliders();
-        for (RecipeModel recipeModel:sliderRecipeList) {
-
-            TextSliderView textSliderView = new TextSliderView(context);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(recipeModel.getName())
-                    .image(new File(recipeModel.getImagesModelArrayList().get(0).getImage()))
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
-
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", recipeModel.getName());
-
-
-            textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(BaseSliderView slider) {
-
-                    /** open detail page activity and pass the clicked recipe object in the intent */
-                    Intent it=new Intent(context, RecipeDetailsActivity.class);
-                    it.putExtra("model",recipeModel);
-                    startActivity(it);
-                }
-            });
-
-            sliderLayout.addSlider(textSliderView);
-
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateView();
     }
     public void onStart() {
 

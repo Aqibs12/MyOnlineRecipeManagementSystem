@@ -1,6 +1,5 @@
 package com.example.fitrecipes.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,20 +16,20 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.DatabaseHelper;
-import com.example.fitrecipes.Util.HelperKeys;
-import com.example.fitrecipes.Util.SessionManager;
 import com.example.fitrecipes.Util.ValidationChecks;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
+    TextView tv_forgotPass, tv_changePass;
     private FirebaseAuth myauth;
+    private FirebaseUser user;
+    private String userId;
     Button btnlogin;
     ValidationChecks validationChecks = new ValidationChecks();
 
@@ -39,14 +38,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         myauth = FirebaseAuth.getInstance();
-        final String userId = SessionManager.getStringPref(HelperKeys.USER_ID, getApplicationContext());
-        if (!userId.equals("")) {
-            Intent intent = new Intent(LoginActivity.this, SendOTPActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        userId = myauth.getCurrentUser().getUid();
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
+        tv_forgotPass = findViewById(R.id.tv_frogot_password);
         btnlogin = findViewById(R.id.btn_login);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                             try {
-                                startActivity(new Intent(getApplicationContext(), SendOTPActivity.class));
+                                //Change Pending set Home Activity to SendOTPActvity
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             }catch (Exception e){}
 
                         } else {
@@ -101,9 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         TextView tv_signUp = findViewById(R.id.tv_signUp);
-        TextView tv_forgot_password = findViewById(R.id.tv_frogot_password);
         tv_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,13 +105,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        tv_forgot_password.setOnClickListener(new View.OnClickListener() {
+        tv_forgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
                 startActivity(intent);
+
             }
         });
+
 
         findViewById(R.id.btn_login_guest_user).setOnClickListener(new View.OnClickListener() {
             @Override

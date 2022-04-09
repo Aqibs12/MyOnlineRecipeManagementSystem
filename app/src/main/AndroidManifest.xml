@@ -23,6 +23,12 @@
             android:name=".Activities.MyRecipesActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.HomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -35,12 +41,6 @@
             android:name=".Activities.LoginActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Activities.UpdateRecipeActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activities.ForgotPassword" />
-        <activity android:name=".Activities.ConfirmPinPasswordAvtivity" />
-        <activity android:name=".Activities.ChangePasswordActivity" />
-        <activity
             android:name=".Activities.SplashActivity"
             android:exported="true" >
             <intent-filter>
@@ -50,7 +50,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.SignUpActivity" />
-        <activity android:name=".Activities.RecipeDetailsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

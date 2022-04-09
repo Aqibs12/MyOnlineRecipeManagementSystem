@@ -3,9 +3,7 @@ package com.example.fitrecipes.Activities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,11 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.example.fitrecipes.Models.UserModel;
+
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.DatabaseHelper;
-import com.example.fitrecipes.Util.HelperKeys;
-import com.example.fitrecipes.Util.SessionManager;
 import com.example.fitrecipes.Util.ValidationChecks;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;

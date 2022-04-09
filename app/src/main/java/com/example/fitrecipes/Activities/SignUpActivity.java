@@ -24,8 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.DatabaseHelper;
-import com.example.fitrecipes.Util.ValidationChecks;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

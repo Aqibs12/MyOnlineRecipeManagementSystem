@@ -3,25 +3,28 @@ package com.example.fitrecipes.Models;
 import java.io.Serializable;
 import java.util.List;
 
-public class RecipeModel implements Serializable {
+public class RecipeModel {
 
-    public RecipeModel() {
-    }
 
-    public RecipeModel(String name, String serving_persons, String cook_time, String category, String description, String instruc) {
+
+    public RecipeModel(String name, String serving_persons, String cook_time, String category, String description, String instruc,String url) {
+
         this.name = name;
         this.serving_persons = serving_persons;
         this.cook_time = cook_time;
         this.category = category;
         this.description = description;
         this.instruc = instruc;
+        this.imageUrl = url;
 
+    }
+    public RecipeModel() {
     }
 
     int id,user_id;
-    String name,serving_persons,cook_time,category,description,instruc;
-    List<ImagesModel> imagesModelArrayList;
-    List<IngredientModel>  ingredientModelArrayList;
+    String name,serving_persons,cook_time,category,description,instruc,imageUrl;
+  /*  List<ImagesModel> imagesModelArrayList;
+    List<IngredientModel>  ingredientModelArrayList;*/
     UserModel user;
 
 
@@ -89,7 +92,7 @@ public class RecipeModel implements Serializable {
         this.instruc = instruc;
     }
 
-    public List<ImagesModel> getImagesModelArrayList() {
+    /*public List<ImagesModel> getImagesModelArrayList() {
         return imagesModelArrayList;
     }
 
@@ -103,7 +106,7 @@ public class RecipeModel implements Serializable {
 
     public void setIngredientModelArrayList(List<IngredientModel> ingredientModelArrayList) {
         this.ingredientModelArrayList = ingredientModelArrayList;
-    }
+    }*/
 
     public UserModel getUser() {
         return user;
