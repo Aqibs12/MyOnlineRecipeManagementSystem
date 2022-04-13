@@ -22,12 +22,10 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.SessionManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private static final String USERS = "users";
+    private String uuid = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                 .inject();
 
         context = this;
+        uuid = LoginActivity.UUID;
         TextView name1 = findViewById(R.id.name);
         et_search = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
@@ -86,72 +86,35 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
-        name = findViewById(R.id.tv_name);
-        emailAddress = findViewById(R.id.tv_email);
-        phone = findViewById(R.id.tv_phone);
-        iv_pic = findViewById(R.id.iv_profilePic);
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(USERS);
+        setListeners();
+        init();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    if (ds.child("email").getValue().equals(email)) ;
-                    emailAddress.setText(ds.child("email").getValue(String.class));
-                    name.setText(ds.child("name").getValue(String.class));
-                    phone.setText(ds.child("phone").getValue(String.class));
-
+                    if(uuid.equals(ds.getKey()))
+                    {
+                        emailAddress.setText(ds.child("email").getValue(String.class));
+                        name.setText(ds.child("name").getValue(String.class));
+                        phone.setText(ds.child("phone").getValue(String.class));
+                    }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-     /*   et_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (recipeAdapter != null) {
-
-                    recipeAdapter.getFilter().filter(s);
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (recipeAdapter != null) {
-                    recipeAdapter.getFilter().filter(s);
-                }
-            }
-        });*/
+    }
+    private void setListeners(){
         findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signOut();
                 signOutUser();
             }
         });
-        tv_changePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, ChangePasswordActivity.class);
-                startActivity(intent);
-            }
-        });
-     /*   findViewById(R.id.tv_my_recipes).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(context, MyRecipesActivity.class));
-            }
-        });*/
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,14 +127,6 @@ public class HomeActivity extends AppCompatActivity {
                 slidingRootNav.openMenu();
             }
         });
-
-        /*findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                slidingRootNav.closeMenu();
-            }
-        });*/
-
         findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,15 +146,24 @@ public class HomeActivity extends AppCompatActivity {
                 choosePicture();
             }
         });
-    }
 
+    }
+    private void init(){
+
+        name = findViewById(R.id.tv_name);
+        emailAddress = findViewById(R.id.tv_email);
+        phone = findViewById(R.id.tv_phone);
+        iv_pic = findViewById(R.id.iv_profilePic);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+    }
     private void choosePicture() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,1);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -209,7 +173,6 @@ public class HomeActivity extends AppCompatActivity {
             uploadPicture();
         }
     }
-
     private void uploadPicture() {
        final ProgressDialog pd =new ProgressDialog(this);
        pd.setTitle("Uploading Image.....");
@@ -242,32 +205,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void signOutUser() {
+        mAuth.signOut();
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
+        uuid = LoginActivity.UUID;
     }
     public void onStart() {
-
         super.onStart();
-
-        FirebaseUser mFirebaseUser = mAuth.getCurrentUser();
-        if (mFirebaseUser!=null){
-            //There is some user logged In
-        }else {
-            startActivity(new Intent(context, LoginActivity.class));
-
-        }
     }
     public void onStop(){
         super.onStop();
         FirebaseAuth.getInstance().signOut();
 
         }
+
 }

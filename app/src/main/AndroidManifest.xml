@@ -15,41 +15,52 @@
         android:theme="@style/Theme.OnlineRecipeManagementSystem" >
         <activity
             android:name=".Activities.VerifyOTPActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.SendOTPActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.MyRecipesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.ForgotPassword"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.ChangePasswordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.HomeActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.ProfileActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.AddRecipeActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.SplashActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SignUpActivity" />
+        <activity android:name=".Activities.SignUpActivity"
+            android:launchMode="singleTop"/>
 
         <meta-data
             android:name="preloaded_fonts"

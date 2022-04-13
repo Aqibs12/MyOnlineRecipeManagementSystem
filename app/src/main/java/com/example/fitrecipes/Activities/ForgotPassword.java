@@ -45,7 +45,6 @@ public class ForgotPassword extends AppCompatActivity {
             }
             });
     }
-
     public void onBackPress(View view) {
         onBackPressed();
     }
@@ -57,9 +56,7 @@ public class ForgotPassword extends AppCompatActivity {
         }else {
             forgetPass();
         }
-
     }
-
     private void forgetPass() {
         fAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

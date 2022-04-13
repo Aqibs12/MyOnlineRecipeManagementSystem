@@ -183,7 +183,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()){
-                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                        String id = task.getResult().getUser().getUid();
+                                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid",id);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                     }else {

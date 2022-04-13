@@ -16,8 +16,18 @@ public class UserModel {
         this.security_answer = security_answer;
     }
 
+    public UserModel(String id, String name, String email, String phone, String password, String security_question, String security_answer) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.security_question = security_question;
+        this.security_answer = security_answer;
+    }
+
     boolean isAnonymous = false;
-    int id;
+    String id;
     String name;
     String email;
     String phone;
@@ -66,11 +76,11 @@ public class UserModel {
         this.password = password;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

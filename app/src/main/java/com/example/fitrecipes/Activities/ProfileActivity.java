@@ -3,6 +3,7 @@ package com.example.fitrecipes.Activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -54,13 +55,26 @@ public class ProfileActivity extends Activity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    if (ds.child("email").getValue().equals(emailAddress)) ;
-                    emailAddress.setText(ds.child("email").getValue(String.class));
-                    name.setText(ds.child("name").getValue(String.class));
-                    password.setText(ds.child("password").getValue(String.class));
-                    phone.setText(ds.child("phone").getValue(String.class));
-                    answer.setText(ds.child("security_answer").getValue(String.class));
-                    question.setText(ds.child("security_question").getValue(String.class));
+                    if(LoginActivity.UUID.equals(ds.getKey()))
+                    {
+                        _USERNAME = ds.getKey();
+                        _Email = ds.child("email").getValue(String.class);
+                        _Name = ds.child("name").getValue(String.class);
+                        _Password = ds.child("password").getValue(String.class);
+                        _Phone = ds.child("phone").getValue(String.class);
+                        _Answer = ds.child("security_answer").getValue(String.class);
+                        _Question = ds.child("security_question").getValue(String.class);
+
+                        //
+
+                        emailAddress.setText(_Email);
+                        name.setText(_Name);
+                        password.setText(_Password);
+                        phone.setText(_Phone);
+                        answer.setText(_Answer);
+                        question.setText(_Question);
+                    }
+
                 }
             }
 
@@ -71,12 +85,15 @@ public class ProfileActivity extends Activity {
         reference = FirebaseDatabase.getInstance().getReference("users");
         btn_update=findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
-            
             @Override
             public void onClick(View view) {
                 validationCheck();
                 if (isEmailChanged() || isNameChanged() || isPhoneChange() || isPasswordChanged() || isQuestionChanged() || isAnswerChanged()){
+//                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+//                    startActivity(intent);
+                    onBackPressed();
                     Toast.makeText(context, "Data has been changed", Toast.LENGTH_SHORT).show();
+
                 }else
                     Toast.makeText(context, "Data is same and can not be changed", Toast.LENGTH_SHORT).show();
             }
@@ -85,9 +102,9 @@ public class ProfileActivity extends Activity {
 
 
     private boolean isEmailChanged() {
-        if (!_Email.equals(emailAddress.getEditableText().toString())){
-            reference.child(_USERNAME).child("email").setValue(emailAddress.getEditableText().toString());
-            _Email = emailAddress.getEditableText().toString();
+        if (!_Email.equals(emailAddress.getText().toString())){
+            reference.child(_USERNAME).child("email").setValue(emailAddress.getText().toString());
+            _Email = emailAddress.getText().toString();
             return true;
 
         }else
@@ -96,9 +113,9 @@ public class ProfileActivity extends Activity {
     }
 
     private boolean isNameChanged() {
-        if (!_Name.equals(name.getEditableText().toString())){
-            reference.child(_USERNAME).child("name").setValue(name.getEditableText().toString());
-            _Name = name.getEditableText().toString();
+        if (!_Name.equals(name.getText().toString())){
+            reference.child(_USERNAME).child("name").setValue(name.getText().toString());
+            _Name = name.getText().toString();
             return true;
 
         }else
@@ -107,9 +124,9 @@ public class ProfileActivity extends Activity {
     }
 
     private boolean isPhoneChange() {
-        if (!_Phone.equals(phone.getEditableText().toString())) {
-            reference.child(_USERNAME).child("phone").setValue(phone.getEditableText().toString());
-            _Phone = phone.getEditableText().toString();
+        if (!_Phone.equals(phone.getText().toString())) {
+            reference.child(_USERNAME).child("phone").setValue(phone.getText().toString());
+            _Phone = phone.getText().toString();
             return true;
         }else
             return false;
@@ -117,26 +134,26 @@ public class ProfileActivity extends Activity {
     }
 
     private boolean isPasswordChanged() {
-        if (!_Password.equals(password.getEditableText().toString())) {
-            reference.child(_USERNAME).child("password").setValue(password.getEditableText().toString());
-            _Password = password.getEditableText().toString();
+        if (!_Password.equals(password.getText().toString())) {
+            reference.child(_USERNAME).child("password").setValue(password.getText().toString());
+            _Password = password.getText().toString();
             return true;
         }else
             return false;
 
     }
     private boolean isQuestionChanged() {
-        if (!_Question.equals(question.getEditableText().toString())) {
-            reference.child(_USERNAME).child("security_question").setValue(password.getEditableText().toString());
-            _Question = question.getEditableText().toString();
+        if (!_Question.equals(question.getText().toString())) {
+            reference.child(_USERNAME).child("security_question").setValue(password.getText().toString());
+            _Question = question.getText().toString();
             return true;
         }else
             return false;
     }
     private boolean isAnswerChanged() {
-        if (!_Answer.equals(answer.getEditableText().toString())) {
-            reference.child(_USERNAME).child("security_answer").setValue(password.getEditableText().toString());
-            _Answer = answer.getEditableText().toString();
+        if (!_Answer.equals(answer.getText().toString())) {
+            reference.child(_USERNAME).child("security_answer").setValue(password.getText().toString());
+            _Answer = answer.getText().toString();
             return true;
         }else
             return false;

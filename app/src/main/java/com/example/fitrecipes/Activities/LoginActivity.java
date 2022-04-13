@@ -33,16 +33,27 @@ public class LoginActivity extends AppCompatActivity {
     Button btnlogin;
     ValidationChecks validationChecks = new ValidationChecks();
 
+    public static String UUID = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         myauth = FirebaseAuth.getInstance();
-        userId = myauth.getCurrentUser().getUid();
+        init();
+        setListeners();
+
+
+    }
+
+    private void init(){
         login_email = findViewById(R.id.login_email);
         login_password = findViewById(R.id.login_password);
         tv_forgotPass = findViewById(R.id.tv_frogot_password);
         btnlogin = findViewById(R.id.btn_login);
+
+    }
+    private void setListeners(){
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,8 +77,12 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                             try {
-                                //Change Pending set Home Activity to SendOTPActvity
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                String id = task.getResult().getUser().getUid();
+                                UUID = task.getResult().getUser().getUid();
+//
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid",id));
+                                finish();
+//
                             }catch (Exception e){}
 
                         } else {
@@ -79,23 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
 
-        });
-        login_email.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                login_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.edit_text_with_stroke));
-                login_password.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.edit_text_without_stroke));
-                return false;
-            }
-        });
-        login_password.setOnTouchListener(new View.OnTouchListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                login_email.setBackground(getDrawable(R.drawable.edit_text_without_stroke));
-                login_password.setBackground(getDrawable(R.drawable.edit_text_with_stroke));
-                return false;
-            }
         });
         TextView tv_signUp = findViewById(R.id.tv_signUp);
         tv_signUp.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +116,28 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btn_login_guest_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-     //           loginUser(LoginActivity.this, "", "", "");
+                //           loginUser(LoginActivity.this, "", "", "");
             }
         });
+        login_email.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                login_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.edit_text_with_stroke));
+                login_password.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.edit_text_without_stroke));
+                return false;
+            }
+        });
+        login_password.setOnTouchListener(new View.OnTouchListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                login_email.setBackground(getDrawable(R.drawable.edit_text_without_stroke));
+                login_password.setBackground(getDrawable(R.drawable.edit_text_with_stroke));
+                return false;
+            }
+        });
+
+
 
 
     }

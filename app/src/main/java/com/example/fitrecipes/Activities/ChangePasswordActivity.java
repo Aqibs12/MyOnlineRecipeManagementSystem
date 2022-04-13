@@ -29,50 +29,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
     FirebaseUser user;
     private String newPass;
     private String confirmPass;
-/** Working Pending 8-4-22*/
+/** Working Pending 11-4-22*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         initViews();
+        setListeners();
         userId = fAuth.getCurrentUser().getUid();
         user  = fAuth.getCurrentUser();
-        btn_savePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateData();
-            }
-        });
-  /*      ed_changepass.setOnTouchListener(new View.OnTouchListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ed_change_Cpass.setBackground(getDrawable(R.drawable.edit_text_without_strock));
-                ed_changepass.setBackground(getDrawable(R.drawable.edit_text_with_stroke));
-
-                return false;
-            }
-        });
-        ed_change_Cpass.setOnTouchListener(new View.OnTouchListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ed_change_Cpass.setBackground(getDrawable(R.drawable.edit_text_with_stroke));
-                ed_changepass.setBackground(getDrawable(R.drawable.edit_text_without_strock));
-                return false;
-            }
-        });*/
-    /*    btn_savePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!ed_change_Cpass.getText().toString().equals("")){
-                    if (ed_change_Cpass.getText().toString().equals(ed_change_Cpass.getText().toString())){
-                    }
-                }
-            }
-        });*/
     }
-
     private void validateData() {
         newPass = ed_changepass.getText().toString();
         confirmPass = ed_change_Cpass.getText().toString();
@@ -82,9 +48,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }else {
             renewPass();
         }
-
     }
-
     private void renewPass() {
         String newPassword = ed_change_Cpass.getText().toString();
         user.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -101,12 +65,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
     }
-
     public void initViews()
     {
         ed_changepass = findViewById(R.id.change_password);
         ed_change_Cpass = findViewById(R.id.change_cpassword);
         btn_savePassword = findViewById(R.id.btn_savePassword);
     }
-
+    private void setListeners(){
+        btn_savePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateData();
+            }
+        });
+    }
 }
