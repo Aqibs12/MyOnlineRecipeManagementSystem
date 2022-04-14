@@ -61,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private static final String USERS = "users";
     private String uuid = "";
+    private String USERID = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
 
         context = this;
         uuid = LoginActivity.UUID;
+        USERID= getIntent().getExtras().getString("uuid");
         TextView name1 = findViewById(R.id.name);
         et_search = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
@@ -118,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, AddRecipeActivity.class));
+                startActivity(new Intent(context, AddRecipeActivity.class).putExtra("uuid",USERID));
             }
         });
         findViewById(R.id.iv_menu).setOnClickListener(new View.OnClickListener() {

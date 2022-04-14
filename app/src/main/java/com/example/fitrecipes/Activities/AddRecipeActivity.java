@@ -53,6 +53,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     public static String UUID = "";
     private String myauth;
     String currentUserId;
+    private String currentUserID="";
+    private String currentUserID2="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
 //        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        currentUserID2= getIntent().getExtras().getString("uuid");
         init();
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,11 +157,20 @@ public class AddRecipeActivity extends AppCompatActivity {
                             String Recipe_Instructions = instructions.getText().toString().trim();
                             String Recipe_Ingredients  = ingredient.getText().toString().trim();
                             String Recipe_No_Serving_People = serving.getText().toString().trim();
+                            //custom lines added
+                            FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            if(mFirebaseUser != null) {
+                                currentUserID = mFirebaseUser.getUid(); //Do what you need to do with the id
+                            }
+                            //
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            RecipeModel imageUploadInfo = new RecipeModel(FirebaseAuth.getInstance().getCurrentUser().getUid(),TempImageName,RecipeTime,
+                            RecipeModel imageUploadInfo = new RecipeModel(currentUserID2,TempImageName,RecipeTime,
                                     Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
                                     taskSnapshot.getUploadSessionUri().toString());
+                            /*RecipeModel imageUploadInfo = new RecipeModel(FirebaseAuth.getInstance().getCurrentUser().getUid(),TempImageName,RecipeTime,
+                                    Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
+                                    taskSnapshot.getUploadSessionUri().toString());*/
                             String ImageUploadId = databaseReference.push().getKey();
                             databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
