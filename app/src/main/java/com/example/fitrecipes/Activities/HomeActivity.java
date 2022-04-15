@@ -4,6 +4,8 @@ package com.example.fitrecipes.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -22,8 +24,11 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -34,32 +39,36 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
     private RecipeModel recipeModel;
-    int totalsize;
     private SliderLayout sliderLayout;
     private RecyclerView recyclerView;
     ArrayList<RecipeModel> recipeModelArrayList;
     ArrayList<RecipeModel> sliderRecipeList;
     SlidingRootNav slidingRootNav;
     TextView name,phone,emailAddress,tv_changePass;
-    ImageView iv_pic;
+    ImageView iv_pic,iv_edPic;
     public Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+    private StorageTask uploadTask;
     Context context;
     private EditText et_search;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private static final String USERS = "users";
+    private String myUri = "";
     private String uuid = "";
     private String USERID = "";
     @Override
@@ -93,6 +102,14 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         setListeners();
         init();
+        StorageReference riversRef = storageReference.child("M1.jpg");
+        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(imageUri).into(iv_pic);
+
+            }
+        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -142,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(context, ProfileActivity.class));
             }
         });
-        findViewById(R.id.iv_profilePic).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choosePicture();
@@ -157,6 +174,7 @@ public class HomeActivity extends AppCompatActivity {
         phone = findViewById(R.id.tv_phone);
         iv_pic = findViewById(R.id.iv_profilePic);
         storage = FirebaseStorage.getInstance();
+        iv_edPic = findViewById(R.id.iv_edit);
         storageReference = storage.getReference();
 
     }
@@ -180,30 +198,40 @@ public class HomeActivity extends AppCompatActivity {
        pd.setTitle("Uploading Image.....");
        pd.show();
        final String randomKey = UUID.randomUUID().toString();
-       StorageReference riversRef = storageReference.child("images/" + randomKey);
-       riversRef.putFile(imageUri)
-               .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                   @Override
-                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                       pd.dismiss();
-                       Snackbar.make(findViewById(android.R.id.content), "Image Upladed.",Snackbar.LENGTH_LONG).show();
-                   }
-               })
-               .addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       pd.dismiss();
-                       Toast.makeText(context, "Failed To Upload", Toast.LENGTH_SHORT).show();
-                   }
-               })
-               .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                   @Override
-                   public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                   double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                   pd.setMessage(" Progress:" + (int)progressPercent + "%");
+      StorageReference riversRef = storageReference.child("images/" + randomKey);
 
-                   }
-               });
+       try {
+
+           riversRef.putFile(imageUri)
+                   .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                           pd.dismiss();
+                           Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
+                           Picasso.get().load(imageUri).into(iv_pic);
+
+                          /* Bitmap bitmap  = BitmapFactory.decodeFile(imageUri.getPath());
+                           ((ImageView)findViewById(R.id.iv_profilePic)).setImageBitmap(bitmap);*/
+                       }
+                   })
+                   .addOnFailureListener(new OnFailureListener() {
+                       @Override
+                       public void onFailure(@NonNull Exception e) {
+                           pd.dismiss();
+                           Toast.makeText(context, "Failed To Upload", Toast.LENGTH_SHORT).show();
+                       }
+                   })
+                   .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                           double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                           pd.setMessage(" Progress:" + (int) progressPercent + "%");
+
+                       }
+                   });
+       }catch (Exception e){
+
+       }
     }
 
     private void signOutUser() {

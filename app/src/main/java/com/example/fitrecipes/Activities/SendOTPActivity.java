@@ -71,7 +71,7 @@ public class SendOTPActivity extends AppCompatActivity {
                         btnGetOtp.setVisibility(View.VISIBLE);
                         Intent intent = new Intent(getApplicationContext(), VerifyOTPActivity.class);
                         intent.putExtra("mobile", etInput.getText().toString());
-                        intent.putExtra("verificationId", verificationId);
+                        intent.putExtra("AEHHMTBpTNeXA4yIuXzUJRZAlC62", verificationId);
                         startActivity(intent);
                     }
                 });

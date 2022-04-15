@@ -25,8 +25,18 @@
             android:src="@drawable/ic_baseline_close_24"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="180dp"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="270dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_baseline_edit_24" />
+
         <TextView
-            android:visibility="invisible"
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +46,8 @@
             android:fontFamily="@font/poppins_bolditalic"
             android:text="FITRECIPE"
             android:textColor="@color/white"
-            android:textSize="27sp" />
+            android:textSize="27sp"
+            android:visibility="invisible" />
 
 
         <TextView
@@ -46,35 +57,35 @@
             android:layout_below="@id/profile"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:visibility="visible"
             android:fontFamily="@font/poppins_semibold"
             android:text="John Doe"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_name"
-            android:visibility="visible"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/poppins_light"
             android:text="johndoe@gmail.com"
             android:textColor="@color/white"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_email"
-            android:visibility="visible"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/poppins_bold"
             android:text="Phone# +1 27565162"
             android:textColor="@color/white"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:visibility="visible" />
 
 
         <Button
@@ -130,10 +141,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_bold"
                 android:textColor="@color/red"
                 android:textSize="60sp" />
+
+
+
+
+
         </RelativeLayout>
+
 
 
     </RelativeLayout>
