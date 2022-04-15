@@ -9,11 +9,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,9 +57,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     private Uri filePathUri;
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
-    RecyclerView recyclerIngreditent,recyclerImages;
+    RecyclerView recyclerIngreditent,recyclerImages,rvRecipe;
     StorageReference storageReference;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference2;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog ;
     public static String UUID = "";
@@ -70,8 +76,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         context = this;
+        rvRecipe=findViewById(R.id.recyclerImages);
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
+        // add child path
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("Images");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2= getIntent().getExtras().getString("uuid");
         init();
@@ -101,6 +110,26 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
     fetchUserData();
+
+    //fetching data from firebase
+        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
+        FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapter = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull AddRecipeViewHolder holder, int position, @NonNull RecipeModel model) {
+                holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
+                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+            }
+
+            @NonNull
+            @Override
+            public AddRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipesrvlayout, parent, false);
+                return new AddRecipeViewHolder(view);
+            }
+        };
+        rvRecipe.setAdapter(adapter);
+        adapter.startListening();
+        //fetching ended
     }
 
     private void fetchUserData() {
@@ -210,6 +239,18 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         }
     }
+// view holder class
+public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
 
+    TextView tvRecipeTime,tvRecipeDescription;
+
+    public AddRecipeViewHolder(@NonNull View itemView) {
+        super(itemView);
+        tvRecipeTime = itemView.findViewById(R.id.tvRecipeTime);
+        tvRecipeDescription = itemView.findViewById(R.id.tvRecipeDescription);
+
+    }
+}
+    // view holder class end
 
     }
