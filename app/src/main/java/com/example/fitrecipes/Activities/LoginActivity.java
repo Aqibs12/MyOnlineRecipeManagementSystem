@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseUser user;
     private String userId;
     Button btnlogin;
+    ProgressBar progressBar;
     ValidationChecks validationChecks = new ValidationChecks();
 
     public static String UUID = "";
@@ -51,12 +53,15 @@ public class LoginActivity extends AppCompatActivity {
         login_password = findViewById(R.id.login_password);
         tv_forgotPass = findViewById(R.id.tv_frogot_password);
         btnlogin = findViewById(R.id.btn_login);
+        progressBar = findViewById(R.id.progressB);
 
     }
     private void setListeners(){
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                btnlogin.setVisibility(View.INVISIBLE);
                 String emailAddress = login_email.getText().toString().trim();
                 String password = login_password.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
@@ -74,6 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                 myauth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
+                        btnlogin.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                             try {

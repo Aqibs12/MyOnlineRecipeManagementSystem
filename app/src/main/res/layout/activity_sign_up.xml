@@ -129,7 +129,7 @@
                     android:drawableStart="@drawable/ic_baseline_phone_24"
                     android:drawablePadding="@dimen/_16sdp"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/hint_enter_phone_number"
+                    android:hint="e.g 3082449971"
                     android:inputType="phone"
                     android:paddingStart="30dp"
                     android:paddingEnd="15dp"

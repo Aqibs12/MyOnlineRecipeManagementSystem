@@ -94,7 +94,7 @@ public class SendOTPActivity extends AppCompatActivity {
                         btnGetOtp.setVisibility(View.VISIBLE);
                         Intent intent = new Intent(getApplicationContext(), VerifyOTPActivity.class);
                         intent.putExtra("mobile", etInput.getText().toString());
-                        intent.putExtra("verificationID", verificationId);
+                        intent.putExtra("UhAGMwRjClQQHh6anTtdC1Dyuts2", verificationId);
                         startActivity(intent);
                     }
                 });
@@ -108,7 +108,7 @@ public class SendOTPActivity extends AppCompatActivity {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if(uuid.equals(ds.getKey()))
                     {
-                        etInput.setText(ds.child("password").getValue(String.class));
+                        etInput.setText(ds.child("phone").getValue(String.class));
                     }
                 }
             }

@@ -28,8 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+/*import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;*/
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -111,7 +111,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     fetchUserData();
 
-    //fetching data from firebase
+    /*//fetching data from firebase
         FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
         FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapter = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
             @Override
@@ -130,7 +130,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         rvRecipe.setAdapter(adapter);
         adapter.startListening();
         //fetching ended
-    }
+ */   }
 
     private void fetchUserData() {
        listener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -240,7 +240,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 // view holder class
-public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
+/*public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
 
     TextView tvRecipeTime,tvRecipeDescription;
 
@@ -249,8 +249,8 @@ public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
         tvRecipeTime = itemView.findViewById(R.id.tvRecipeTime);
         tvRecipeDescription = itemView.findViewById(R.id.tvRecipeDescription);
 
-    }
+    }*/
 }
     // view holder class end
 
-    }
+
