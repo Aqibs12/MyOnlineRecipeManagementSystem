@@ -123,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName,emailAddress,password,phoneNumber,signUpQ,signUpA);
+                            UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName,emailAddress,phoneNumber,password,signUpQ,signUpA);
                             FirebaseDatabase.getInstance().getReference("users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {

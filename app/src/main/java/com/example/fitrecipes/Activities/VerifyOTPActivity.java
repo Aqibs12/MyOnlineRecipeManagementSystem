@@ -39,7 +39,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         setUpOtpInputs();
         setListeners();
         textMobile.setText(String.format("+92-%s",getIntent().getStringExtra("mobile")));
-        verificationId = getIntent().getStringExtra("AEHHMTBpTNeXA4yIuXzUJRZAlC62");
+        verificationId = getIntent().getStringExtra("verificationID");
     }
 
     private void init(){
