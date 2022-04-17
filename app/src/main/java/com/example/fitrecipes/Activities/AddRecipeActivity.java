@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
@@ -52,6 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class AddRecipeActivity extends AppCompatActivity {
+RecipeAdapter recipeAdapter;
     Context context;
     Spinner spin;
     CircleImageView profile_image;
@@ -78,11 +80,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
         context = this;
         rvRecipe = findViewById(R.id.recyclerImages2);
-        rvRecipe.setLayoutManager(new LinearLayoutManager(this));
+
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         // add child path
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("recipes");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("recipes");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
@@ -91,6 +93,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         list = new ArrayList<String>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spin.setAdapter(adapter);
+        //rv added
+        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
+        recipeAdapter=new RecipeAdapter(options);
+        rvRecipe.setAdapter(recipeAdapter);
+        //rv end
+        rvRecipe.setLayoutManager(new LinearLayoutManager(this));
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,27 +128,13 @@ public class AddRecipeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //fetching data from firebase
-        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
-        FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapterr = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull AddRecipeViewHolder holder, int position, @NonNull RecipeModel model) {
-                holder.tvRecipeTime.setText("Recipe Time: " + "model.getRecipeT()");
-                //      holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
-//                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
-                holder.tvRecipeDescription.setText("Recipe Description: " + "model.getRecipeD()");
-            }
+recipeAdapter.startListening();
+    }
 
-            @NonNull
-            @Override
-            public AddRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipesrvlayout, parent, false);
-                return new AddRecipeViewHolder(view);
-            }
-        };
-        rvRecipe.setAdapter(adapterr);
-        adapterr.startListening();
-        //fetching ended
+    @Override
+    protected void onStop() {
+        super.onStop();
+        recipeAdapter.stopListening();
     }
 
     private void fetchUserData() {
@@ -251,19 +245,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     }
 
-    // view holder class
-    public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvRecipeTime, tvRecipeDescription;
-
-        public AddRecipeViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvRecipeTime = itemView.findViewById(R.id.tvRecipeTime);
-            tvRecipeDescription = itemView.findViewById(R.id.tvRecipeDescription);
-
-        }
-    }
 }
-    // view holder class end
 
 

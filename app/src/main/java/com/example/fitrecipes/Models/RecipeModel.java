@@ -5,22 +5,25 @@ public class RecipeModel {
     String name;
     String recipeT;
     String recipeD;
-    String RecipeI;
-    String RecipeIng;
-    String Recipe_people;
-    String Recipe_image;
+    String recipeI;
+    String recipeIng;
+    String recipe_people;
+    String recipe_image;
+RecipeModel(){
 
-
+}
     public RecipeModel(String uid, String tempImageName, String recipeTime, String recipe_description, String recipe_instructions, String recipe_ingredients, String recipe_no_serving_people, String url) {
-    this.id = uid;
-    this.name = tempImageName;
-    this.recipeT = recipeTime;
-    this.recipeD = recipe_description;
-    this.RecipeI = recipe_instructions;
-    this.RecipeIng = recipe_ingredients;
-    this.Recipe_people = recipe_no_serving_people;
-    this.Recipe_image = url;
+        this.id = uid;
+        this.name = tempImageName;
+        this.recipeT = recipeTime;
+        this.recipeD = recipe_description;
+        this.recipeI = recipe_instructions;
+        this.recipeIng = recipe_ingredients;
+        this.recipe_people = recipe_no_serving_people;
+        this.recipe_image = url;
     }
+
+
     UserModel user;
 
     public UserModel getUser() {
@@ -64,34 +67,34 @@ public class RecipeModel {
     }
 
     public String getRecipeI() {
-        return RecipeI;
+        return recipeI;
     }
 
     public void setRecipeI(String recipeI) {
-        RecipeI = recipeI;
+        this.recipeI = recipeI;
     }
 
     public String getRecipeIng() {
-        return RecipeIng;
+        return recipeIng;
     }
 
     public void setRecipeIng(String recipeIng) {
-        RecipeIng = recipeIng;
+        this.recipeIng = recipeIng;
     }
 
     public String getRecipe_people() {
-        return Recipe_people;
+        return recipe_people;
     }
 
     public void setRecipe_people(String recipe_people) {
-        Recipe_people = recipe_people;
+        this.recipe_people = recipe_people;
     }
 
     public String getRecipe_image() {
-        return Recipe_image;
+        return recipe_image;
     }
 
     public void setRecipe_image(String recipe_image) {
-        Recipe_image = recipe_image;
+        this.recipe_image = recipe_image;
     }
 }

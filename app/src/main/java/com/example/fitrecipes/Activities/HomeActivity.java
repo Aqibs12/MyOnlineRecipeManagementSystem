@@ -22,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
+import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -58,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     SlidingRootNav slidingRootNav;
     TextView name,phone,emailAddress,tv_changePass;
     ImageView iv_pic,iv_edPic;
+    RecipeAdapter recipeAdapter;
     public Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -66,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
     private EditText et_search;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference3;
     private static final String USERS = "users";
     private String myUri = "";
     private String uuid = "";
@@ -75,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
@@ -94,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recipeModelArrayList = new ArrayList();
         sliderRecipeList = new ArrayList();
+
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
@@ -102,6 +107,12 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         setListeners();
         init();
+        //things added
+        FirebaseRecyclerOptions<RecipeModel> options2 = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference3, RecipeModel.class).build();
+        recipeAdapter=new RecipeAdapter(options2);
+        recyclerView.setAdapter(recipeAdapter);
+        //things added stop
+
         StorageReference riversRef = storageReference.child("M1.jpg");
         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -249,10 +260,12 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void onStart() {
         super.onStart();
+        recipeAdapter.startListening();
     }
     public void onStop(){
         super.onStop();
         FirebaseAuth.getInstance().signOut();
+        recipeAdapter.stopListening();
 
         }
 
