@@ -16,6 +16,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +27,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.RecipeModelAdapter;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
 
@@ -62,8 +65,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
     RecyclerView recyclerIngreditent, recyclerImages, rvRecipe;
+    RecyclerView.LayoutManager layoutManager;
     StorageReference storageReference;
-    DatabaseReference databaseReference, databaseReference2;
+    DatabaseReference databaseReference, databaseReference2, databaseReference4;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog;
     public static String UUID = "";
@@ -73,34 +77,59 @@ public class AddRecipeActivity extends AppCompatActivity {
     private String currentUserID2 = "";
     ValueEventListener listener;
     ArrayList<String> list;
+    RecipeModelAdapter recipeModelAdapter;
+    ArrayList<RecipeModel> recipeModelArrayList;
     ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         context = this;
-        rvRecipe = findViewById(R.id.recyclerImages2);
+
 
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         // add child path
-        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("spinner").child("recipes");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("recipes");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
         init();
+        rvRecipe = findViewById(R.id.recyclerImages2);
+        rvRecipe.setHasFixedSize(true);
+        rvRecipe.setLayoutManager(new LinearLayoutManager(this));
+
+        recipeModelArrayList = new ArrayList<>();
+        recipeModelAdapter = new RecipeModelAdapter(this, recipeModelArrayList);
+        rvRecipe.setAdapter(recipeModelAdapter);
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
+                    recipeModelArrayList.add(recipeModel);
+
+                }
+                recipeModelAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
+        databaseReference4 = FirebaseDatabase.getInstance().getReference();
         list = new ArrayList<String>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spin.setAdapter(adapter);
         //rv added
-        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
-       // databaseReference2.push().setValue(String.class);
 
-        recipeAdapter=new RecipeAdapter(options);
-        rvRecipe.setAdapter(recipeAdapter);
+        // databaseReference2.push().setValue(String.class);
+
         //rv end
-        rvRecipe.setLayoutManager(new LinearLayoutManager(this));
+
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,17 +156,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-recipeAdapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        recipeAdapter.stopListening();
-    }
 
     private void fetchUserData() {
         listener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -234,9 +252,9 @@ recipeAdapter.startListening();
                             /*RecipeModel imageUploadInfo = new RecipeModel(FirebaseAuth.getInstance().getCurrentUser().getUid(),TempImageName,RecipeTime,
                                     Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
                                     taskSnapshot.getUploadSessionUri().toString());*/
-                            String ImageUploadId = databaseReference.push().getKey();
+                            String ImageUploadId = databaseReference4.push().getKey();
                             //little changes in line 233
-                            databaseReference.child("recipes").setValue(imageUploadInfo);
+                            databaseReference4.child("recipes").setValue(imageUploadInfo);
 //                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });
@@ -247,7 +265,23 @@ recipeAdapter.startListening();
         }
     }
 
+    public static class RecipesViewHolder extends RecyclerView.ViewHolder {
+        TextView tvRecipeTime, tvRecipeDescription, tvRecipeName, tvRecipeIngredients, tvRecipeInstructions, tvRecipeSrvPeople;
+        ImageView iv_RecipePic;
+
+        public RecipesViewHolder(@NonNull View itemView) {
+            super(itemView);
+            iv_RecipePic = itemView.findViewById(R.id.img1);
+            tvRecipeName = itemView.findViewById(R.id.tv_Recipe_name);
+            tvRecipeTime = itemView.findViewById(R.id.tv_cook_time);
+            tvRecipeDescription = itemView.findViewById(R.id.tv_Recipe_Description);
+            tvRecipeIngredients = itemView.findViewById(R.id.tv_Recipe_Ingredients);
+            tvRecipeSrvPeople = itemView.findViewById(R.id.tv_People);
+            tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);
+        }
+
+
+    }
+
 
 }
-
-

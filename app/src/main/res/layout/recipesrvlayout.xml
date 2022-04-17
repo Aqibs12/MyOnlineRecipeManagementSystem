@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,26 +16,26 @@
             android:src="@mipmap/ic_launcher" />
 
         <TextView
+            android:id="@+id/tv_Recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_Recipe_name"
-            android:text="Recipe Name"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:textColor="#000"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/img1"
-            android:layout_marginLeft="10dp"/>
+            android:text="Recipe Name"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tv_cook_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_cook_time"
-            android:text="Recipe Cook Time"
-            android:textSize="25sp"
-            android:textColor="#000"
-            android:layout_toRightOf="@id/img1"
             android:layout_below="@id/tv_Recipe_name"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="Recipe Cook Time"
+            android:textColor="#000"
+            android:textSize="25sp" />
 
 
         <TextView
@@ -50,37 +50,37 @@
             android:textSize="25sp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_Recipe_Ingredients"
-            android:text="Recipe Ingredients"
-            android:textSize="25sp"
-            android:textColor="#000"
-            android:layout_toRightOf="@id/img1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tv_People"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="Recipe Ingredients"
+            android:textColor="#000"
+            android:textSize="25sp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_Recipe_Description"
-            android:text="Recipe Description"
-            android:textSize="25sp"
-            android:textColor="#000"
-            android:layout_toRightOf="@id/img1"
-            android:layout_below="@id/tv_Recipe_Ingredients"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_Recipe_Instructions"
-            android:text="Recipe Description"
-            android:textSize="25sp"
-            android:textColor="#000"
+            android:layout_below="@id/tv_Recipe_Ingredients"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/img1"
+            android:text="Recipe Description"
+            android:textColor="#000"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tv_Recipe_Instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/tv_Recipe_Description"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="Recipe Description"
+            android:textColor="#000"
+            android:textSize="25sp" />
 
 
     </RelativeLayout>
