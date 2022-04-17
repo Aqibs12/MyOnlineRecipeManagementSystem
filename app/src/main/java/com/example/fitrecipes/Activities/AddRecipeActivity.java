@@ -28,8 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
-/*import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;*/
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,16 +58,16 @@ public class AddRecipeActivity extends AppCompatActivity {
     private Uri filePathUri;
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
-    RecyclerView recyclerIngreditent,recyclerImages,rvRecipe;
+    RecyclerView recyclerIngreditent, recyclerImages, rvRecipe;
     StorageReference storageReference;
-    DatabaseReference databaseReference,databaseReference2;
+    DatabaseReference databaseReference, databaseReference2;
     int Image_Request_Code = 1;
-    ProgressDialog progressDialog ;
+    ProgressDialog progressDialog;
     public static String UUID = "";
     private String myauth;
     String currentUserId;
-    private String currentUserID="";
-    private String currentUserID2="";
+    private String currentUserID = "";
+    private String currentUserID2 = "";
     ValueEventListener listener;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
@@ -76,17 +77,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         context = this;
-        rvRecipe=findViewById(R.id.recyclerImages);
+        rvRecipe = findViewById(R.id.recyclerImages);
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         // add child path
-        databaseReference2 = FirebaseDatabase.getInstance().getReference("Images");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference(filePathUri.toString());
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
-        currentUserID2= getIntent().getExtras().getString("uuid");
+        currentUserID2 = getIntent().getExtras().getString("uuid");
+        UUID = getIntent().getExtras().getString("uuid");
         init();
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
-        list=new ArrayList<String>();
-        adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        list = new ArrayList<String>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spin.setAdapter(adapter);
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +111,9 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
-    fetchUserData();
+        fetchUserData();
 
-    /*//fetching data from firebase
+        //fetching data from firebase
         FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
         FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapter = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
             @Override
@@ -127,28 +129,28 @@ public class AddRecipeActivity extends AppCompatActivity {
                 return new AddRecipeViewHolder(view);
             }
         };
-        rvRecipe.setAdapter(adapter);
-        adapter.startListening();
+//        rvRecipe.setAdapter(adapter);
+//        adapter.startListening();
         //fetching ended
- */   }
-
-    private void fetchUserData() {
-       listener = databaseReference.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot snapshot) {
-               for(DataSnapshot mydata : snapshot.getChildren())
-                   list.add(mydata.getValue().toString());
-               adapter.notifyDataSetChanged();
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-
-           }
-       });
     }
 
-    private void init(){
+    private void fetchUserData() {
+        listener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot mydata : snapshot.getChildren())
+                    list.add(mydata.getValue().toString());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void init() {
         btn = findViewById(R.id.btn);
         addIng = findViewById(R.id.adding);
         spin = findViewById(R.id.spin);
@@ -178,8 +180,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathUri);
                 profile_image.setImageBitmap(bitmap);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
 
                 e.printStackTrace();
             }
@@ -191,7 +192,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
     }
 
@@ -212,18 +213,18 @@ public class AddRecipeActivity extends AppCompatActivity {
                             String RecipeTime = time.getText().toString().trim();
                             String Recipe_Description = desc.getText().toString().trim();
                             String Recipe_Instructions = instructions.getText().toString().trim();
-                            String Recipe_Ingredients  = ingredient.getText().toString().trim();
+                            String Recipe_Ingredients = ingredient.getText().toString().trim();
                             String Recipe_No_Serving_People = serving.getText().toString().trim();
                             //custom lines added
                             FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                            if(mFirebaseUser != null) {
+                            if (mFirebaseUser != null) {
                                 currentUserID = mFirebaseUser.getUid(); //Do what you need to do with the id
                             }
                             //
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Recipe Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                            RecipeModel imageUploadInfo = new RecipeModel(currentUserID2,TempImageName,RecipeTime,
-                                    Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
+                            RecipeModel imageUploadInfo = new RecipeModel(UUID, TempImageName, RecipeTime,
+                                    Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                     taskSnapshot.getUploadSessionUri().toString());
                             /*RecipeModel imageUploadInfo = new RecipeModel(FirebaseAuth.getInstance().getCurrentUser().getUid(),TempImageName,RecipeTime,
                                     Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
@@ -232,24 +233,25 @@ public class AddRecipeActivity extends AppCompatActivity {
                             databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });
-        }
-        else {
+        } else {
 
             Toast.makeText(AddRecipeActivity.this, "Please Select Recipe Image or Add Recipe Name", Toast.LENGTH_LONG).show();
 
         }
     }
-// view holder class
-/*public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
 
-    TextView tvRecipeTime,tvRecipeDescription;
+    // view holder class
+    public static class AddRecipeViewHolder extends RecyclerView.ViewHolder {
 
-    public AddRecipeViewHolder(@NonNull View itemView) {
-        super(itemView);
-        tvRecipeTime = itemView.findViewById(R.id.tvRecipeTime);
-        tvRecipeDescription = itemView.findViewById(R.id.tvRecipeDescription);
+        TextView tvRecipeTime, tvRecipeDescription;
 
-    }*/
+        public AddRecipeViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvRecipeTime = itemView.findViewById(R.id.tvRecipeTime);
+            tvRecipeDescription = itemView.findViewById(R.id.tvRecipeDescription);
+
+        }
+    }
 }
     // view holder class end
 
