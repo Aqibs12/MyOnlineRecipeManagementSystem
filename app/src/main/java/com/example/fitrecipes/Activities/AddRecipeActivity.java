@@ -71,7 +71,6 @@ public class AddRecipeActivity extends AppCompatActivity {
     ValueEventListener listener;
     ArrayList<String> list;
     ArrayAdapter<String> adapter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,8 +128,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 return new AddRecipeViewHolder(view);
             }
         };
-//        rvRecipe.setAdapter(adapter);
-//        adapter.startListening();
+        rvRecipe.setAdapter(adapter);
+       adapter.startListening();
         //fetching ended
     }
 

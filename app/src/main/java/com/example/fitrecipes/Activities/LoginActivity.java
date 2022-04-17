@@ -25,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.UUID;
+
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
     TextView tv_forgotPass, tv_changePass;
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String id = task.getResult().getUser().getUid();
                                 UUID = task.getResult().getUser().getUid();
 //
-                                startActivity(new Intent(getApplicationContext(), SendOTPActivity.class).putExtra("uuid",id));
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid", UUID));
                                 finish();
 //
                             }catch (Exception e){}
