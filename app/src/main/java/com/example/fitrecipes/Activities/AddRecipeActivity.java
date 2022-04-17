@@ -84,7 +84,7 @@ RecipeAdapter recipeAdapter;
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         // add child path
-        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("recipes");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("spinner").child("recipes");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");

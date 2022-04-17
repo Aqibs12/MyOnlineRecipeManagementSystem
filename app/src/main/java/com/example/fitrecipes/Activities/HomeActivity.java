@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
+        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("spinner").child("recipes");
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
