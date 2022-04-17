@@ -53,7 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class AddRecipeActivity extends AppCompatActivity {
-RecipeAdapter recipeAdapter;
+    RecipeAdapter recipeAdapter;
     Context context;
     Spinner spin;
     CircleImageView profile_image;
@@ -95,6 +95,8 @@ RecipeAdapter recipeAdapter;
         spin.setAdapter(adapter);
         //rv added
         FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
+       // databaseReference2.push().setValue(String.class);
+
         recipeAdapter=new RecipeAdapter(options);
         rvRecipe.setAdapter(recipeAdapter);
         //rv end
