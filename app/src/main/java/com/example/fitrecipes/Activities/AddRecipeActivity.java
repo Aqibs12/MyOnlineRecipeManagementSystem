@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fitrecipes.Models.RecipeModel;
@@ -76,11 +77,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         context = this;
-        rvRecipe = findViewById(R.id.recyclerImages);
+        rvRecipe = findViewById(R.id.recyclerImages2);
+        rvRecipe.setLayoutManager(new LinearLayoutManager(this));
         storageReference = FirebaseStorage.getInstance().getReference("Images");
         databaseReference = FirebaseDatabase.getInstance().getReference("Images");
         // add child path
-        databaseReference2 = FirebaseDatabase.getInstance().getReference(filePathUri.toString());
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("recipes");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
@@ -112,13 +114,21 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         fetchUserData();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         //fetching data from firebase
         FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference2, RecipeModel.class).build();
-        FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapter = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
+        FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder> adapterr = new FirebaseRecyclerAdapter<RecipeModel, AddRecipeViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull AddRecipeViewHolder holder, int position, @NonNull RecipeModel model) {
-                holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
-                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+                holder.tvRecipeTime.setText("Recipe Time: " + "model.getRecipeT()");
+                //      holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
+//                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+                holder.tvRecipeDescription.setText("Recipe Description: " + "model.getRecipeD()");
             }
 
             @NonNull
@@ -128,8 +138,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 return new AddRecipeViewHolder(view);
             }
         };
-        rvRecipe.setAdapter(adapter);
-       adapter.startListening();
+        rvRecipe.setAdapter(adapterr);
+        adapterr.startListening();
         //fetching ended
     }
 
@@ -229,7 +239,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                                     Recipe_Description,Recipe_Instructions,Recipe_Ingredients,Recipe_No_Serving_People,
                                     taskSnapshot.getUploadSessionUri().toString());*/
                             String ImageUploadId = databaseReference.push().getKey();
-                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
+                            //little changes in line 233
+                            databaseReference.child("recipes").setValue(imageUploadInfo);
+//                            databaseReference.child(ImageUploadId).setValue(imageUploadInfo);
                         }
                     });
         } else {
