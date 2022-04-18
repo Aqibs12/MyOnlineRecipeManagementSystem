@@ -1,3 +1,4 @@
+// this adapter for made for recyclerview to fetch firebase data
 package com.example.fitrecipes.Models;
 
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.R;
 
@@ -35,6 +37,13 @@ ArrayList<RecipeModel> recipeModels;
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 RecipeModel recipelist=recipeModels.get(position);
 holder.tvRecipeTime.setText(recipelist.getRecipeT());
+holder.tvRecipeName.setText(recipelist.getName());
+       holder.tvRecipeDescription.setText("Recipe Description: " + recipelist.getRecipeD());
+
+                Glide.with(holder.iv_RecipePic.getContext()).load(recipelist.getRecipe_image()).into(holder.iv_RecipePic);
+                holder.tvRecipeInstructions.setText("Recipe Instructions" + recipelist.getRecipeI());
+                holder.tvRecipeSrvPeople.setText("Recipe Serving People"+ recipelist.getRecipe_people());
+                holder.tvRecipeIngredients.setText("Recipe Ingredients" + recipelist.getRecipeIng());
     }
 
     @Override

@@ -26,6 +26,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.RecipeModelAdapter;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -77,12 +78,14 @@ public class HomeActivity extends AppCompatActivity {
     private String myUri = "";
     private String uuid = "";
     private String USERID = "";
+    RecipeModelAdapter recipeModelAdapter;
+    ArrayList<RecipeModel> recipeModelArrayList2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
+        databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
@@ -101,9 +104,10 @@ public class HomeActivity extends AppCompatActivity {
         sliderLayout.setDuration(3333);
         recyclerView = findViewById(R.id.recyclerview);
         recipeModelArrayList = new ArrayList();
+        recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
 
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         mAuth = FirebaseAuth.getInstance();
@@ -112,9 +116,25 @@ public class HomeActivity extends AppCompatActivity {
         setListeners();
         init();
         //things added
-        /*FirebaseRecyclerOptions<RecipeModel> options2 = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(databaseReference3, RecipeModel.class).build();
-        recipeAdapter=new RecipeAdapter(options2);
-        recyclerView.setAdapter(recipeAdapter);*/
+        recipeModelArrayList2 = new ArrayList<>();
+        recipeModelAdapter = new RecipeModelAdapter(this, recipeModelArrayList2);
+        recyclerView.setAdapter(recipeModelAdapter);
+        databaseReference3.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
+                    recipeModelArrayList2.add(recipeModel);
+
+                }
+                recipeModelAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         //things added stop
 
         StorageReference riversRef = storageReference.child("M1.jpg");

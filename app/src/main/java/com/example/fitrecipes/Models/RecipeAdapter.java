@@ -1,3 +1,5 @@
+// this adapter was made for firebase_recyclerview not for recyclerview
+
 package com.example.fitrecipes.Models;
 
 import android.view.LayoutInflater;
@@ -30,12 +32,13 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAda
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull RecipeModel model) {
                 holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
-                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
-                holder.tvRecipeName.setText("Recipe Name" + model.getName());
+        holder.tvRecipeName.setText("Recipe Name" + model.getName());
+                /*holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+
                 Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);
                 holder.tvRecipeInstructions.setText("Recipe Instructions" + model.getRecipeI());
                 holder.tvRecipeSrvPeople.setText("Recipe Serving People"+ model.getRecipe_people());
-                holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());
+                holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());*/
 
 
     }
