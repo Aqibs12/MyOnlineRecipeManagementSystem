@@ -4,13 +4,9 @@ package com.example.fitrecipes.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,15 +22,9 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
-import com.example.fitrecipes.Models.RecipeModelAdapter;
 import com.example.fitrecipes.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +42,6 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
@@ -78,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
     private String myUri = "";
     private String uuid = "";
     private String USERID = "";
-    RecipeModelAdapter recipeModelAdapter;
     ArrayList<RecipeModel> recipeModelArrayList2;
 
     @Override
@@ -115,19 +103,13 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         setListeners();
         init();
-        //things added
-        recipeModelArrayList2 = new ArrayList<>();
-        recipeModelAdapter = new RecipeModelAdapter(this, recipeModelArrayList2);
-        recyclerView.setAdapter(recipeModelAdapter);
         databaseReference3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
                     recipeModelArrayList2.add(recipeModel);
-
                 }
-                recipeModelAdapter.notifyDataSetChanged();
             }
 
             @Override

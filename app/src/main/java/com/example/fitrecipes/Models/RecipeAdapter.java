@@ -16,6 +16,8 @@ import com.example.fitrecipes.Activities.AddRecipeActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.squareup.picasso.Picasso;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAdapter.MyViewHolder> {
@@ -32,13 +34,13 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAda
     @Override
     protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull RecipeModel model) {
                 holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
-        holder.tvRecipeName.setText("Recipe Name" + model.getName());
-                /*holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
-
-                Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);
+                holder.tvRecipeName.setText("Recipe Name" + model.getName());
+                holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+        Picasso.get().load(model.getRecipe_image()).into(holder.iv_RecipePic);
+                //Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);
                 holder.tvRecipeInstructions.setText("Recipe Instructions" + model.getRecipeI());
                 holder.tvRecipeSrvPeople.setText("Recipe Serving People"+ model.getRecipe_people());
-                holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());*/
+                holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());
 
 
     }
@@ -65,12 +67,4 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAda
         }
     }
 }
-/*
-     this.id = uid;
-             this.name = tempImageName;
-             this.recipeT = recipeTime;
-             this.recipeD = recipe_description;
-             this.recipeI = recipe_instructions;
-             this.recipeIng = recipe_ingredients;
-             this.recipe_people = recipe_no_serving_people;
-             this.recipe_image = url;*/
+
