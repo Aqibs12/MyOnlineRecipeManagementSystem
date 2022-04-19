@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,11 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,8 +43,10 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
@@ -68,12 +73,13 @@ public class HomeActivity extends AppCompatActivity {
     private String uuid = "";
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
+    MyRecyclerViewAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-        databaseReference3 = FirebaseDatabase.getInstance().getReference();
+//        databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
@@ -96,6 +102,30 @@ public class HomeActivity extends AppCompatActivity {
         sliderRecipeList = new ArrayList();
 
         recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
+
+        List<String> data = new ArrayList<>();
+
+        List<RecipeModel> mData = new ArrayList<>();
+        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
+
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
+                mData.add(post);
+                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w("loadPost:onCancelled", databaseError.toException());
+            }
+        };
+        databaseReference3.addValueEventListener(postListener);
+
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         mAuth = FirebaseAuth.getInstance();
@@ -103,12 +133,12 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         setListeners();
         init();
-        databaseReference3.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
-                    recipeModelArrayList2.add(recipeModel);
+//                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
+//                    recipeModelArrayList2.add(recipeModel);
                 }
             }
 
@@ -135,6 +165,8 @@ public class HomeActivity extends AppCompatActivity {
                         emailAddress.setText(ds.child("email").getValue(String.class));
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
+                        Glide.with(iv_pic).load("https://firebasestorage.googleapis.com/v0/b/fitrecipes-db5ec.appspot.com/o/1650384443655.jpg?alt=media&token=8c2f844f-0b5c-49ed-88de-8b2d1b1e47a9").into(iv_pic);
+
                     }
                 }
             }
@@ -230,10 +262,7 @@ public class HomeActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             pd.dismiss();
                             Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
-                            Picasso.get().load(imageUri).into(iv_pic);
-
-                          /* Bitmap bitmap  = BitmapFactory.decodeFile(imageUri.getPath());
-                           ((ImageView)findViewById(R.id.iv_profilePic)).setImageBitmap(bitmap);*/
+                            Glide.with(iv_pic).load("https://firebasestorage.googleapis.com/v0/b/fitrecipes-db5ec.appspot.com/o/1650384443655.jpg?alt=media&token=8c2f844f-0b5c-49ed-88de-8b2d1b1e47a9").into(iv_pic);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
