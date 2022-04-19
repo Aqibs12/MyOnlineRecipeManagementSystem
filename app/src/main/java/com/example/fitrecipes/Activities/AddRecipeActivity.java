@@ -92,7 +92,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         rvRecipe.setLayoutManager(new LinearLayoutManager(this));
         FirebaseRecyclerOptions<RecipeModel> options =
                 new FirebaseRecyclerOptions.Builder<RecipeModel>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("recipes"), RecipeModel.class)
+                        .setQuery(FirebaseDatabase.getInstance().getReference("recipes"), RecipeModel.class)
                         .build();
         recipeAdapter = new RecipeAdapter(options);
         rvRecipe.setAdapter(recipeAdapter);
