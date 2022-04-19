@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private EditText et_search;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference, databaseReference3;
+    private DatabaseReference databaseReference, databaseReference3,databaseReference5;
     private static final String USERS = "users";
     private String myUri = "";
     private String uuid = "";
@@ -106,7 +106,12 @@ public class HomeActivity extends AppCompatActivity {
         List<String> data = new ArrayList<>();
 
         List<RecipeModel> mData = new ArrayList<>();
+//        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
+//        DatabaseReference   userId = databaseReference3.child(USERID);
+//
+//        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
+//        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -116,13 +121,16 @@ public class HomeActivity extends AppCompatActivity {
                 mData.add(post);
                 adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
                 recyclerView.setAdapter(adapter);
+
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Getting Post failed, log a message
                 Log.w("loadPost:onCancelled", databaseError.toException());
             }
+
         };
         databaseReference3.addValueEventListener(postListener);
 

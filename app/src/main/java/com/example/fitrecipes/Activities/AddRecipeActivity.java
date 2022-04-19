@@ -223,7 +223,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                                 photoLink[0]);
                                         String ImageUploadId = databaseReference.push().getKey();
                                         //little changes in line 233
-                                        databaseReference2.child("recipes").setValue(imageUploadInfo);
+                                        databaseReference2.child("recipes").child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
                                     }
                                 });
 //
