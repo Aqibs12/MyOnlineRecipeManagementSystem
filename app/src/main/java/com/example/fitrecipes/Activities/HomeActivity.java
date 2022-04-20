@@ -107,8 +107,9 @@ public class HomeActivity extends AppCompatActivity {
 
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
-        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
-//        DatabaseReference   userId = databaseReference3.child(USERID);
+        firebaseDatabase=FirebaseDatabase.getInstance();
+        databaseReference3 = firebaseDatabase.getReference("recipes");
+//       DatabaseReference   userId = databaseReference3.child(USERID);
 //
 //        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
 //        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
