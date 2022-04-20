@@ -3,38 +3,31 @@ package com.example.fitrecipes.Models;
 import java.io.Serializable;
 
 public class ImagesModel implements Serializable {
-    int id,recipeId;
-    String image;
 
-    public ImagesModel(String image) {
-        this.image = image;
-    }
-
+    String id;
+    String userImage;
 
     public ImagesModel() {
     }
 
-    public int getId() {
+    public ImagesModel(String id, String userImage) {
+        this.id = id;
+        this.userImage = userImage;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getRecipeId() {
-        return recipeId;
+    public String getUserImage() {
+        return userImage;
     }
 
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }

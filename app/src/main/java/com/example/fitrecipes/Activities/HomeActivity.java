@@ -2,12 +2,14 @@ package com.example.fitrecipes.Activities;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,10 +26,12 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -79,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
-//        databaseReference3 = FirebaseDatabase.getInstance().getReference();
+        databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
@@ -158,15 +162,18 @@ public class HomeActivity extends AppCompatActivity {
         });
         //things added stop
 
-        StorageReference riversRef = storageReference.child("M1.jpg");
+        StorageReference riversRef = storageReference.child("images");
         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            final String[] photoLink = {""};
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(imageUri).into(iv_pic);
+                Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
+
 
             }
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
+            final String[] photoLink = {""};
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -174,7 +181,8 @@ public class HomeActivity extends AppCompatActivity {
                         emailAddress.setText(ds.child("email").getValue(String.class));
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
-                        Glide.with(iv_pic).load("https://firebasestorage.googleapis.com/v0/b/fitrecipes-db5ec.appspot.com/o/1650384443655.jpg?alt=media&token=8c2f844f-0b5c-49ed-88de-8b2d1b1e47a9").into(iv_pic);
+                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
+
 
                     }
                 }
@@ -255,41 +263,63 @@ public class HomeActivity extends AppCompatActivity {
             uploadPicture();
         }
     }
+    public String GetFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
 
     private void uploadPicture() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setTitle("Uploading Image.....");
-        pd.show();
-        final String randomKey = UUID.randomUUID().toString();
-        StorageReference riversRef = storageReference.child("images/" + randomKey);
+        if (imageUri != null) {
+            final ProgressDialog pd = new ProgressDialog(this);
+            pd.setTitle("Uploading Image.....");
+            pd.show();
+           /* final String randomKey = UUID.randomUUID().toString();
+            StorageReference riversRef = storageReference.child("images/" + randomKey);
+*/
+            try {
+                 storageReference = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
+                storageReference.putFile(imageUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                pd.dismiss();
+                                final String[] photoLink = {""};
+                                Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        photoLink[0] = uri.toString();
+                                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
+                                        Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
+                                        ImagesModel imageUploadInfo = new ImagesModel(uuid,
+                                                photoLink[0]);
+                                        databaseReference.child("recipes").setValue(imageUploadInfo);
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                pd.dismiss();
+                                Toast.makeText(context, "Failed To Upload", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                                double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                                pd.setMessage(" Progress:" + (int) progressPercent + "%");
 
-        try {
+                            }
+                        });
+            } catch (Exception e) {
 
-            riversRef.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            pd.dismiss();
-                            Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
-                            Glide.with(iv_pic).load("https://firebasestorage.googleapis.com/v0/b/fitrecipes-db5ec.appspot.com/o/1650384443655.jpg?alt=media&token=8c2f844f-0b5c-49ed-88de-8b2d1b1e47a9").into(iv_pic);
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            pd.dismiss();
-                            Toast.makeText(context, "Failed To Upload", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                            double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            pd.setMessage(" Progress:" + (int) progressPercent + "%");
-
-                        }
-                    });
-        } catch (Exception e) {
+            }
+        }else {
+            Toast.makeText(HomeActivity.this, "Please Select Image", Toast.LENGTH_LONG).show();
 
         }
     }

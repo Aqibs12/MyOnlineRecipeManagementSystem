@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="16dp"
+    android:backgroundTint="@color/teal_700">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,15 +17,15 @@
             android:id="@+id/img1"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/tv_Recipe_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/img1"
             android:text="Recipe Name"
             android:textColor="#000"
             android:textSize="25sp"
@@ -31,8 +36,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_Recipe_name"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
             android:text="Recipe Cook Time"
             android:textColor="#000"
             android:textSize="25sp" />
@@ -43,8 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_cook_time"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
             android:text="No. of Serving People"
             android:textColor="#000"
             android:textSize="25sp" />
@@ -54,8 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_People"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
             android:text="Recipe Ingredients"
             android:textColor="#000"
             android:textSize="25sp" />
@@ -65,8 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_Recipe_Ingredients"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
             android:text="Recipe Description"
             android:textColor="#000"
             android:textSize="25sp" />
@@ -76,8 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_Recipe_Description"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/img1"
             android:text="Recipe Instruction"
             android:textColor="#000"
             android:textSize="25sp" />

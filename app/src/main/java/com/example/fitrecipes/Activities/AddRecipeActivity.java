@@ -224,9 +224,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         String ImageUploadId = databaseReference.push().getKey();
                                         //little changes in line 233
                                         databaseReference2.child("recipes").child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
-                                    finish();
+                                   /* finish();
                                     Intent it=new Intent(AddRecipeActivity.this,HomeActivity.class);
-                                    startActivity(it);
+                                    startActivity(it);*/
 
                                     }
                                 });
