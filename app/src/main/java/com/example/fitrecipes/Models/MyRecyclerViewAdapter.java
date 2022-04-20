@@ -37,7 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         RecipeModel recipeModel = mData.get(position);
-        Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
+       Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
         holder.tvRecipeInstructions.setText(recipeModel.recipeI);
         holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);

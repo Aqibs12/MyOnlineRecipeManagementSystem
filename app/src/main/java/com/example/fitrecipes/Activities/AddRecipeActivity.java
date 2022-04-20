@@ -47,7 +47,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,7 +76,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<RecipeModel> recipeModelArrayList;
     ArrayAdapter<String> adapter;
-
+    String saveCurrentDate,saveCurrentTime,productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         init();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("images");
-        databaseReference2 = FirebaseDatabase.getInstance().getReference();
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipe");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
@@ -221,9 +223,18 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         RecipeModel imageUploadInfo = new RecipeModel(UUID, TempImageName, RecipeTime,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
-                                        String ImageUploadId = databaseReference.push().getKey();
+//                                        String ImageUploadId = databaseReference.push().getKey();
+                                        // date
+                                        Calendar calendar = Calendar.getInstance();
+                                        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd,yyyy ");
+                                        saveCurrentDate = currentDate.format(calendar.getTime());
+
+                                        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+                                        saveCurrentTime = currentTime.format(calendar.getTime());
+                                        productRandomKey = saveCurrentDate +" "+ saveCurrentTime;
+                                        //date nd
                                         //little changes in line 233
-                                        databaseReference2.child("recipes").child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
+                                        databaseReference2.child(UUID).child("recipe").child(saveCurrentDate).setValue(imageUploadInfo);
                                    /* finish();
                                     Intent it=new Intent(AddRecipeActivity.this,HomeActivity.class);
                                     startActivity(it);*/

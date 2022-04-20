@@ -49,8 +49,13 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
@@ -79,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<RecipeModel> recipeModelArrayList2;
     MyRecyclerViewAdapter adapter;
 
+    String saveCurrentDate,saveCurrentTime,productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +110,15 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList = new ArrayList();
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
+// date
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd,yyyy ");
+        saveCurrentDate = currentDate.format(calendar.getTime());
 
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+         saveCurrentTime = currentTime.format(calendar.getTime());
+        productRandomKey = saveCurrentDate +" "+ saveCurrentTime;
+        //date nd
         recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
 
         List<String> data = new ArrayList<>();
@@ -112,8 +126,8 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference3 = firebaseDatabase.getReference("recipes");
-//       DatabaseReference   userId = databaseReference3.child(USERID);
+        databaseReference3 = firebaseDatabase.getReference("Recipe");
+        DatabaseReference   userId = databaseReference3.child(USERID).child("recipe").child(saveCurrentDate);
 //
 //        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
 //        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
@@ -122,6 +136,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
+                String key=dataSnapshot.getKey();
                 RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
                 mData.add(post);
                 adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
@@ -137,7 +152,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         };
-        databaseReference3.addValueEventListener(postListener);
+     userId.addValueEventListener(postListener);
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
