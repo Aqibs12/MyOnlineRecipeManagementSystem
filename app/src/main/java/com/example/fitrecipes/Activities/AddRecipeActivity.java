@@ -91,12 +91,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         UUID = getIntent().getExtras().getString("uuid");
 
 
-        FirebaseRecyclerOptions<RecipeModel> options =
+      /** firebase recyclerview adapter
+       *  FirebaseRecyclerOptions<RecipeModel> options =
+
                 new FirebaseRecyclerOptions.Builder<RecipeModel>()
                         .setQuery(FirebaseDatabase.getInstance().getReference("recipes"), RecipeModel.class)
                         .build();
         recipeAdapter = new RecipeAdapter(options);
-        rvRecipe.setAdapter(recipeAdapter);
+        rvRecipe.setAdapter(recipeAdapter);*/
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
@@ -223,21 +225,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         RecipeModel imageUploadInfo = new RecipeModel(UUID, TempImageName, RecipeTime,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
-//                                        String ImageUploadId = databaseReference.push().getKey();
-                                        // date
-                                        Calendar calendar = Calendar.getInstance();
-                                        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd,yyyy ");
-                                        saveCurrentDate = currentDate.format(calendar.getTime());
+                                        String ImageUploadId = databaseReference.push().getKey();
 
-                                        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-                                        saveCurrentTime = currentTime.format(calendar.getTime());
-                                        productRandomKey = saveCurrentDate +" "+ saveCurrentTime;
-                                        //date nd
                                         //little changes in line 233
-                                        databaseReference2.child(UUID).child("recipe").child(saveCurrentDate).setValue(imageUploadInfo);
-                                   /* finish();
-                                    Intent it=new Intent(AddRecipeActivity.this,HomeActivity.class);
-                                    startActivity(it);*/
+                                        long time= System.currentTimeMillis();
+                                        String timee=String.valueOf(time);
+                                        databaseReference2.child("recipe").child(UUID).setValue(imageUploadInfo);
 
                                     }
                                 });

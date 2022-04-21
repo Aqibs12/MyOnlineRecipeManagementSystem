@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
     MyRecyclerViewAdapter adapter;
-
+List<String> recipeList;
     String saveCurrentDate,saveCurrentTime,productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,15 +110,7 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList = new ArrayList();
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
-// date
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd,yyyy ");
-        saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-         saveCurrentTime = currentTime.format(calendar.getTime());
-        productRandomKey = saveCurrentDate +" "+ saveCurrentTime;
-        //date nd
         recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
 
         List<String> data = new ArrayList<>();
@@ -126,12 +118,26 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference3 = firebaseDatabase.getReference("Recipe");
-        DatabaseReference   userId = databaseReference3.child(USERID).child("recipe").child(saveCurrentDate);
-//
-//        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
-//        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
+        recipeList=new ArrayList<>();
+        databaseReference3 = firebaseDatabase.getReference().child("Recipe");
+        DatabaseReference   userId = databaseReference3.child("recipe").child(USERID);
 
+/**userId.addValueEventListener(new ValueEventListener() {
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        for(DataSnapshot itemSnapshot:dataSnapshot.getChildren()){
+            if(itemSnapshot.exists()){
+                recipeList.add(itemSnapshot.child("Recipe").getValue().toString());
+            }
+        }
+        name.setText(recipeList.toString());
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+
+    }
+});*/
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
