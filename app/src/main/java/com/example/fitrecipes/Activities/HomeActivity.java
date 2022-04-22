@@ -7,11 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,11 +55,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -68,6 +70,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView name, phone, emailAddress, tv_changePass;
     ImageView iv_pic, iv_edPic;
     RecipeAdapter recipeAdapter;
+    EditText etSearch;
     public Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -83,8 +86,8 @@ public class HomeActivity extends AppCompatActivity {
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
     MyRecyclerViewAdapter adapter;
-List<String> recipeList;
-    String saveCurrentDate,saveCurrentTime,productRandomKey;
+    private List<RecipeModel> exampleList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,31 +121,16 @@ List<String> recipeList;
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
-        recipeList=new ArrayList<>();
-        databaseReference3 = firebaseDatabase.getReference().child("Recipe");
-        DatabaseReference   userId = databaseReference3.child("recipe").child(USERID);
+        databaseReference3 = firebaseDatabase.getReference("recipes");
+//       DatabaseReference   userId = databaseReference3.child(USERID);
+//
+//        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
+//        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
 
-/**userId.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        for(DataSnapshot itemSnapshot:dataSnapshot.getChildren()){
-            if(itemSnapshot.exists()){
-                recipeList.add(itemSnapshot.child("Recipe").getValue().toString());
-            }
-        }
-        name.setText(recipeList.toString());
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError error) {
-
-    }
-});*/
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                String key=dataSnapshot.getKey();
                 RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
                 mData.add(post);
                 adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
@@ -158,7 +146,7 @@ List<String> recipeList;
             }
 
         };
-     userId.addValueEventListener(postListener);
+        databaseReference3.addValueEventListener(postListener);
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
@@ -253,8 +241,36 @@ List<String> recipeList;
                 choosePicture();
             }
         });
+    /*    et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                HomeActivity.this.filterQuery(editable.toString());
+
+
+            }
+        });
+*/
     }
+
+ /*   private void filterQuery(String text) {
+        ArrayList<RecipeModel> filterdNames = new ArrayList<>();
+        for (RecipeModel s : this.exampleList) {
+            if (s.getName().toLowerCase().contains(text) || s.getRecipeIng().toLowerCase().contains(text)) {
+                filterdNames.add(s);
+            }
+        }
+        this.adapter.setFilter(filterdNames);
+    }*/
 
     private void init() {
 
@@ -264,6 +280,7 @@ List<String> recipeList;
         iv_pic = findViewById(R.id.iv_profilePic);
         storage = FirebaseStorage.getInstance();
         iv_edPic = findViewById(R.id.iv_edit);
+        et_search= findViewById(R.id.et_search);
         storageReference = storage.getReference();
 
     }
@@ -358,8 +375,4 @@ List<String> recipeList;
         super.onResume();
         uuid = LoginActivity.UUID;
     }
-
-
-
-
 }

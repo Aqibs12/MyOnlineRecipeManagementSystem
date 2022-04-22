@@ -1,0 +1,573 @@
+Index: app/src/main/res/layout/home_activity.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n\r\n\r\n\r\n\r\n    <androidx.core.widget.NestedScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            >\r\n\r\n            <RelativeLayout\r\n                android:layout_marginLeft=\"@dimen/_12sdp\"\r\n                android:layout_marginRight=\"@dimen/_12sdp\"\r\n                android:layout_marginTop=\"@dimen/_12sdp\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n\r\n                <ImageView\r\n                    android:id=\"@+id/iv_menu\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_centerVertical=\"true\"\r\n                    android:src=\"@drawable/ic_baseline_menu_24\"\r\n                    app:tint=\"#2B2B2B\" />\r\n\r\n                <ImageView\r\n                    android:src=\"@drawable/logo_text\"\r\n                    android:id=\"@+id/greetings\"\r\n                    android:layout_width=\"150dp\"\r\n                    android:layout_height=\"30dp\"\r\n                    android:layout_marginLeft=\"2dp\"\r\n                    android:layout_toEndOf=\"@id/iv_menu\"\r\n                    android:fontFamily=\"@font/poppins_bold\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:text=\"FITRECIPES\"\r\n                    android:textColor=\"#2B2B2B\"\r\n                    android:textSize=\"@dimen/_14ssp\" />\r\n\r\n\r\n                <TextView\r\n                    android:visibility=\"gone\"\r\n                    android:id=\"@+id/name\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:layout_alignParentRight=\"true\"\r\n                    android:layout_centerVertical=\"true\"\r\n\r\n                    android:layout_marginLeft=\"8dp\"\r\n                    android:layout_toEndOf=\"@id/greetings\"\r\n                    android:fontFamily=\"@font/poppins_regular\"\r\n                    android:text=\"Hi Adnan ,Welcome to FitRecipes \"\r\n                    android:textColor=\"@color/textcolor\"\r\n                    android:textSize=\"13sp\" />\r\n\r\n\r\n            </RelativeLayout>\r\n\r\n            <LinearLayout\r\n                android:visibility=\"gone\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\">\r\n\r\n                <TextView\r\n                    android:id=\"@+id/tv_log_out\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_alignParentRight=\"true\"\r\n                    android:fontFamily=\"@font/poppins_bold\"\r\n                    android:paddingStart=\"@dimen/_10sdp\"\r\n                    android:paddingLeft=\"@dimen/_10sdp\"\r\n                    android:layout_marginLeft=\"@dimen/_12sdp\"\r\n\r\n                    android:text=\"@string/logout\"\r\n                    android:textColor=\"@color/red\"\r\n                    android:textSize=\"14sp\" />\r\n\r\n                <TextView\r\n                    android:id=\"@+id/tv_my_recipes\"\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:layout_alignParentRight=\"true\"\r\n                    android:fontFamily=\"@font/poppins_bold\"\r\n                    android:paddingStart=\"@dimen/_10sdp\"\r\n                    android:layout_marginRight=\"@dimen/_12sdp\"\r\n                    android:text=\"@string/my_recipes\"\r\n                    android:textColor=\"@color/red\"\r\n                    android:textSize=\"14sp\" />\r\n\r\n            </LinearLayout>\r\n\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:id=\"@+id/c\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                app:cardBackgroundColor=\"@color/black\"\r\n                app:cardCornerRadius=\"@dimen/_8sdp\"\r\n                android:layout_margin=\"@dimen/_12sdp\"\r\n                android:fitsSystemWindows=\"true\"\r\n                >\r\n\r\n                <com.daimajia.slider.library.SliderLayout\r\n                    android:id=\"@+id/slider\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"@dimen/_140sdp\"\r\n                    android:fitsSystemWindows=\"true\"\r\n                    />\r\n            </androidx.cardview.widget.CardView>\r\n\r\n            <LinearLayout\r\n\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"@dimen/_60sdp\"\r\n                android:layout_marginLeft=\"@dimen/_12sdp\"\r\n                android:layout_marginRight=\"@dimen/_12sdp\"\r\n                android:orientation=\"horizontal\">\r\n\r\n                <EditText\r\n                    android:id=\"@+id/et_search\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"@dimen/_45sdp\"\r\n                    android:layout_marginTop=\"@dimen/_10sdp\"\r\n                    android:background=\"@drawable/edit_text_without_strock\"\r\n                    android:fontFamily=\"@font/poppins_regular\"\r\n                    android:hint=\"Search by ingredients or recipe name\"\r\n                    android:paddingStart=\"@dimen/_16sdp\"\r\n                    android:paddingLeft=\"@dimen/_16sdp\"\r\n                    android:text=\"\"\r\n                    android:textColorHint=\"@color/textcolor\"\r\n                    android:textCursorDrawable=\"@drawable/cursor_drawable\"\r\n                    android:textSize=\"@dimen/_12ssp\" />\r\n\r\n            </LinearLayout>\r\n\r\n            <TextView\r\n                android:layout_marginTop=\"@dimen/_10sdp\"\r\n                android:id=\"@+id/tvfood\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginStart=\"@dimen/_12sdp\"\r\n                android:paddingStart=\"@dimen/_10sdp\"\r\n                android:fontFamily=\"@font/poppins_bold\"\r\n                android:text=\"Recommended Recipes:\"\r\n                android:textColor=\"@color/black\"\r\n                android:textSize=\"@dimen/_13ssp\"\r\n                android:layout_marginLeft=\"@dimen/_12sdp\"\r\n                android:paddingLeft=\"@dimen/_10sdp\" />\r\n            <androidx.recyclerview.widget.RecyclerView\r\n                android:id=\"@+id/recyclerview\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"match_parent\"\r\n                android:padding=\"@dimen/_10sdp\"\r\n                tools:listitem=\"@layout/recipesrvlayout\"/>\r\n\r\n\r\n\r\n\r\n        </LinearLayout>\r\n    </androidx.core.widget.NestedScrollView>\r\n\r\n\r\n    <com.google.android.material.floatingactionbutton.FloatingActionButton\r\n        android:id=\"@+id/fab\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:layout_alignParentRight=\"true\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:src=\"@drawable/ic_baseline_add_24\"\r\n        android:contentDescription=\"add\"\r\n        android:layout_margin=\"16dp\" />\r\n\r\n\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/home_activity.xml b/app/src/main/res/layout/home_activity.xml
+--- a/app/src/main/res/layout/home_activity.xml	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/res/layout/home_activity.xml	(date 1650481494240)
+@@ -140,6 +140,7 @@
+                     android:paddingLeft="@dimen/_16sdp"
+                     android:text=""
+                     android:textColorHint="@color/textcolor"
++                    android:src="@drawable/ic_baseline_search_24"
+                     android:textCursorDrawable="@drawable/cursor_drawable"
+                     android:textSize="@dimen/_12ssp" />
+ 
+Index: app/src/main/java/com/example/fitrecipes/Models/RecipeAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// this adapter was made for firebase_recyclerview not for recyclerview\r\n\r\npackage com.example.fitrecipes.Models;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.example.fitrecipes.Activities.AddRecipeActivity;\r\nimport com.example.fitrecipes.R;\r\nimport com.firebase.ui.database.FirebaseRecyclerAdapter;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\nimport com.squareup.picasso.Picasso;\r\n\r\nimport de.hdodenhof.circleimageview.CircleImageView;\r\n\r\npublic class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAdapter.MyViewHolder> {\r\n    /**\r\n     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See\r\n     * {@link FirebaseRecyclerOptions} for configuration options.\r\n     *\r\n     * @param options\r\n     */\r\n    public RecipeAdapter(@NonNull FirebaseRecyclerOptions<RecipeModel> options) {\r\n        super(options);\r\n    }\r\n\r\n    @Override\r\n    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull RecipeModel model) {\r\n                holder.tvRecipeTime.setText(\"Recipe Time: \" + model.getRecipeT());\r\n                holder.tvRecipeName.setText(\"Recipe Name\" + model.getName());\r\n                holder.tvRecipeDescription.setText(\"Recipe Description: \" + model.getRecipeD());\r\n        Picasso.get().load(model.getRecipe_image()).into(holder.iv_RecipePic);\r\n                //Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);\r\n                holder.tvRecipeInstructions.setText(\"Recipe Instructions\" + model.getRecipeI());\r\n                holder.tvRecipeSrvPeople.setText(\"Recipe Serving People\"+ model.getRecipe_people());\r\n                holder.tvRecipeIngredients.setText(\"Recipe Ingredients\" + model.getRecipeIng());\r\n\r\n\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipesrvlayout, parent, false);\r\n        return new MyViewHolder(view);\r\n    }\r\n\r\n    public class MyViewHolder extends RecyclerView.ViewHolder {\r\n        TextView tvRecipeTime, tvRecipeDescription,tvRecipeName,tvRecipeIngredients,tvRecipeInstructions,tvRecipeSrvPeople;\r\n        ImageView iv_RecipePic;\r\n        public MyViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n            iv_RecipePic = itemView.findViewById(R.id.img1);\r\n            tvRecipeName = itemView.findViewById(R.id.tv_Recipe_name);\r\n            tvRecipeTime = itemView.findViewById(R.id.tv_cook_time);\r\n            tvRecipeDescription = itemView.findViewById(R.id.tv_Recipe_Description);\r\n            tvRecipeIngredients = itemView.findViewById(R.id.tv_Recipe_Ingredients);\r\n            tvRecipeSrvPeople = itemView.findViewById(R.id.tv_People);\r\n            tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fitrecipes/Models/RecipeAdapter.java b/app/src/main/java/com/example/fitrecipes/Models/RecipeAdapter.java
+--- a/app/src/main/java/com/example/fitrecipes/Models/RecipeAdapter.java	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/java/com/example/fitrecipes/Models/RecipeAdapter.java	(date 1650488303782)
+@@ -2,9 +2,14 @@
+ 
+ package com.example.fitrecipes.Models;
+ 
++import android.annotation.SuppressLint;
++import android.app.AlertDialog;
++import android.content.DialogInterface;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.Button;
++import android.widget.EditText;
+ import android.widget.ImageView;
+ import android.widget.TextView;
+ 
+@@ -16,11 +21,22 @@
+ import com.example.fitrecipes.R;
+ import com.firebase.ui.database.FirebaseRecyclerAdapter;
+ import com.firebase.ui.database.FirebaseRecyclerOptions;
++import com.google.android.gms.tasks.OnFailureListener;
++import com.google.android.gms.tasks.OnSuccessListener;
++import com.google.firebase.database.FirebaseDatabase;
+ import com.squareup.picasso.Picasso;
++import com.orhanobut.dialogplus.DialogPlus;
++import com.orhanobut.dialogplus.DialogPlusBuilder;
++import com.orhanobut.dialogplus.ViewHolder;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
+ 
+ import de.hdodenhof.circleimageview.CircleImageView;
+ 
+ public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAdapter.MyViewHolder> {
++    private List<RecipeModel> exampleList;
++
+     /**
+      * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+      * {@link FirebaseRecyclerOptions} for configuration options.
+@@ -31,18 +47,109 @@
+         super(options);
+     }
+ 
++
+     @Override
+-    protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull RecipeModel model) {
++    protected void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull RecipeModel model) {
+                 holder.tvRecipeTime.setText("Recipe Time: " + model.getRecipeT());
+                 holder.tvRecipeName.setText("Recipe Name" + model.getName());
+                 holder.tvRecipeDescription.setText("Recipe Description: " + model.getRecipeD());
+-        Picasso.get().load(model.getRecipe_image()).into(holder.iv_RecipePic);
+-                //Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);
++                // Picasso.get().load(model.getRecipe_image()).into(holder.iv_RecipePic);
++                Glide.with(holder.iv_RecipePic.getContext()).load(model.getRecipe_image()).into(holder.iv_RecipePic);
+                 holder.tvRecipeInstructions.setText("Recipe Instructions" + model.getRecipeI());
+                 holder.tvRecipeSrvPeople.setText("Recipe Serving People"+ model.getRecipe_people());
+                 holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());
+ 
++//ToDO  code for edit and delete func
++     /*        holder.edit.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                final DialogPlus dialogPlus=DialogPlus.newDialog(holder.iv_RecipePic.getContext())
++                        .setContentHolder(new ViewHolder(R.layout.dialogcontent))
++                        .setExpanded(true,1100)
++                        .create();
++
++                View myview = dialogPlus.getHolderView();
++                final EditText R_name = myview.findViewById(R.id.tv_R_name);
++                final EditText R_time = myview.findViewById(R.id.tv_R_time);
++                final EditText R_instr = myview.findViewById(R.id.tv_R_Ins);
++                final EditText R_ingred = myview.findViewById(R.id.tv_R_Ing);
++                final EditText R_srv_peop = myview.findViewById(R.id.tv_R_people);
++                final EditText R_Desc = myview.findViewById(R.id.tv_R_desc);
++                final EditText R_Url = myview.findViewById(R.id.tv_R_url);
++                Button submit=myview.findViewById(R.id.btn_submit);
++
++                R_name.setText(model.getName());
++                R_time.setText(model.getRecipeT());
++                R_instr.setText(model.getRecipeI());
++                R_ingred.setText(model.getRecipeIng());
++                R_srv_peop.setText(model.getRecipe_people());
++                R_Desc.setText(model.getRecipeD());
++                R_Url.setText(model.getRecipe_image());
++
++                dialogPlus.show();
++
++                submit.setOnClickListener(new View.OnClickListener() {
++                    @Override
++                    public void onClick(View view) {
++                        Map<String,Object> map=new HashMap<>();
++                        map.put("name",R_name.getText().toString());
++                        map.put("recipeD",R_Desc.getText().toString());
++                        map.put("recipeI",R_instr.getText().toString());
++                        map.put("recipeIng",R_ingred.getText().toString());
++                        map.put("recipeT",R_time.getText().toString());
++                        map.put("recipe_image",R_Url.getText().toString());
++                        map.put("recipe_people",R_srv_peop.getText().toString());
++
++                        FirebaseDatabase.getInstance().getReference().child("recipes")
++                                .child(getRef(position).getKey()).updateChildren(map)
++                                .addOnSuccessListener(new OnSuccessListener<Void>() {
++                                    @Override
++                                    public void onSuccess(Void aVoid) {
++                                        dialogPlus.dismiss();
++                                    }
++                                })
++                                .addOnFailureListener(new OnFailureListener() {
++                                    @Override
++                                    public void onFailure(@NonNull Exception e) {
++                                        dialogPlus.dismiss();
++                                    }
++                                });
++                    }
++                });
++
++
++            }
++        });
++
++
++        holder.delete.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                AlertDialog.Builder builder=new AlertDialog.Builder(holder.iv_RecipePic.getContext());
++                builder.setTitle("Delete Recipe");
++                builder.setMessage("Delete...?");
++
++                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
++                    @Override
++                    public void onClick(DialogInterface dialogInterface, int i) {
++                        FirebaseDatabase.getInstance().getReference().child("recipes")
++                                .child(getRef(position).getKey()).removeValue();
++                    }
++                });
+ 
++                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
++                    @Override
++                    public void onClick(DialogInterface dialogInterface, int i) {
++
++                    }
++                });
++
++                builder.show();
++            }
++        });
++
++
++*/
+     }
+ 
+     @NonNull
+@@ -54,7 +161,7 @@
+ 
+     public class MyViewHolder extends RecyclerView.ViewHolder {
+         TextView tvRecipeTime, tvRecipeDescription,tvRecipeName,tvRecipeIngredients,tvRecipeInstructions,tvRecipeSrvPeople;
+-        ImageView iv_RecipePic;
++        ImageView iv_RecipePic,edit,delete;;
+         public MyViewHolder(@NonNull View itemView) {
+             super(itemView);
+             iv_RecipePic = itemView.findViewById(R.id.img1);
+@@ -64,7 +171,10 @@
+             tvRecipeIngredients = itemView.findViewById(R.id.tv_Recipe_Ingredients);
+             tvRecipeSrvPeople = itemView.findViewById(R.id.tv_People);
+             tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);
++            edit=(ImageView)itemView.findViewById(R.id.edit_icon);
++            delete=(ImageView)itemView.findViewById(R.id.delete_icon);
+         }
++
+     }
+ }
+ 
+Index: app/src/main/res/layout/recipesrvlayout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:padding=\"10dp\"\r\n    android:layout_margin=\"10dp\"\r\n    app:cardCornerRadius=\"16dp\"\r\n    android:backgroundTint=\"@color/teal_700\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:padding=\"15dp\">\r\n\r\n        <de.hdodenhof.circleimageview.CircleImageView\r\n            android:id=\"@+id/img1\"\r\n            android:layout_width=\"80dp\"\r\n            android:layout_height=\"80dp\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:src=\"@mipmap/ic_launcher\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_Recipe_name\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:layout_below=\"@id/img1\"\r\n            android:text=\"Recipe Name\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_cook_time\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/tv_Recipe_name\"\r\n            android:text=\"Recipe Cook Time\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_People\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/tv_cook_time\"\r\n            android:text=\"No. of Serving People\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_Recipe_Ingredients\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/tv_People\"\r\n            android:text=\"Recipe Ingredients\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_Recipe_Description\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/tv_Recipe_Ingredients\"\r\n            android:text=\"Recipe Description\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n        <TextView\r\n            android:id=\"@+id/tv_Recipe_Instructions\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/tv_Recipe_Description\"\r\n            android:text=\"Recipe Instruction\"\r\n            android:textColor=\"#000\"\r\n            android:textSize=\"25sp\" />\r\n\r\n\r\n    </RelativeLayout>\r\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/recipesrvlayout.xml b/app/src/main/res/layout/recipesrvlayout.xml
+--- a/app/src/main/res/layout/recipesrvlayout.xml	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/res/layout/recipesrvlayout.xml	(date 1650475810326)
+@@ -8,7 +8,10 @@
+     app:cardCornerRadius="16dp"
+     android:backgroundTint="@color/teal_700">
+ 
++
++
+     <RelativeLayout
++        android:id="@+id/l1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:padding="15dp">
+@@ -77,6 +80,24 @@
+             android:textColor="#000"
+             android:textSize="25sp" />
+ 
++        <ImageView
++            android:id="@+id/edit_icon"
++            android:layout_width="80dp"
++            android:layout_height="40dp"
++            android:layout_below="@id/tv_Recipe_Instructions"
++            android:layout_alignEnd="@+id/tv_Recipe_Instructions"
++            android:layout_marginTop="16dp"
++            android:layout_marginEnd="65dp"
++            android:src="@drawable/edit" />
+ 
++        <ImageView
++            android:id="@+id/delete_icon"
++            android:layout_width="50dp"
++            android:layout_height="40dp"
++            android:layout_marginTop="14dp"
++            android:layout_below="@+id/tv_Recipe_Instructions"
++            android:layout_alignEnd="@+id/tv_Recipe_Instructions"
++            android:src="@drawable/delete" />
+     </RelativeLayout>
++
+ </androidx.cardview.widget.CardView>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n    <FrameLayout\r\n        android:layout_above=\"@+id/navigation\"\r\n        android:id=\"@+id/frame_container\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        app:layout_behavior=\"@string/appbar_scrolling_view_behavior\" />\r\n\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/navigation\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"bottom\"\r\n        android:layout_alignParentBottom=\"true\"\r\n        android:background=\"?android:attr/windowBackground\"\r\n        app:itemIconTint=\"@color/bnv_tab_item_foreground\"\r\n        app:itemTextColor=\"@color/bnv_tab_item_foreground\"\r\n        app:itemBackground=\"@color/purple_700\"\r\n        android:foreground=\"?attr/selectableItemBackground\"\r\n        app:menu=\"@menu/nav_bottom\" />\r\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1650486297944)
+@@ -24,5 +24,5 @@
+         app:itemTextColor="@color/bnv_tab_item_foreground"
+         app:itemBackground="@color/purple_700"
+         android:foreground="?attr/selectableItemBackground"
+-        app:menu="@menu/nav_bottom" />
++        />
+ </RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/fitrecipes/Models/MyRecyclerViewAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fitrecipes.Models;\r\n\r\nimport android.content.Context;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.example.fitrecipes.R;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\n\r\nimport java.util.List;\r\n\r\npublic class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {\r\n\r\n    private List<RecipeModel> mData;\r\n    private LayoutInflater mInflater;\r\n\r\n    // data is passed into the constructor\r\n    public MyRecyclerViewAdapter(Context context, List<RecipeModel> data) {\r\n        this.mInflater = LayoutInflater.from(context);\r\n        this.mData = data;\r\n    }\r\n\r\n    // inflates the row layout from xml when needed\r\n    @Override\r\n    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {\r\n        View view = mInflater.inflate(R.layout.recipesrvlayout, parent, false);\r\n        return new ViewHolder(view);\r\n    }\r\n\r\n    // binds the data to the TextView in each row\r\n    @Override\r\n    public void onBindViewHolder(ViewHolder holder, int position) {\r\n        RecipeModel recipeModel = mData.get(position);\r\n        Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);\r\n        holder.tv_Recipe_name.setText(recipeModel.name);\r\n        holder.tvRecipeInstructions.setText(recipeModel.recipeI);\r\n        holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);\r\n        holder.tvRecipeIngredients.setText(recipeModel.getRecipeIng());\r\n        holder.tvRecipeDescription.setText(recipeModel.recipeD);\r\n        holder.tvRecipeTime.setText(recipeModel.recipeT);\r\n\r\n\r\n    }\r\n\r\n    // total number of rows\r\n    @Override\r\n    public int getItemCount() {\r\n        return mData.size();\r\n    }\r\n\r\n\r\n    // stores and recycles views as they are scrolled off screen\r\n    public class ViewHolder extends RecyclerView.ViewHolder {\r\n        TextView tv_Recipe_name,tvRecipeTime,tvRecipeDescription,tvRecipeIngredients,tvRecipeSrvPeople,tvRecipeInstructions;\r\n        ImageView imageView;\r\n\r\n        ViewHolder(View itemView) {\r\n            super(itemView);\r\n            tv_Recipe_name = itemView.findViewById(R.id.tv_Recipe_name);\r\n            tvRecipeTime = itemView.findViewById(R.id.tv_cook_time);\r\n            tvRecipeDescription = itemView.findViewById(R.id.tv_Recipe_Description);\r\n            tvRecipeIngredients = itemView.findViewById(R.id.tv_Recipe_Ingredients);\r\n            tvRecipeSrvPeople = itemView.findViewById(R.id.tv_People);\r\n            tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);\r\n            imageView = itemView.findViewById(R.id.img1);\r\n        }\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fitrecipes/Models/MyRecyclerViewAdapter.java b/app/src/main/java/com/example/fitrecipes/Models/MyRecyclerViewAdapter.java
+--- a/app/src/main/java/com/example/fitrecipes/Models/MyRecyclerViewAdapter.java	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/java/com/example/fitrecipes/Models/MyRecyclerViewAdapter.java	(date 1650488909492)
+@@ -25,7 +25,6 @@
+         this.mInflater = LayoutInflater.from(context);
+         this.mData = data;
+     }
+-
+     // inflates the row layout from xml when needed
+     @Override
+     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+Index: app/src/main/java/com/example/fitrecipes/Activities/HomeActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.fitrecipes.Activities;\r\n\r\n\r\nimport android.app.ProgressDialog;\r\nimport android.content.ContentResolver;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.webkit.MimeTypeMap;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.GridLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.bumptech.glide.Glide;\r\nimport com.daimajia.slider.library.Animations.DescriptionAnimation;\r\nimport com.daimajia.slider.library.SliderLayout;\r\nimport com.example.fitrecipes.Models.RecipeAdapter;\r\nimport com.example.fitrecipes.Models.RecipeModel;\r\nimport com.example.fitrecipes.Models.ImagesModel;\r\nimport com.example.fitrecipes.R;\r\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.material.snackbar.Snackbar;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\nimport com.google.firebase.storage.FirebaseStorage;\r\nimport com.google.firebase.storage.OnProgressListener;\r\nimport com.google.firebase.storage.StorageReference;\r\nimport com.google.firebase.storage.StorageTask;\r\nimport com.google.firebase.storage.UploadTask;\r\nimport com.squareup.picasso.Picasso;\r\nimport com.yarolegovich.slidingrootnav.SlidingRootNav;\r\nimport com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;\r\nimport com.example.fitrecipes.Models.MyRecyclerViewAdapter;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.UUID;\r\n\r\npublic class HomeActivity extends AppCompatActivity {\r\n    private RecipeModel recipeModel;\r\n    private SliderLayout sliderLayout;\r\n    private RecyclerView recyclerView;\r\n    ArrayList<RecipeModel> recipeModelArrayList;\r\n    ArrayList<RecipeModel> sliderRecipeList;\r\n    SlidingRootNav slidingRootNav;\r\n    TextView name, phone, emailAddress, tv_changePass;\r\n    ImageView iv_pic, iv_edPic;\r\n    RecipeAdapter recipeAdapter;\r\n    public Uri imageUri;\r\n    private FirebaseStorage storage;\r\n    private StorageReference storageReference;\r\n    private StorageTask uploadTask;\r\n    Context context;\r\n    private EditText et_search;\r\n    private FirebaseAuth mAuth;\r\n    private FirebaseDatabase firebaseDatabase;\r\n    private DatabaseReference databaseReference, databaseReference3,databaseReference5;\r\n    private static final String USERS = \"users\";\r\n    private String myUri = \"\";\r\n    private String uuid = \"\";\r\n    private String USERID = \"\";\r\n    ArrayList<RecipeModel> recipeModelArrayList2;\r\n    MyRecyclerViewAdapter adapter;\r\n\r\n    @Override\r\n    protected void onCreate(@Nullable Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.home_activity);\r\n        databaseReference3 = FirebaseDatabase.getInstance().getReference();\r\n\r\n        slidingRootNav = new SlidingRootNavBuilder(this)\r\n                .withMenuLayout(R.layout.activity_drawer)\r\n                .withMenuOpened(false)\r\n                .inject();\r\n\r\n        context = this;\r\n        uuid = LoginActivity.UUID;\r\n        USERID = getIntent().getExtras().getString(\"uuid\");\r\n        TextView name1 = findViewById(R.id.name);\r\n        et_search = findViewById(R.id.et_search);\r\n        sliderLayout = findViewById(R.id.slider);\r\n        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);\r\n        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);\r\n        sliderLayout.setCustomAnimation(new DescriptionAnimation());\r\n        sliderLayout.setDuration(3333);\r\n        recyclerView = findViewById(R.id.recyclerview);\r\n        recipeModelArrayList = new ArrayList();\r\n        recipeModelArrayList2 = new ArrayList();\r\n        sliderRecipeList = new ArrayList();\r\n\r\n        recyclerView.setLayoutManager(new GridLayoutManager(context, 1));\r\n\r\n        List<String> data = new ArrayList<>();\r\n\r\n        List<RecipeModel> mData = new ArrayList<>();\r\n//        databaseReference3 = FirebaseDatabase.getInstance().getReference().child(\"recipes\");\r\n        firebaseDatabase=FirebaseDatabase.getInstance();\r\n        databaseReference3 = firebaseDatabase.getReference(\"recipes\");\r\n//       DatabaseReference   userId = databaseReference3.child(USERID);\r\n//\r\n//        DatabaseReference zone1Ref = zonesRef.child(\"ZONE_1\");\r\n//        DatabaseReference zone1NameRef = zone1Ref.child(\"ZNAME\");\r\n\r\n        ValueEventListener postListener = new ValueEventListener() {\r\n            @Override\r\n            public void onDataChange(DataSnapshot dataSnapshot) {\r\n                // Get Post object and use the values to update the UI\r\n                RecipeModel post = dataSnapshot.getValue(RecipeModel.class);\r\n                mData.add(post);\r\n                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);\r\n                recyclerView.setAdapter(adapter);\r\n\r\n            }\r\n\r\n\r\n            @Override\r\n            public void onCancelled(DatabaseError databaseError) {\r\n                // Getting Post failed, log a message\r\n                Log.w(\"loadPost:onCancelled\", databaseError.toException());\r\n            }\r\n\r\n        };\r\n        databaseReference3.addValueEventListener(postListener);\r\n\r\n        Intent intent = getIntent();\r\n        String email = intent.getStringExtra(\"email\");\r\n        mAuth = FirebaseAuth.getInstance();\r\n        firebaseDatabase = FirebaseDatabase.getInstance();\r\n        databaseReference = firebaseDatabase.getReference(USERS);\r\n        setListeners();\r\n        init();\r\n        databaseReference.addValueEventListener(new ValueEventListener() {\r\n            @Override\r\n            public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {\r\n//                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);\r\n//                    recipeModelArrayList2.add(recipeModel);\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n            }\r\n        });\r\n        //things added stop\r\n\r\n        StorageReference riversRef = storageReference.child(\"images\");\r\n        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {\r\n            final String[] photoLink = {\"\"};\r\n            @Override\r\n            public void onSuccess(Uri uri) {\r\n                Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);\r\n\r\n\r\n            }\r\n        });\r\n        databaseReference.addValueEventListener(new ValueEventListener() {\r\n            final String[] photoLink = {\"\"};\r\n            @Override\r\n            public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                for (DataSnapshot ds : snapshot.getChildren()) {\r\n                    if (uuid.equals(ds.getKey())) {\r\n                        emailAddress.setText(ds.child(\"email\").getValue(String.class));\r\n                        name.setText(ds.child(\"name\").getValue(String.class));\r\n                        phone.setText(ds.child(\"phone\").getValue(String.class));\r\n                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);\r\n\r\n\r\n                    }\r\n                }\r\n            }\r\n\r\n            @Override\r\n            public void onCancelled(@NonNull DatabaseError error) {\r\n            }\r\n        });\r\n    }\r\n\r\n    private void setListeners() {\r\n        findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                signOutUser();\r\n            }\r\n        });\r\n        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(context, AddRecipeActivity.class).putExtra(\"uuid\", USERID));\r\n            }\r\n        });\r\n        findViewById(R.id.iv_menu).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                slidingRootNav.openMenu();\r\n            }\r\n        });\r\n        findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(context, MyRecipesActivity.class));\r\n            }\r\n        });\r\n\r\n        findViewById(R.id.btn_edit_profile).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                startActivity(new Intent(context, ProfileActivity.class));\r\n            }\r\n        });\r\n        findViewById(R.id.iv_edit).setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                choosePicture();\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    private void init() {\r\n\r\n        name = findViewById(R.id.tv_name);\r\n        emailAddress = findViewById(R.id.tv_email);\r\n        phone = findViewById(R.id.tv_phone);\r\n        iv_pic = findViewById(R.id.iv_profilePic);\r\n        storage = FirebaseStorage.getInstance();\r\n        iv_edPic = findViewById(R.id.iv_edit);\r\n        storageReference = storage.getReference();\r\n\r\n    }\r\n\r\n    private void choosePicture() {\r\n        Intent intent = new Intent();\r\n        intent.setType(\"image/*\");\r\n        intent.setAction(Intent.ACTION_GET_CONTENT);\r\n        startActivityForResult(intent, 1);\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {\r\n            imageUri = data.getData();\r\n            iv_pic.setImageURI(imageUri);\r\n            uploadPicture();\r\n        }\r\n    }\r\n    public String GetFileExtension(Uri uri) {\r\n        ContentResolver contentResolver = getContentResolver();\r\n        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();\r\n        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));\r\n    }\r\n\r\n\r\n    private void uploadPicture() {\r\n        if (imageUri != null) {\r\n            final ProgressDialog pd = new ProgressDialog(this);\r\n            pd.setTitle(\"Uploading Image.....\");\r\n            pd.show();\r\n           /* final String randomKey = UUID.randomUUID().toString();\r\n            StorageReference riversRef = storageReference.child(\"images/\" + randomKey);\r\n*/\r\n            try {\r\n                 storageReference = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + \".\" + GetFileExtension(imageUri));\r\n                storageReference.putFile(imageUri)\r\n                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {\r\n                            @Override\r\n                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {\r\n                                pd.dismiss();\r\n                                final String[] photoLink = {\"\"};\r\n                                Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();\r\n                                task.addOnSuccessListener(new OnSuccessListener<Uri>() {\r\n                                    @Override\r\n                                    public void onSuccess(Uri uri) {\r\n                                        photoLink[0] = uri.toString();\r\n                                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);\r\n                                        Snackbar.make(findViewById(android.R.id.content), \"Image Uploaded.\", Snackbar.LENGTH_LONG).show();\r\n                                        ImagesModel imageUploadInfo = new ImagesModel(uuid,\r\n                                                photoLink[0]);\r\n                                        databaseReference.child(\"recipes\").setValue(imageUploadInfo);\r\n                                    }\r\n                                });\r\n                            }\r\n                        })\r\n                        .addOnFailureListener(new OnFailureListener() {\r\n                            @Override\r\n                            public void onFailure(@NonNull Exception e) {\r\n                                pd.dismiss();\r\n                                Toast.makeText(context, \"Failed To Upload\", Toast.LENGTH_SHORT).show();\r\n                            }\r\n                        })\r\n                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {\r\n                            @Override\r\n                            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {\r\n                                double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());\r\n                                pd.setMessage(\" Progress:\" + (int) progressPercent + \"%\");\r\n\r\n                            }\r\n                        });\r\n            } catch (Exception e) {\r\n\r\n            }\r\n        }else {\r\n            Toast.makeText(HomeActivity.this, \"Please Select Image\", Toast.LENGTH_LONG).show();\r\n\r\n        }\r\n    }\r\n\r\n    private void signOutUser() {\r\n        mAuth.signOut();\r\n        Intent intent = new Intent(context, LoginActivity.class);\r\n        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n        startActivity(intent);\r\n        finish();\r\n    }\r\n\r\n    @Override\r\n    public void onResume() {\r\n        super.onResume();\r\n        uuid = LoginActivity.UUID;\r\n    }\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/fitrecipes/Activities/HomeActivity.java b/app/src/main/java/com/example/fitrecipes/Activities/HomeActivity.java
+--- a/app/src/main/java/com/example/fitrecipes/Activities/HomeActivity.java	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/src/main/java/com/example/fitrecipes/Activities/HomeActivity.java	(date 1650487034917)
+@@ -7,11 +7,17 @@
+ import android.content.Intent;
+ import android.net.Uri;
+ import android.os.Bundle;
++import android.text.Editable;
++import android.text.TextWatcher;
+ import android.util.Log;
++import android.view.Menu;
++import android.view.MenuItem;
+ import android.view.View;
+ import android.webkit.MimeTypeMap;
++import android.widget.Adapter;
+ import android.widget.EditText;
+ import android.widget.ImageView;
++import android.widget.SearchView;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
+@@ -51,6 +57,7 @@
+ 
+ import java.util.ArrayList;
+ import java.util.List;
++import java.util.Locale;
+ import java.util.UUID;
+ 
+ public class HomeActivity extends AppCompatActivity {
+@@ -63,6 +70,7 @@
+     TextView name, phone, emailAddress, tv_changePass;
+     ImageView iv_pic, iv_edPic;
+     RecipeAdapter recipeAdapter;
++    EditText etSearch;
+     public Uri imageUri;
+     private FirebaseStorage storage;
+     private StorageReference storageReference;
+@@ -78,6 +86,7 @@
+     private String USERID = "";
+     ArrayList<RecipeModel> recipeModelArrayList2;
+     MyRecyclerViewAdapter adapter;
++    private List<RecipeModel> exampleList;
+ 
+     @Override
+     protected void onCreate(@Nullable Bundle savedInstanceState) {
+@@ -232,8 +241,36 @@
+                 choosePicture();
+             }
+         });
++    /*    et_search.addTextChangedListener(new TextWatcher() {
++            @Override
++            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
++
++            }
++
++            @Override
++            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+ 
++            }
++
++            @Override
++            public void afterTextChanged(Editable editable) {
++                HomeActivity.this.filterQuery(editable.toString());
++
++
++            }
++        });
++*/
+     }
++
++ /*   private void filterQuery(String text) {
++        ArrayList<RecipeModel> filterdNames = new ArrayList<>();
++        for (RecipeModel s : this.exampleList) {
++            if (s.getName().toLowerCase().contains(text) || s.getRecipeIng().toLowerCase().contains(text)) {
++                filterdNames.add(s);
++            }
++        }
++        this.adapter.setFilter(filterdNames);
++    }*/
+ 
+     private void init() {
+ 
+@@ -243,6 +280,7 @@
+         iv_pic = findViewById(R.id.iv_profilePic);
+         storage = FirebaseStorage.getInstance();
+         iv_edPic = findViewById(R.id.iv_edit);
++        et_search= findViewById(R.id.et_search);
+         storageReference = storage.getReference();
+ 
+     }
+@@ -337,8 +375,4 @@
+         super.onResume();
+         uuid = LoginActivity.UUID;
+     }
+-
+-
+-
+-
+ }
+\ No newline at end of file
+Index: app/src/main/res/menu/nav_bottom.xml
+===================================================================
+diff --git a/app/src/main/res/menu/nav_bottom.xml b/app/src/main/res/menu/nav_bottom.xml
+deleted file mode 100644
+--- a/app/src/main/res/menu/nav_bottom.xml	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ /dev/null	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
+@@ -1,43 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-
+-    >
+-    <item
+-        android:id="@+id/home"
+-        android:icon="@drawable/ic_baseline_home_24"
+-        android:iconTint="@color/black"
+-        android:title="Home" />
+-    <item
+-
+-        android:id="@+id/add"
+-        android:icon="@drawable/ic_baseline_add_circle_24"
+-        android:iconTint="@color/black"
+-        android:title="Add Recipe"
+-
+-        />
+-
+-    <item
+-
+-        android:id="@+id/profile"
+-        android:icon="@drawable/ic_user"
+-        android:iconTint="@color/black"
+-        android:title="Profile"
+-
+-        />
+- <item
+-
+-        android:id="@+id/logout"
+-        android:icon="@drawable/logout"
+-        android:iconTint="@color/black"
+-        android:title="Logout"
+-
+-        />
+-
+-
+-
+-
+-
+-
+-</menu>
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'com.google.gms.google-services'\r\n}\r\n\r\nandroid {\r\n    compileSdkVersion 31\r\n    buildToolsVersion \"30.0.3\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.fitrecipes\"\r\n        minSdkVersion 19\r\n        multiDexEnabled true\r\n        targetSdkVersion 31\r\n        versionCode 2\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n\r\n            // Or, if you prefer, you can continue to check for errors in release builds,\r\n            // but continue the build even when errors are found:\r\n\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    lint {\r\n        checkReleaseBuilds false\r\n    }\r\n\r\n\r\n}\r\n\r\ndependencies {\r\n    implementation 'com.intuit.ssp:ssp-android:1.0.5'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.nineoldandroids:library:2.4.0'\r\n    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'\r\n    implementation 'com.daimajia.slider:library:1.1.5@aar'\r\n    implementation 'com.squareup.picasso:picasso:2.5.2'\r\n    implementation 'com.github.bumptech.glide:glide:4.11.0'\r\n    implementation 'com.android.support:multidex:1.0.3'\r\n    implementation 'com.karumi:dexter:6.0.0'\r\n    implementation 'com.intuit.sdp:sdp-android:1.0.5'\r\n    implementation 'androidx.appcompat:appcompat:1.4.0'\r\n    implementation 'com.google.android.material:material:1.4.0'\r\n    implementation 'com.github.dhaval2404:imagepicker:2.1'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'\r\n    implementation 'com.google.firebase:firebase-auth:21.0.3'\r\n    implementation 'com.google.firebase:firebase-database:20.0.4'\r\n    implementation 'com.google.firebase:firebase-firestore:24.1.1'\r\n    implementation 'com.google.firebase:firebase-storage:20.0.1'\r\n    implementation 'com.firebaseui:firebase-ui-database:6.2.0'\r\n    testImplementation 'junit:junit:4.+'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.yarolegovich:sliding-root-nav:1.1.1'\r\n    implementation 'com.android.support:multidex:1.0.3'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.squareup.picasso:picasso:2.71828'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.karumi:dexter:4.2.0'\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision c9ece3d0a03c0c3db1944140c40cb9acbcdca99a)
++++ b/app/build.gradle	(date 1650476369823)
+@@ -69,6 +69,8 @@
+     implementation 'de.hdodenhof:circleimageview:3.1.0'
+     implementation 'com.karumi:dexter:4.2.0'
+     implementation fileTree(dir: "libs", include: ["*.jar"])
++    implementation 'com.orhanobut:dialogplus:1.11@aar'
++
+ 
+ 
+ 
+Index: app/src/main/res/layout/dialogcontent.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/dialogcontent.xml b/app/src/main/res/layout/dialogcontent.xml
+new file mode 100644
+--- /dev/null	(date 1650477448739)
++++ b/app/src/main/res/layout/dialogcontent.xml	(date 1650477448739)
+@@ -0,0 +1,83 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    >
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="50dp"
++        android:text="Update Content Panel"
++        android:textSize="25sp"
++        android:gravity="center"
++        android:textColor="#fff"/>
++
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Name"
++        android:id="@+id/tv_R_name"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Time"
++        android:id="@+id/tv_R_time"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Description"
++        android:id="@+id/tv_R_desc"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Instructions"
++        android:id="@+id/tv_R_Ins"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Ingredients"
++        android:id="@+id/tv_R_Ing"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Serving People"
++        android:id="@+id/tv_R_people"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++    <EditText
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="Recipe Image URL"
++        android:id="@+id/tv_R_url"
++        android:layout_marginTop="10dp"
++        android:textSize="20sp"/>
++
++
++    <Button
++        android:layout_width="300dp"
++        android:layout_height="wrap_content"
++        android:text="Update"
++        android:id="@+id/btn_submit"
++        android:textColor="#fff"
++        android:layout_gravity="center"
++        android:textSize="20sp"
++        android:layout_marginTop="10dp"
++        android:layout_marginBottom="10dp"
++        />
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_baseline_search_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_baseline_search_24.xml b/app/src/main/res/drawable/ic_baseline_search_24.xml
+new file mode 100644
+--- /dev/null	(date 1595104248000)
++++ b/app/src/main/res/drawable/ic_baseline_search_24.xml	(date 1595104248000)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?attr/colorControlNormal">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19l-4.99,-5zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z"/>
++</vector>
