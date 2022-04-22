@@ -76,7 +76,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<RecipeModel> recipeModelArrayList;
     ArrayAdapter<String> adapter;
-    String saveCurrentDate,saveCurrentTime,productRandomKey;
+    String productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +85,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         init();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("images");
-        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipe");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipes");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
@@ -102,7 +102,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
-        databaseReference4 = FirebaseDatabase.getInstance().getReference();
         list = new ArrayList<String>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
         spin.setAdapter(adapter);
@@ -230,7 +229,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         //little changes in line 233
                                         long time= System.currentTimeMillis();
                                         String timee=String.valueOf(time);
-                                        databaseReference2.child("recipe").child(UUID).setValue(imageUploadInfo);
+                                        databaseReference2.child(UUID).child("recipe").setValue(imageUploadInfo);
 
                                     }
                                 });

@@ -121,11 +121,9 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference3 = firebaseDatabase.getReference("recipes");
-//       DatabaseReference   userId = databaseReference3.child(USERID);
-//
-//        DatabaseReference zone1Ref = zonesRef.child("ZONE_1");
-//        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
+        databaseReference3 = firebaseDatabase.getReference().child("Recipes");
+        DatabaseReference   userId = databaseReference3.child(USERID).child("recipe");
+
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -146,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         };
-        databaseReference3.addValueEventListener(postListener);
+        userId.addValueEventListener(postListener);
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
