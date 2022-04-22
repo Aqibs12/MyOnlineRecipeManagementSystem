@@ -140,6 +140,7 @@
                     android:paddingLeft="@dimen/_16sdp"
                     android:text=""
                     android:textColorHint="@color/textcolor"
+                    android:src="@drawable/ic_baseline_search_24"
                     android:textCursorDrawable="@drawable/cursor_drawable"
                     android:textSize="@dimen/_12ssp" />
 

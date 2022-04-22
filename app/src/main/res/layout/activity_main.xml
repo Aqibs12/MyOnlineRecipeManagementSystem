@@ -24,5 +24,5 @@
         app:itemTextColor="@color/bnv_tab_item_foreground"
         app:itemBackground="@color/purple_700"
         android:foreground="?attr/selectableItemBackground"
-        app:menu="@menu/nav_bottom" />
+        />
 </RelativeLayout>
