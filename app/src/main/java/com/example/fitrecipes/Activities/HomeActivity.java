@@ -1,6 +1,5 @@
 package com.example.fitrecipes.Activities;
 
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -32,6 +31,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     private EditText et_search;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference, databaseReference3,databaseReference5;
+    private DatabaseReference databaseReference, databaseReference3;
     private static final String USERS = "users";
     private String myUri = "";
     private String uuid = "";
@@ -119,30 +120,30 @@ public class HomeActivity extends AppCompatActivity {
         List<String> data = new ArrayList<>();
 
         List<RecipeModel> mData = new ArrayList<>();
-//        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
-        DatabaseReference   userId = databaseReference3.child(USERID).child("recipe");
 
-        //trying to access child data when push key is unknown
 
-        databaseReference5=databaseReference3.child(USERID);
-        databaseReference5.addValueEventListener(new ValueEventListener() {
+        List<Recipe> recipes = new ArrayList<>();
+        databaseReference3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot itemSnapshot:dataSnapshot.getChildren()){
-                    if(itemSnapshot.exists()){
-// child means the key values in the firebase data
-                        mArrayList.add(itemSnapshot.child("name").getValue().toString());
-                        System.out.println(mArrayList);
-                        //adding it recyclerview
-//                        RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
-//                        mData.add((RecipeModel) mArrayList);
+                mData.clear();
+                recipes.clear();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    RecipeModel university = postSnapshot.getValue(RecipeModel.class);
+                    Recipe recipe = new Recipe(postSnapshot.getKey(),university);
+                    recipes.add(recipe);
 
-                    }
+                    // here you can access to name property like university.name
+
                 }
-//                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
-//                recyclerView.setAdapter(adapter);
+                for(int i=0; i<recipes.size(); i++)
+                {
+                    mData.add(recipes.get(i).getRecipeModel());
+                }
+                adapter = new MyRecyclerViewAdapter(HomeActivity.this,recipes);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -150,29 +151,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-        //end--------------
 
-
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
-                mData.add(post);
-                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
-                recyclerView.setAdapter(adapter);
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w("loadPost:onCancelled", databaseError.toException());
-            }
-
-        };
-//        userId.addValueEventListener(postListener);
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");

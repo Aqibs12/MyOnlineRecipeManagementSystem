@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
 
@@ -221,15 +222,19 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         //
                                         progressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Recipe Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                        RecipeModel imageUploadInfo = new RecipeModel(UUID, TempImageName, RecipeTime,
+                                        RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
-                                        String ImageUploadId = databaseReference.push().getKey();
+                                        String recipeId = databaseReference.push().getKey();
 
                                         //little changes in line 233
                                         long time= System.currentTimeMillis();
-                                        String timee=String.valueOf(time);
-                                        databaseReference2.child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
+                                        String timee = String.valueOf(time);
+
+                                        Recipe recipe = new Recipe(recipeId,recipeModel);
+                                        databaseReference2.child(recipeId).setValue(recipeModel);
+//                                        databaseReference2.child(UUID).setValue(recipeModel);
+//                                        databaseReference2.child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
 
                                     }
                                 });

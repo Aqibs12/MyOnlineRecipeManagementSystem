@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private List<RecipeModel> mData;
+    private List<Recipe> mData;
     private LayoutInflater mInflater;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapter(Context context, List<RecipeModel> data) {
+    public MyRecyclerViewAdapter(Context context, List<Recipe> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -35,8 +36,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RecipeModel recipeModel = mData.get(position);
-//       Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
+        RecipeModel recipeModel = mData.get(position).getRecipeModel();
+        String RecipeId= mData.get(position).getRecipeId();
+       Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
 //        holder.tvRecipeInstructions.setText(recipeModel.recipeI);
 //        holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);
@@ -44,6 +46,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 //        holder.tvRecipeDescription.setText(recipeModel.recipeD);
 //        holder.tvRecipeTime.setText(recipeModel.recipeT);
 
+        holder.delete_icon.setOnClickListener(view -> {
+            FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId).removeValue();
+            mData.remove(position);
+            notifyDataSetChanged();
+        });
 
     }
 
@@ -57,7 +64,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_Recipe_name,tvRecipeTime,tvRecipeDescription,tvRecipeIngredients,tvRecipeSrvPeople,tvRecipeInstructions;
-        ImageView imageView;
+        ImageView imageView, delete_icon;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -68,6 +75,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             tvRecipeSrvPeople = itemView.findViewById(R.id.tv_People);
             tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);
             imageView = itemView.findViewById(R.id.img1);
+            delete_icon = itemView.findViewById(R.id.delete_icon);
         }
 
     }
