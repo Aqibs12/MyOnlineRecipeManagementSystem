@@ -85,7 +85,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         init();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("images");
-        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipes");
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipess");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
@@ -229,7 +229,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         //little changes in line 233
                                         long time= System.currentTimeMillis();
                                         String timee=String.valueOf(time);
-                                        databaseReference2.child(UUID).child("recipe").setValue(imageUploadInfo);
+                                        databaseReference2.child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
 
                                     }
                                 });

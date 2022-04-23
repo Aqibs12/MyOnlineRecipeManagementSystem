@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.activity_drawer)
                 .withMenuOpened(false)
                 .inject();
-
+        final List<String> mArrayList=new ArrayList<>();
         context = this;
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
@@ -121,8 +121,36 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
 //        databaseReference3 = FirebaseDatabase.getInstance().getReference().child("recipes");
         firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference3 = firebaseDatabase.getReference().child("Recipes");
+        databaseReference3 = firebaseDatabase.getReference().child("Recipess");
         DatabaseReference   userId = databaseReference3.child(USERID).child("recipe");
+
+        //trying to access child data when push key is unknown
+
+        databaseReference5=databaseReference3.child(USERID);
+        databaseReference5.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot itemSnapshot:dataSnapshot.getChildren()){
+                    if(itemSnapshot.exists()){
+// child means the key values in the firebase data
+                        mArrayList.add(itemSnapshot.child("name").getValue().toString());
+                        System.out.println(mArrayList);
+                        //adding it recyclerview
+                        RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
+                        mData.add((RecipeModel) mArrayList);
+
+                    }
+                }
+                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        //end--------------
 
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -144,7 +172,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         };
-        userId.addValueEventListener(postListener);
+//        userId.addValueEventListener(postListener);
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
