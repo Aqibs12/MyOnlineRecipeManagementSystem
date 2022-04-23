@@ -6,14 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -29,10 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
+import com.example.fitrecipes.Models.ImagesModel;
+import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
+import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
-import com.example.fitrecipes.Models.Recipe;
-import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,7 +35,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,15 +45,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
-import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 
 public class HomeActivity extends AppCompatActivity {
     private RecipeModel recipeModel;
@@ -71,7 +61,8 @@ public class HomeActivity extends AppCompatActivity {
     TextView name, phone, emailAddress, tv_changePass;
     ImageView iv_pic, iv_edPic;
     RecipeAdapter recipeAdapter;
-    EditText etSearch;
+//    EditText etSearch;
+    SearchView etSearch;
     public Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -87,7 +78,6 @@ public class HomeActivity extends AppCompatActivity {
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
     MyRecyclerViewAdapter adapter;
-    private List<RecipeModel> exampleList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,7 +94,8 @@ public class HomeActivity extends AppCompatActivity {
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
         TextView name1 = findViewById(R.id.name);
-        et_search = findViewById(R.id.et_search);
+        etSearch = findViewById(R.id.et_search);
+//        et_search = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -163,6 +154,22 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         setListeners();
         init();
+
+        // search function
+        etSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                processSearch(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                processSearch(s);
+                return false;
+            }
+        });
+        //search function end
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -209,6 +216,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void processSearch(String s) {
+        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(FirebaseDatabase.getInstance().getReference().child("Recipess").orderByChild("name").startAt(s).endAt(s+"\uf8ff"), RecipeModel.class).build();
+        recipeAdapter=new RecipeAdapter(options);
+        recipeAdapter.startListening();
+        recyclerView.setAdapter(recipeAdapter);
     }
 
     private void setListeners() {
@@ -288,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
         iv_pic = findViewById(R.id.iv_profilePic);
         storage = FirebaseStorage.getInstance();
         iv_edPic = findViewById(R.id.iv_edit);
-        et_search= findViewById(R.id.et_search);
+//        et_search= findViewById(R.id.et_search);
         storageReference = storage.getReference();
 
     }

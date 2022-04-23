@@ -128,7 +128,7 @@
                 android:layout_marginRight="@dimen/_12sdp"
                 android:orientation="horizontal">
 
-                <EditText
+                <SearchView
                     android:id="@+id/et_search"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
