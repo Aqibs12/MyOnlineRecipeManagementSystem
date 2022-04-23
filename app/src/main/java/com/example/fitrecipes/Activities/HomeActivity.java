@@ -140,7 +140,10 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 for(int i=0; i<recipes.size(); i++)
                 {
-                    mData.add(recipes.get(i).getRecipeModel());
+                    if(uuid.equals(recipes.get(i).getRecipeModel().getId()))
+                    {
+                        mData.add(recipes.get(i).getRecipeModel());
+                    }
                 }
                 adapter = new MyRecyclerViewAdapter(HomeActivity.this,recipes);
                 recyclerView.setAdapter(adapter);

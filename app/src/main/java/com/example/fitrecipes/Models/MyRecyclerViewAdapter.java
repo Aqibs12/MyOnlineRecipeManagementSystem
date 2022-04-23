@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Activities.LoginActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,14 +38,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         RecipeModel recipeModel = mData.get(position).getRecipeModel();
+        if(!LoginActivity.UUID.equals(recipeModel.getId()))
+        {
+            holder.delete_icon.setVisibility(View.GONE);
+        }
         String RecipeId= mData.get(position).getRecipeId();
        Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
-//        holder.tvRecipeInstructions.setText(recipeModel.recipeI);
-//        holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);
-//        holder.tvRecipeIngredients.setText(recipeModel.getRecipeIng());
-//        holder.tvRecipeDescription.setText(recipeModel.recipeD);
-//        holder.tvRecipeTime.setText(recipeModel.recipeT);
+        holder.tvRecipeInstructions.setText(recipeModel.recipeI);
+        holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);
+        holder.tvRecipeIngredients.setText(recipeModel.getRecipeIng());
+        holder.tvRecipeDescription.setText(recipeModel.recipeD);
+        holder.tvRecipeTime.setText(recipeModel.recipeT);
 
         holder.delete_icon.setOnClickListener(view -> {
             FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId).removeValue();
