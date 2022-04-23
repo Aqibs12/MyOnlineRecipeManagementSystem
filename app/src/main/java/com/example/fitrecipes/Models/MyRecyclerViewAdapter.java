@@ -56,6 +56,70 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             mData.remove(position);
             notifyDataSetChanged();
         });
+        //ToDO  code for edit and delete func
+     /*        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final DialogPlus dialogPlus=DialogPlus.newDialog(holder.iv_RecipePic.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.dialogcontent))
+                        .setExpanded(true,1100)
+                        .create();
+
+                View myview = dialogPlus.getHolderView();
+                final EditText R_name = myview.findViewById(R.id.tv_R_name);
+                final EditText R_time = myview.findViewById(R.id.tv_R_time);
+                final EditText R_instr = myview.findViewById(R.id.tv_R_Ins);
+                final EditText R_ingred = myview.findViewById(R.id.tv_R_Ing);
+                final EditText R_srv_peop = myview.findViewById(R.id.tv_R_people);
+                final EditText R_Desc = myview.findViewById(R.id.tv_R_desc);
+                final EditText R_Url = myview.findViewById(R.id.tv_R_url);
+                Button submit=myview.findViewById(R.id.btn_submit);
+
+                R_name.setText(model.getName());
+                R_time.setText(model.getRecipeT());
+                R_instr.setText(model.getRecipeI());
+                R_ingred.setText(model.getRecipeIng());
+                R_srv_peop.setText(model.getRecipe_people());
+                R_Desc.setText(model.getRecipeD());
+                R_Url.setText(model.getRecipe_image());
+
+                dialogPlus.show();
+
+                submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Map<String,Object> map=new HashMap<>();
+                        map.put("name",R_name.getText().toString());
+                        map.put("recipeD",R_Desc.getText().toString());
+                        map.put("recipeI",R_instr.getText().toString());
+                        map.put("recipeIng",R_ingred.getText().toString());
+                        map.put("recipeT",R_time.getText().toString());
+                        map.put("recipe_image",R_Url.getText().toString());
+                        map.put("recipe_people",R_srv_peop.getText().toString());
+
+                        FirebaseDatabase.getInstance().getReference().child("recipes")
+                                .child(getRef(position).getKey()).updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        dialogPlus.dismiss();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        dialogPlus.dismiss();
+                                    }
+                                });
+                    }
+                });
+
+
+            }
+        });
+
+
+*/
 
     }
 
