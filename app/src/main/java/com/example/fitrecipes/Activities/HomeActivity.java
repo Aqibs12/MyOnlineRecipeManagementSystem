@@ -136,13 +136,13 @@ public class HomeActivity extends AppCompatActivity {
                         mArrayList.add(itemSnapshot.child("name").getValue().toString());
                         System.out.println(mArrayList);
                         //adding it recyclerview
-                        RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
-                        mData.add((RecipeModel) mArrayList);
+//                        RecipeModel post = dataSnapshot.getValue(RecipeModel.class);
+//                        mData.add((RecipeModel) mArrayList);
 
                     }
                 }
-                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
-                recyclerView.setAdapter(adapter);
+//                adapter = new MyRecyclerViewAdapter(HomeActivity.this,mData);
+//                recyclerView.setAdapter(adapter);
             }
 
             @Override
