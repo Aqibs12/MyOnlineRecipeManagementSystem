@@ -76,10 +76,6 @@ public class UpdateRecipeActivity extends AppCompatActivity {
                 && ingredientModelArrayList.size()!=0
                 && spin.getSelectedItemPosition() != 0
         ) {
-      /*      Toast.makeText(getApplicationContext(), "Data updated successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();*/
         }
     }
 }

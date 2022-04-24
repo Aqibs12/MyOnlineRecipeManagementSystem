@@ -217,7 +217,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
                                             Toast.makeText(VerifyOTPActivity.this, "OTP Sent", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-
                         }
                     });
                 }

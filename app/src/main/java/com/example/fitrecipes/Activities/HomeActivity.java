@@ -95,7 +95,6 @@ public class HomeActivity extends AppCompatActivity {
         USERID = getIntent().getExtras().getString("uuid");
         TextView name1 = findViewById(R.id.name);
         etSearch = findViewById(R.id.et_search);
-//        et_search = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -145,8 +144,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
-
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         mAuth = FirebaseAuth.getInstance();
@@ -174,8 +171,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    RecipeModel recipeModel = dataSnapshot.getValue(RecipeModel.class);
-//                    recipeModelArrayList2.add(recipeModel);
                 }
             }
 
@@ -185,15 +180,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         //things added stop
-
         StorageReference riversRef = storageReference.child("images");
         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             final String[] photoLink = {""};
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
-
-
             }
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -206,8 +198,6 @@ public class HomeActivity extends AppCompatActivity {
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
                         Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
-
-
                     }
                 }
             }
@@ -263,36 +253,7 @@ public class HomeActivity extends AppCompatActivity {
                 choosePicture();
             }
         });
-    /*    et_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                HomeActivity.this.filterQuery(editable.toString());
-
-
-            }
-        });
-*/
     }
-
- /*   private void filterQuery(String text) {
-        ArrayList<RecipeModel> filterdNames = new ArrayList<>();
-        for (RecipeModel s : this.exampleList) {
-            if (s.getName().toLowerCase().contains(text) || s.getRecipeIng().toLowerCase().contains(text)) {
-                filterdNames.add(s);
-            }
-        }
-        this.adapter.setFilter(filterdNames);
-    }*/
 
     private void init() {
 
@@ -302,7 +263,6 @@ public class HomeActivity extends AppCompatActivity {
         iv_pic = findViewById(R.id.iv_profilePic);
         storage = FirebaseStorage.getInstance();
         iv_edPic = findViewById(R.id.iv_edit);
-//        et_search= findViewById(R.id.et_search);
         storageReference = storage.getReference();
 
     }
@@ -329,15 +289,12 @@ public class HomeActivity extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-
     private void uploadPicture() {
         if (imageUri != null) {
             final ProgressDialog pd = new ProgressDialog(this);
             pd.setTitle("Uploading Image.....");
             pd.show();
-           /* final String randomKey = UUID.randomUUID().toString();
-            StorageReference riversRef = storageReference.child("images/" + randomKey);
-*/
+
             try {
                  storageReference = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
                 storageReference.putFile(imageUri)

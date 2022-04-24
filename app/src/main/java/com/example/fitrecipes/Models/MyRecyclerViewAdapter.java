@@ -1,21 +1,31 @@
 package com.example.fitrecipes.Models;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.LoginActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
@@ -33,10 +43,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         View view = mInflater.inflate(R.layout.recipesrvlayout, parent, false);
         return new ViewHolder(view);
     }
-
+    //public void onBindViewHolder(ViewHolder holder, final int position)
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+     public void onBindViewHolder(ViewHolder holder, final int position){
         RecipeModel recipeModel = mData.get(position).getRecipeModel();
         if(!LoginActivity.UUID.equals(recipeModel.getId()))
         {
@@ -57,13 +67,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             notifyDataSetChanged();
         });
         //ToDO  code for edit and delete func
-     /*        holder.edit.setOnClickListener(new View.OnClickListener() {
+          holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final DialogPlus dialogPlus=DialogPlus.newDialog(holder.iv_RecipePic.getContext())
-                        .setContentHolder(new ViewHolder(R.layout.dialogcontent))
-                        .setExpanded(true,1100)
+
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.imageView.getContext())
+                        .setContentHolder(new com.orhanobut.dialogplus.ViewHolder(R.layout.dialogcontent))
+                        .setExpanded(true,1200)
                         .create();
+                dialogPlus.show();
 
                 View myview = dialogPlus.getHolderView();
                 final EditText R_name = myview.findViewById(R.id.tv_R_name);
@@ -75,7 +87,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 final EditText R_Url = myview.findViewById(R.id.tv_R_url);
                 Button submit=myview.findViewById(R.id.btn_submit);
 
-                R_name.setText(model.getName());
+             /*   R_name.setText(model.getName());
                 R_time.setText(model.getRecipeT());
                 R_instr.setText(model.getRecipeI());
                 R_ingred.setText(model.getRecipeIng());
@@ -97,8 +109,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                         map.put("recipe_image",R_Url.getText().toString());
                         map.put("recipe_people",R_srv_peop.getText().toString());
 
-                        FirebaseDatabase.getInstance().getReference().child("recipes")
-                                .child(getRef(position).getKey()).updateChildren(map)
+                        FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId).updateChildren(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -113,13 +124,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                                 });
                     }
                 });
-
+*/
 
             }
         });
 
 
-*/
+
 
     }
 
@@ -133,7 +144,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_Recipe_name,tvRecipeTime,tvRecipeDescription,tvRecipeIngredients,tvRecipeSrvPeople,tvRecipeInstructions;
-        ImageView imageView, delete_icon;
+        ImageView imageView, delete_icon,edit;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -145,6 +156,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);
             imageView = itemView.findViewById(R.id.img1);
             delete_icon = itemView.findViewById(R.id.delete_icon);
+            edit=(ImageView)itemView.findViewById(R.id.edit_icon);
+
         }
 
     }
