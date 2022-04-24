@@ -12,7 +12,7 @@
         android:text="Update Content Panel"
         android:textSize="25sp"
         android:gravity="center"
-        android:textColor="#fff"/>
+        android:textColor="@color/black"/>
 
     <EditText
         android:layout_width="match_parent"
