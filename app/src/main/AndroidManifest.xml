@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fitrecipes" >
+    package="com.example.fitrecipes">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <application
         android:allowBackup="true"
@@ -15,43 +15,46 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OnlineRecipeManagementSystem" >
+        android:theme="@style/Theme.OnlineRecipeManagementSystem">
+        <activity
+            android:name=".Activities.EditRecipeActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.VerifyOTPActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.SendOTPActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.MyRecipesActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.ForgotPassword"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.ChangePasswordActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.HomeActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activities.ProfileActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activities.AddRecipeActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Activities.SplashActivity"
             android:exported="true"
@@ -62,8 +65,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.SignUpActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".Activities.SignUpActivity"
+            android:launchMode="singleTop" />
 
         <meta-data
             android:name="preloaded_fonts"

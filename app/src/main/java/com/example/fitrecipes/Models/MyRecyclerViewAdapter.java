@@ -16,7 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Activities.EditRecipeActivity;
 import com.example.fitrecipes.Activities.LoginActivity;
+import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
-
+    Context context;
     private List<Recipe> mData;
     private LayoutInflater mInflater;
 
@@ -41,23 +43,27 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public MyRecyclerViewAdapter(Context context, List<Recipe> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.context=context;
     }
+
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recipesrvlayout, parent, false);
         return new ViewHolder(view);
     }
+
     //public void onBindViewHolder(ViewHolder holder, final int position)
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position){
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         RecipeModel recipeModel = mData.get(position).getRecipeModel();
-        if(!LoginActivity.UUID.equals(recipeModel.getId()))
-        {
+        if (!LoginActivity.UUID.equals(recipeModel.getId())) {
             holder.delete_icon.setVisibility(View.GONE);
+            holder.edit.setVisibility(View.GONE);
         }
-        String RecipeId= mData.get(position).getRecipeId();
+
+        String RecipeId = mData.get(position).getRecipeId();
         Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
         holder.tvRecipeInstructions.setText(recipeModel.recipeI);
@@ -73,11 +79,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         });
         //ToDO  code for edit and delete func
         holder.edit.setOnClickListener(new View.OnClickListener() {
-            private DatabaseReference productsRef;
+
             @Override
             public void onClick(View view) {
+                Intent it = new Intent(context, EditRecipeActivity.class);
+                it.putExtra("rid", RecipeId);
+                context.startActivity(it);
 
-                productsRef = FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId);
                 //     applyChanges();
 /*
                 final DialogPlus dialogPlus = DialogPlus.newDialog(holder.imageView.getContext())
@@ -136,41 +144,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 */
 
             }
-          /*  private void applyChanges() {
-                String RecipeName = R_name.getText().toString();
-                // String RecipeImg = R_Url.getText().toString();
-                String RecipeD = R_Desc.getText().toString();
-                String RecipeI = R_instr.getText().toString();
-                String RecipeIng = R_ingred.getText().toString();
-                String RecipeT = R_time.getText().toString();
-                String RecipePeople = R_srv_peop.getText().toString();
-                if (RecipeName.equals("")) {
-                    Toast.makeText(this, "Write down Recipe Name.", Toast.LENGTH_LONG).show();
-                } else if (RecipeD.equals("")) {
-                    Toast.makeText(this, "Write down Recipe Description.", Toast.LENGTH_LONG).show();
-                } else {
-                    HashMap<String, Object> productMap = new HashMap<>();
-                    productMap.put("id", RecipeId);
-                    productMap.put("name", RecipeName);
-                    //productMap.put("recipe_image", RecipeImg);
-                    productMap.put("recipeD", RecipeD);
-                    productMap.put("recipeI", RecipeI);
-                    productMap.put("recipeIng", RecipeIng);
-                    productMap.put("recipeT", RecipeT);
-                    productMap.put("recipe_people", RecipePeople);
-                    productsRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(AdminMaintainProductsActivity.this, "Changes Applied", Toast.LENGTH_SHORT).show();
-                            Intent it = new Intent(AdminMaintainProductsActivity.this, AdminCategoryActivity.class);
-                            startActivity(it);
-                            finish();
-                        }
-                    });
-                }
-            }
 
-*/
+
+
 
         });
     }
@@ -184,8 +160,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_Recipe_name,tvRecipeTime,tvRecipeDescription,tvRecipeIngredients,tvRecipeSrvPeople,tvRecipeInstructions;
-        ImageView imageView, delete_icon,edit;
+        TextView tv_Recipe_name, tvRecipeTime, tvRecipeDescription, tvRecipeIngredients, tvRecipeSrvPeople, tvRecipeInstructions;
+        ImageView imageView, delete_icon, edit;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -197,7 +173,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             tvRecipeInstructions = itemView.findViewById(R.id.tv_Recipe_Instructions);
             imageView = itemView.findViewById(R.id.img1);
             delete_icon = itemView.findViewById(R.id.delete_icon);
-            edit=(ImageView)itemView.findViewById(R.id.edit_icon);
+            edit = (ImageView) itemView.findViewById(R.id.edit_icon);
 
         }
 

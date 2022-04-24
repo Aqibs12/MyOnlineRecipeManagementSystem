@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Update Content Panel"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Name"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Time"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Description"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_Ins"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Instructions"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_Ing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Ingredients"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Serving People"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/edit_tv_R_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Recipe Image URL"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:id="@+id/edit_btn_submit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Update"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+</ScrollView>
