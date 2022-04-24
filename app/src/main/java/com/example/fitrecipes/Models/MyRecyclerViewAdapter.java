@@ -51,14 +51,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     //public void onBindViewHolder(ViewHolder holder, final int position)
     // binds the data to the TextView in each row
     @Override
-     public void onBindViewHolder(ViewHolder holder, final int position){
+    public void onBindViewHolder(ViewHolder holder, final int position){
         RecipeModel recipeModel = mData.get(position).getRecipeModel();
         if(!LoginActivity.UUID.equals(recipeModel.getId()))
         {
             holder.delete_icon.setVisibility(View.GONE);
         }
         String RecipeId= mData.get(position).getRecipeId();
-       Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
+        Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).placeholder(R.drawable.coffee_mugs).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
         holder.tvRecipeInstructions.setText(recipeModel.recipeI);
         holder.tvRecipeSrvPeople.setText(recipeModel.recipe_people);
@@ -72,13 +72,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             notifyDataSetChanged();
         });
         //ToDO  code for edit and delete func
-          holder.edit.setOnClickListener(new View.OnClickListener() {
-              private DatabaseReference productsRef;
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            private DatabaseReference productsRef;
             @Override
             public void onClick(View view) {
 
                 productsRef = FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId);
-           //     applyChanges();
+                //     applyChanges();
 /*
                 final DialogPlus dialogPlus = DialogPlus.newDialog(holder.imageView.getContext())
                         .setContentHolder(new com.orhanobut.dialogplus.ViewHolder(R.layout.dialogcontent))
@@ -172,7 +172,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
 */
 
-    });
+        });
     }
 
     // total number of rows
