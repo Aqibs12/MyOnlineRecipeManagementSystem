@@ -2,6 +2,7 @@ package com.example.fitrecipes.Models;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +19,11 @@ import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.LoginActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
@@ -68,9 +73,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         });
         //ToDO  code for edit and delete func
           holder.edit.setOnClickListener(new View.OnClickListener() {
+              private DatabaseReference productsRef;
             @Override
             public void onClick(View view) {
 
+                productsRef = FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId);
+           //     applyChanges();
+/*
                 final DialogPlus dialogPlus = DialogPlus.newDialog(holder.imageView.getContext())
                         .setContentHolder(new com.orhanobut.dialogplus.ViewHolder(R.layout.dialogcontent))
                         .setExpanded(true,1200)
@@ -85,7 +94,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 final EditText R_srv_peop = myview.findViewById(R.id.tv_R_people);
                 final EditText R_Desc = myview.findViewById(R.id.tv_R_desc);
                 final EditText R_Url = myview.findViewById(R.id.tv_R_url);
-                Button submit=myview.findViewById(R.id.btn_submit);
+                Button submit=myview.findViewById(R.id.btn_submit);*/
 
              /*   R_name.setText(model.getName());
                 R_time.setText(model.getRecipeT());
@@ -127,11 +136,43 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 */
 
             }
-        });
+          /*  private void applyChanges() {
+                String RecipeName = R_name.getText().toString();
+                // String RecipeImg = R_Url.getText().toString();
+                String RecipeD = R_Desc.getText().toString();
+                String RecipeI = R_instr.getText().toString();
+                String RecipeIng = R_ingred.getText().toString();
+                String RecipeT = R_time.getText().toString();
+                String RecipePeople = R_srv_peop.getText().toString();
+                if (RecipeName.equals("")) {
+                    Toast.makeText(this, "Write down Recipe Name.", Toast.LENGTH_LONG).show();
+                } else if (RecipeD.equals("")) {
+                    Toast.makeText(this, "Write down Recipe Description.", Toast.LENGTH_LONG).show();
+                } else {
+                    HashMap<String, Object> productMap = new HashMap<>();
+                    productMap.put("id", RecipeId);
+                    productMap.put("name", RecipeName);
+                    //productMap.put("recipe_image", RecipeImg);
+                    productMap.put("recipeD", RecipeD);
+                    productMap.put("recipeI", RecipeI);
+                    productMap.put("recipeIng", RecipeIng);
+                    productMap.put("recipeT", RecipeT);
+                    productMap.put("recipe_people", RecipePeople);
+                    productsRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(AdminMaintainProductsActivity.this, "Changes Applied", Toast.LENGTH_SHORT).show();
+                            Intent it = new Intent(AdminMaintainProductsActivity.this, AdminCategoryActivity.class);
+                            startActivity(it);
+                            finish();
+                        }
+                    });
+                }
+            }
 
+*/
 
-
-
+    });
     }
 
     // total number of rows
