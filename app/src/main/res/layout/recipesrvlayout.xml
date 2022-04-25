@@ -2,11 +2,17 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/tools"
+    card_view:cardElevation="20dp"
+    card_view:contentPadding="20dp"
+    app:cardBackgroundColor="#388CC1"
+    android:outlineAmbientShadowColor="#BDBDBD"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="16dp"
-    android:backgroundTint="@color/teal_700">
+
+    >
 
 
 
@@ -16,11 +22,10 @@
         android:layout_height="wrap_content"
         android:padding="15dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/img1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_150sdp"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
@@ -29,72 +34,135 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/img1"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Recipe Name"
             android:textColor="#000"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_cook_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_Recipe_name"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Recipe Cook Time :"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_cook_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_Recipe_name"
-            android:text="Recipe Cook Time"
+            android:layout_below="@+id/tv_Recipe_name"
+            android:textAlignment="textEnd"
+            android:layout_toRightOf="@+id/tv_cook_time_text"
+            android:fontFamily="@font/poppins_light"
+            android:text="10 Mins"
             android:textColor="#000"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
+
+        <TextView
+            android:id="@+id/tv_People_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_cook_time"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="No. of Serving People :"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_People"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_cook_time"
-            android:text="No. of Serving People"
+            android:layout_toRightOf="@+id/tv_People_text"
+            android:textAlignment="textEnd"
+            android:fontFamily="@font/poppins_light"
+            android:text="10"
             android:textColor="#000"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_Recipe_Ingredients_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_People"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Recipe Ingredients"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_Recipe_Ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_People"
+            android:layout_below="@id/tv_Recipe_Ingredients_text"
+            android:fontFamily="@font/poppins_light"
             android:text="Recipe Ingredients"
             android:textColor="#000"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_Recipe_Description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_Recipe_Ingredients"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Recipe Description"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_Recipe_Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_Recipe_Ingredients"
+            android:layout_below="@id/tv_Recipe_Description_text"
+            android:fontFamily="@font/poppins_light"
             android:text="Recipe Description"
             android:textColor="#000"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_Recipe_Instructions_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_Recipe_Description"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Recipe Instruction"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_Recipe_Instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_Recipe_Description"
+            android:layout_below="@id/tv_Recipe_Instructions_text"
             android:text="Recipe Instruction"
             android:textColor="#000"
-            android:textSize="25sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/edit_icon"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_below="@id/tv_Recipe_Instructions"
-            android:layout_alignEnd="@+id/tv_Recipe_Instructions"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="65dp"
             android:src="@drawable/ic_baseline_edit_24"/>
+
         <ImageView
             android:id="@+id/delete_icon"
             android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:layout_below="@+id/tv_Recipe_Instructions"
-            android:layout_alignEnd="@+id/tv_Recipe_Instructions"
+            android:layout_toRightOf="@+id/edit_icon"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
             android:src="@drawable/ic_baseline_delete_24" />
     </RelativeLayout>
