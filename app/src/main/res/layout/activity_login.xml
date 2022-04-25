@@ -86,6 +86,7 @@
             android:drawablePadding="@dimen/_16sdp"
             android:fontFamily="@font/poppins_regular"
             android:hint="Email"
+            android:text="aqibs8758@gmail.com"
             android:inputType="textEmailAddress"
             android:paddingStart="30dp"
             android:layout_marginTop="@dimen/_40sdp"

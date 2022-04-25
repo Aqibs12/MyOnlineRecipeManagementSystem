@@ -70,6 +70,8 @@ dependencies {
     implementation 'com.karumi:dexter:4.2.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+    implementation "androidx.cardview:cardview:1.0.0"
+
 
 
 
