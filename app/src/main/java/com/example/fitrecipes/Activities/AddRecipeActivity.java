@@ -65,7 +65,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
     RecyclerView  rvRecipe;
-    DatabaseReference databaseReference ,databaseReference2;
+    DatabaseReference databaseReference ,databaseReference2,databaseReference3;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog;
     public static String UUID = "";
@@ -82,6 +82,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        String[] category = { "Russian", "American", "Thai", "Indonesian",
+                "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
         context = this;
         init();
 
@@ -104,10 +106,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         rvRecipe.setAdapter(recipeAdapter);*/
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
-        list = new ArrayList<String>();
+       // databaseReference3 = FirebaseDatabase.getInstance().getReference().child("spinner");
+        category = new ArrayList<String>();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, category);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
 
@@ -213,8 +215,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                                     public void onSuccess(Uri uri) {
                                         photoLink[0] = uri.toString();
                                         Glide.with(profile_image).load(photoLink[0]).into(profile_image);
+
                                         String TempImageName = name.getText().toString().trim();
                                         String RecipeTime = time.getText().toString().trim();
+                                        String RecipeCategory = spin.toString().trim();
                                         String Recipe_Description = desc.getText().toString().trim();
                                         String Recipe_Instructions = instructions.getText().toString().trim();
                                         String Recipe_Ingredients = ingredient.getText().toString().trim();
@@ -228,7 +232,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         //
                                         progressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Recipe Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                        RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,
+                                        RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,RecipeCategory,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
                                         String recipeId = databaseReference.push().getKey();

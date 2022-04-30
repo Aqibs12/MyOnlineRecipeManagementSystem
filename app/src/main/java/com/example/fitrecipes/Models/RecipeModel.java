@@ -15,10 +15,12 @@ public class RecipeModel implements Serializable {
 RecipeModel(){
 
 }
-    public RecipeModel(String uid, String tempImageName, String recipeTime, String recipe_description, String recipe_instructions, String recipe_ingredients, String recipe_no_serving_people, String url) {
+
+    public RecipeModel(String uid, String tempImageName, String recipeTime,String recipeCategory, String recipe_description, String recipe_instructions, String recipe_ingredients, String recipe_no_serving_people, String url) {
         this.id = uid;
         this.name = tempImageName;
         this.recipeT = recipeTime;
+        this.recipeCategory = recipeCategory;
         this.recipeD = recipe_description;
         this.recipeI = recipe_instructions;
         this.recipeIng = recipe_ingredients;
@@ -29,9 +31,12 @@ RecipeModel(){
 
     UserModel user;
 
+
     public UserModel getUser() {
         return user;
     }
+
+
 
     public void setUser(UserModel user) {
         this.user = user;
@@ -107,4 +112,7 @@ RecipeModel(){
     public void setRecipeCategory(String recipeCategory) {
         this.recipeCategory = recipeCategory;
     }
+
+
+
 }
