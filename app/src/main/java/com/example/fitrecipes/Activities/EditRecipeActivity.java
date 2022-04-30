@@ -42,7 +42,7 @@ public class EditRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String RecipeName = R_name.getText().toString();
-                String RecipeImg = R_Url.getText().toString();
+     //           String RecipeImg = R_Url.getText().toString();
                 String RecipeD = R_Desc.getText().toString();
                 String RecipeI = R_instr.getText().toString();
                 String RecipeIng = R_ingred.getText().toString();
@@ -56,7 +56,7 @@ public class EditRecipeActivity extends AppCompatActivity {
                     HashMap<String, Object> productMap = new HashMap<>();
                     productMap.put("id", RecipeID);
                     productMap.put("name", RecipeName);
-                    productMap.put("recipe_image", RecipeImg);
+       //             productMap.put("recipe_image", RecipeImg);
                     productMap.put("recipeD", RecipeD);
                     productMap.put("recipeI", RecipeI);
                     productMap.put("recipeIng", RecipeIng);
@@ -67,8 +67,9 @@ public class EditRecipeActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(EditRecipeActivity.this, "Changes Applied", Toast.LENGTH_SHORT).show();
                             /*Intent it = new Intent(EditRecipeActivity.this, HomeActivity.class);
+                            it.putExtra("EditUUID",RecipeID);
                             startActivity(it);
-                            finish();*/
+                            recreate();*/
                         }
                     });
                 }

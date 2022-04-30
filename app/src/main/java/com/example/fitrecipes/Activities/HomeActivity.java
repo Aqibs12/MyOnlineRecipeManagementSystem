@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView name, phone, emailAddress, tv_changePass;
     ImageView iv_pic, iv_edPic;
     RecipeAdapter recipeAdapter;
-//    EditText etSearch;
+    //    EditText etSearch;
     SearchView etSearch;
     public Uri imageUri;
     private FirebaseStorage storage;
@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
     MyRecyclerViewAdapter adapter;
+    String EditRecipeId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,10 +90,23 @@ public class HomeActivity extends AppCompatActivity {
                 .withMenuLayout(R.layout.activity_drawer)
                 .withMenuOpened(false)
                 .inject();
-        final List<String> mArrayList=new ArrayList<>();
+        final List<String> mArrayList = new ArrayList<>();
         context = this;
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
+       /* EditRecipeId = getIntent().getExtras().getString("EditUUID");
+        if (EditRecipeId != null) {
+            if (USERID == null) {
+                USERID = EditRecipeId;
+                if (USERID.equals(EditRecipeId)) {
+                    Toast.makeText(context, "Both Ids has been matched", Toast.LENGTH_SHORT).show();
+                //recreate();
+                }
+            }
+
+        }*/
+
+
         TextView name1 = findViewById(R.id.name);
         etSearch = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
@@ -110,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
         List<String> data = new ArrayList<>();
 
         List<RecipeModel> mData = new ArrayList<>();
-        firebaseDatabase=FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
 
 
@@ -120,22 +134,20 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mData.clear();
                 recipes.clear();
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     RecipeModel university = postSnapshot.getValue(RecipeModel.class);
-                    Recipe recipe = new Recipe(postSnapshot.getKey(),university);
+                    Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
 
                     // here you can access to name property like university.name
 
                 }
-                for(int i=0; i<recipes.size(); i++)
-                {
-                    if(uuid.equals(recipes.get(i).getRecipeModel().getId()))
-                    {
+                for (int i = 0; i < recipes.size(); i++) {
+                    if (uuid.equals(recipes.get(i).getRecipeModel().getId())) {
                         mData.add(recipes.get(i).getRecipeModel());
                     }
                 }
-                adapter = new MyRecyclerViewAdapter(HomeActivity.this,recipes);
+                adapter = new MyRecyclerViewAdapter(HomeActivity.this, recipes);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -183,6 +195,7 @@ public class HomeActivity extends AppCompatActivity {
         StorageReference riversRef = storageReference.child("images");
         riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             final String[] photoLink = {""};
+
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
@@ -190,6 +203,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             final String[] photoLink = {""};
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -198,6 +212,7 @@ public class HomeActivity extends AppCompatActivity {
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
                         Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
+          //              Glide.with(HomeActivity.this).load(photoLink[0]).into(iv_pic);
                     }
                 }
             }
@@ -209,8 +224,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void processSearch(String s) {
-        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(FirebaseDatabase.getInstance().getReference().child("Recipess").orderByChild("name").startAt(s).endAt(s+"\uf8ff"), RecipeModel.class).build();
-        recipeAdapter=new RecipeAdapter(options);
+        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(FirebaseDatabase.getInstance().getReference().child("Recipess").orderByChild("name").startAt(s).endAt(s + "\uf8ff"), RecipeModel.class).build();
+        recipeAdapter = new RecipeAdapter(options);
         recipeAdapter.startListening();
         recyclerView.setAdapter(recipeAdapter);
     }
@@ -283,6 +298,7 @@ public class HomeActivity extends AppCompatActivity {
             uploadPicture();
         }
     }
+
     public String GetFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
@@ -296,7 +312,7 @@ public class HomeActivity extends AppCompatActivity {
             pd.show();
 
             try {
-                 storageReference = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
+                storageReference = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
                 storageReference.putFile(imageUri)
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -335,7 +351,7 @@ public class HomeActivity extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-        }else {
+        } else {
             Toast.makeText(HomeActivity.this, "Please Select Image", Toast.LENGTH_LONG).show();
 
         }
