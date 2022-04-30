@@ -65,7 +65,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
     RecyclerView  rvRecipe;
-    DatabaseReference databaseReference ,databaseReference2,databaseReference4;
+    DatabaseReference databaseReference ,databaseReference2;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog;
     public static String UUID = "";
@@ -121,6 +121,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UploadImage();
+
             }
         });
      fetchUserData();
@@ -141,7 +142,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot mydata : snapshot.getChildren())
-                    list.add(mydata.getValue().toString());
+                  list.add(mydata.getValue().toString());
                 adapter.notifyDataSetChanged();
             }
             @Override

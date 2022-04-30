@@ -21,16 +21,24 @@ import java.util.HashMap;
 public class EditRecipeActivity extends AppCompatActivity {
     EditText R_name, R_time, R_instr, R_ingred, R_srv_peop, R_Desc, R_Url;
     Button btnSubmit;
+    private String uuid = "";
+    private String USERID = "";
     private DatabaseReference productsRef;
+    DatabaseReference reference;
     String RecipeID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
         init();
+        uuid = LoginActivity.UUID;
+        USERID = getIntent().getExtras().getString("uuid");
         RecipeID = getIntent().getExtras().getString("rid");
+        reference = FirebaseDatabase.getInstance().getReference("users");
         productsRef = FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeID);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        btnSubmit.
+                setOnClickListener(new View.OnClickListener() {
+          
             @Override
             public void onClick(View view) {
                 String RecipeName = R_name.getText().toString();
