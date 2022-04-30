@@ -106,7 +106,7 @@
             android:background="@drawable/edit_text_without_stroke"
             android:drawablePadding="@dimen/_16sdp"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Password"
+            android:text="123456"
             android:inputType="textPassword"
             android:paddingStart="30dp"
             android:textCursorDrawable="@drawable/cursor_drawable"
