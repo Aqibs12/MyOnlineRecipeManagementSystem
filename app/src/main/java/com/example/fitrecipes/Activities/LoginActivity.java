@@ -71,7 +71,10 @@ public class LoginActivity extends AppCompatActivity {
                     login_email.requestFocus();
                     return;
                 }
-
+                if (password.isEmpty() ) {
+                    login_password.setError("Please Enter Name");
+                    return;
+                }
                 if (!password.equals(password)) {
                     login_password.setError("Password Does not matches....");
                     login_password.requestFocus();

@@ -104,7 +104,9 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
         list = new ArrayList<String>();
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
 
         profile_image.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +162,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         time = findViewById(R.id.time);
         desc = findViewById(R.id.desc);
+        spin = findViewById(R.id.spin);
         instructions = findViewById(R.id.instructions);
         ingredient = findViewById(R.id.ingredients);
         serving = findViewById(R.id.serving);
