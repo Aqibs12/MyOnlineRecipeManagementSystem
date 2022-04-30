@@ -131,6 +131,7 @@
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_regular"
+                                android:entries="@array/array_name"
                                 android:paddingStart="@dimen/_16sdp"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
