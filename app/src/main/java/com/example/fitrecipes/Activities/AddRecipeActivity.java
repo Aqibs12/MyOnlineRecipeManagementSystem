@@ -92,6 +92,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         UUID = getIntent().getExtras().getString("uuid");
 
 
+
+
       /** firebase recyclerview adapter
        *  FirebaseRecyclerOptions<RecipeModel> options =
 
