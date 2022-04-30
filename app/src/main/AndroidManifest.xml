@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineRecipeManagementSystem">
         <activity
+            android:name=".Activities.RecipeDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.EditRecipeActivity"
             android:exported="false" />
         <activity

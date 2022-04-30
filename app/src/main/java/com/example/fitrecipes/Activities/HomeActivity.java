@@ -94,18 +94,6 @@ public class HomeActivity extends AppCompatActivity {
         context = this;
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
-       /* EditRecipeId = getIntent().getExtras().getString("EditUUID");
-        if (EditRecipeId != null) {
-            if (USERID == null) {
-                USERID = EditRecipeId;
-                if (USERID.equals(EditRecipeId)) {
-                    Toast.makeText(context, "Both Ids has been matched", Toast.LENGTH_SHORT).show();
-                //recreate();
-                }
-            }
-
-        }*/
-
 
         TextView name1 = findViewById(R.id.name);
         etSearch = findViewById(R.id.et_search);
@@ -224,7 +212,10 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void processSearch(String s) {
-        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().setQuery(FirebaseDatabase.getInstance().getReference().child("Recipess").orderByChild("name").startAt(s).endAt(s + "\uf8ff"), RecipeModel.class).build();
+        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().
+                setQuery(FirebaseDatabase.getInstance().getReference()
+                        .child("Recipess").orderByChild("name").startAt(s).
+                                endAt(s + "\uf8ff"), RecipeModel.class).build();
         recipeAdapter = new RecipeAdapter(options);
         recipeAdapter.startListening();
         recyclerView.setAdapter(recipeAdapter);

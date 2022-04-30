@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.EditRecipeActivity;
 import com.example.fitrecipes.Activities.LoginActivity;
+import com.example.fitrecipes.Activities.RecipeDetailActivity;
 import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+    public static final String USER_KEY = "user_key";
     Context context;
     private List<Recipe> mData;
     private LayoutInflater mInflater;
@@ -85,6 +87,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 Intent it = new Intent(context, EditRecipeActivity.class);
                 it.putExtra("rid", RecipeId);
                 context.startActivity(it);
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uid = recipeModel.getUser().getId();
+                Intent intent = new Intent(context, RecipeDetailActivity.class);
+                intent.putExtra(USER_KEY, uid);
+                context.startActivity(intent);
             }
         });
     }
