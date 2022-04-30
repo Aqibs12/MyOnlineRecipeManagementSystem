@@ -21,10 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
@@ -33,6 +29,10 @@ import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.animations.DescriptionAnimation;
+import com.glide.slider.library.slidertypes.BaseSliderView;
+import com.glide.slider.library.slidertypes.TextSliderView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -224,8 +224,7 @@ public class HomeActivity extends AppCompatActivity {
             // initialize a SliderLayout
             textSliderView
                     .description(recipeModel.getName())
-                    .image(recipeModel.getRecipe_image())
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
+                    .image(recipeModel.getRecipe_image());
 
             //add your extra information
             textSliderView.bundle(new Bundle());
@@ -244,7 +243,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
 
-            sliderLayout.addSlider(textSliderView);
+           sliderLayout.addSlider(textSliderView);
 
         }
     }

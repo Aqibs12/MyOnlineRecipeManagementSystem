@@ -55,6 +55,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
        // holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
+
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

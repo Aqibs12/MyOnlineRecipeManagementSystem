@@ -72,7 +72,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 context.startActivity(it);
             }
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String uid = recipeModel.getUser().getId();
@@ -80,7 +80,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                // intent.putExtra(USER_KEY, uid);
                // context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     // total number of rows
