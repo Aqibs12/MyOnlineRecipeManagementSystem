@@ -98,7 +98,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 new FirebaseRecyclerOptions.Builder<RecipeModel>()
                         .setQuery(FirebaseDatabase.getInstance().getReference("recipes"), RecipeModel.class)
                         .build();
-        recipeAdapter = new RecipeAdapter(options);
+        recipeAdapter = new OriginalRecipeAdapter(options);
         rvRecipe.setAdapter(recipeAdapter);*/
 
 

@@ -21,10 +21,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
             // Or, if you prefer, you can continue to check for errors in release builds,
             // but continue the build even when errors are found:
-
         }
     }
     compileOptions {
@@ -34,7 +32,6 @@ android {
     lint {
         checkReleaseBuilds false
     }
-
 
 }
 
@@ -73,11 +70,5 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation "androidx.cardview:cardview:1.0.0"
-
-
-
-
-
-
 
 }

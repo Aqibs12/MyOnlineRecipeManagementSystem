@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,9 +83,10 @@ public class SendOTPActivity extends AppCompatActivity {
 
                     @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
+
                         progressBar.setVisibility(View.GONE);
                         btnGetOtp.setVisibility(View.VISIBLE);
-                        Toast.makeText(SendOTPActivity.this, "Error OTP", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendOTPActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
 

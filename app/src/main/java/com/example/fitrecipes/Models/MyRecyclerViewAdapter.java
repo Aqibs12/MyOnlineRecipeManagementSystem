@@ -1,39 +1,22 @@
 package com.example.fitrecipes.Models;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.EditRecipeActivity;
 import com.example.fitrecipes.Activities.LoginActivity;
-import com.example.fitrecipes.Activities.RecipeDetailActivity;
-import com.example.fitrecipes.Activities.MyRecipesActivity;
 import com.example.fitrecipes.R;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.ViewHolder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
     public static final String USER_KEY = "user_key";
@@ -93,9 +76,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             @Override
             public void onClick(View v) {
                 String uid = recipeModel.getUser().getId();
-                Intent intent = new Intent(context, RecipeDetailActivity.class);
-                intent.putExtra(USER_KEY, uid);
-                context.startActivity(intent);
+               // Intent intent = new Intent(context, RecipeDetailActivity.class);
+               // intent.putExtra(USER_KEY, uid);
+               // context.startActivity(intent);
             }
         });
     }

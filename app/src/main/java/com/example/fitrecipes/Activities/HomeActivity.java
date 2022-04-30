@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
+import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 import com.example.fitrecipes.Models.Recipe;
@@ -77,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
     private String uuid = "";
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
-    MyRecyclerViewAdapter adapter;
+    OriginalRecipeAdapter adapter;
     String EditRecipeId;
 
     @Override
@@ -135,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
                         mData.add(recipes.get(i).getRecipeModel());
                     }
                 }
-                adapter = new MyRecyclerViewAdapter(HomeActivity.this, recipes);
+                adapter = new OriginalRecipeAdapter(recipes,HomeActivity.this);
                 recyclerView.setAdapter(adapter);
             }
 

@@ -1,6 +1,8 @@
 package com.example.fitrecipes.Models;
 
-public class RecipeModel {
+import java.io.Serializable;
+
+public class RecipeModel implements Serializable {
     String id;
     String name;
     String recipeT;
@@ -9,6 +11,7 @@ public class RecipeModel {
     String recipeIng;
     String recipe_people;
     String recipe_image;
+    String recipeCategory;
 RecipeModel(){
 
 }
@@ -96,5 +99,12 @@ RecipeModel(){
 
     public void setRecipe_image(String recipe_image) {
         this.recipe_image = recipe_image;
+    }
+
+    public String getRecipeCategory() {
+        return recipeCategory;
+    }
+    public void setRecipeCategory(String recipeCategory) {
+        this.recipeCategory = recipeCategory;
     }
 }
