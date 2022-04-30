@@ -82,6 +82,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
+        String[] category = { "Russian", "American", "Thai", "Indonesian",
+                "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
         context = this;
         init();
 
@@ -107,7 +109,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("spinner");
         list = new ArrayList<String>();
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, category);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
 

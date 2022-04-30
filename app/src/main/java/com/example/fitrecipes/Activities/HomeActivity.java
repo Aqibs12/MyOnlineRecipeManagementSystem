@@ -23,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
@@ -51,7 +49,6 @@ import com.google.firebase.storage.UploadTask;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,18 +127,17 @@ public class HomeActivity extends AppCompatActivity {
                     RecipeModel university = postSnapshot.getValue(RecipeModel.class);
                     Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
+
                     // here you can access to name property like university.name
+
                 }
                 for (int i = 0; i < recipes.size(); i++) {
                     if (uuid.equals(recipes.get(i).getRecipeModel().getId())) {
                         mData.add(recipes.get(i).getRecipeModel());
-                        sliderRecipeList.add(recipes.get(i).getRecipeModel());
                     }
                 }
-                setSlider();
                 adapter = new OriginalRecipeAdapter(recipes,HomeActivity.this);
                 recyclerView.setAdapter(adapter);
-
             }
 
             @Override
@@ -214,39 +210,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-    }
-
-    private void setSlider(){
-        sliderLayout.removeAllSliders();
-        for (RecipeModel recipeModel:sliderRecipeList) {
-
-            TextSliderView textSliderView = new TextSliderView(context);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(recipeModel.getName())
-                    .image(recipeModel.getRecipe_image())
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
-
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", recipeModel.getName());
-
-
-            textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(BaseSliderView slider) {
-
-                    // open detail page activity and pass the clicked recipe object in the intent *//*
-                    Intent it=new Intent(context, RecipeDetailsActivity.class);
-                    it.putExtra("model",recipeModel);
-     //               startActivity(it);
-                }
-            });
-
-            sliderLayout.addSlider(textSliderView);
-
-        }
     }
 
     private void processSearch(String s) {
