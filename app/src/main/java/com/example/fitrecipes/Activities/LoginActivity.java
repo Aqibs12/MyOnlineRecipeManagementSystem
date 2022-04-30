@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 if (password.isEmpty() ) {
-                    login_password.setError("Please Enter Name");
+                    login_password.setError("Please Enter Password");
                     return;
                 }
                 if (!password.equals(password)) {
