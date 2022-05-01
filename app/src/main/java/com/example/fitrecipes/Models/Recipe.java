@@ -1,6 +1,8 @@
 package com.example.fitrecipes.Models;
 
-public class Recipe {
+import java.io.Serializable;
+
+public class Recipe implements Serializable {
     String recipeId;
     RecipeModel recipeModel;
 

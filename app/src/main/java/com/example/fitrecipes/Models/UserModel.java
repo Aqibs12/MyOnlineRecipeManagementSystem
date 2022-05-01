@@ -2,7 +2,9 @@ package com.example.fitrecipes.Models;
 
 import android.widget.EditText;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
 
     public UserModel() {
     }

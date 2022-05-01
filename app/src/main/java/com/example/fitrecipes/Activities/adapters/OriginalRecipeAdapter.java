@@ -15,8 +15,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 
 import java.util.ArrayList;
@@ -28,12 +30,14 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
     private List<Recipe> exampleList;
     public List<Recipe> exampleListFull;
+    String uuid;
     Context context;
 
-    public OriginalRecipeAdapter(List<Recipe> exampleList, Context context)
+    public OriginalRecipeAdapter(List<Recipe> exampleList, String uuid, Context context)
     {
         this.exampleList = exampleList;
         this.context =  context;
+        this.uuid = uuid;
         this.exampleListFull=exampleList;
 
     }
@@ -50,17 +54,18 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
 
 
-        position = holder.getAdapterPosition();
+
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
-       // holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
+        holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
 
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context, RecipeModel.class);
-                //intent.putExtra("model",exampleListFull.get(holder.getAdapterPosition()));
+                Intent intent= new Intent(context, RecipeDetailsActivity.class);
+                intent.putExtra("recipe",exampleListFull.get(holder.getAdapterPosition()));
+                intent.putExtra("uuid",uuid);
                 context.startActivity(intent);
             }
         });

@@ -6,26 +6,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.R;
-import com.example.fitrecipes.Util.SessionManager;
 import com.google.android.material.button.MaterialButton;
-import com.viewpagerindicator.CirclePageIndicator;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
     private RecipeModel recipeModel;
+    private Recipe recipe;
     TextView name,desc,inst,cat,ing,ingTitle;
     ImageView image,share;
     MaterialButton edit,btnDelete;
+    String uuid;
     String ingToshow="";
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -44,32 +44,42 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inst=findViewById(R.id.inst);
         cat=findViewById(R.id.cat);
         ing=findViewById(R.id.ing);
-        recipeModel= (RecipeModel) getIntent().getSerializableExtra("model");
+        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        recipeModel = recipe.getRecipeModel();
+        uuid = getIntent().getStringExtra("uuid");
        /* for (int i=0;i<recipeModel.getIngredientModelArrayList().size();i++){
-            ingToshow=ingToshow+"\n"+recipeModel.getIngredientModelArrayList().get(i).getIngredient();
-        }
-        Glide.with(getApplicationContext()).load(recipeModel.getImagesModelArrayList().get(0).getImage()).into(image);
-        name.setText(recipeModel.getName()+"("+recipeModel.getCook_time()+" min)");
-        desc.setText(recipeModel.getDescription());
-        inst.setText(recipeModel.getInstruc());
-        cat.setText(recipeModel.getCategory());
-        ingTitle.setText("Ingredients("+recipeModel.getServing_persons()+" Serving)");*/
+            ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
+
+        }*/
+        ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
+        Glide.with(getApplicationContext()).load(recipeModel.getRecipe_image()).into(image);
+        name.setText(recipeModel.getName()+"("+recipeModel.getRecipeT()+" min)");
+        desc.setText(recipeModel.getRecipeD());
+        inst.setText(recipeModel.getRecipeI());
+        cat.setText(recipeModel.getRecipeCategory());
+        ingTitle.setText("Ingredients("+recipeModel.getRecipe_people()+" Serving)");
         ing.setText(ingToshow);
-//        if (recipeModel.getImagesModelArrayList().size()>1){
+      /*if (recipeModel.getImagesModelArrayList().size()>1){
             mPager.setVisibility(View.VISIBLE);
             image.setVisibility(View.GONE);
-//        }
-//        else {
-//            mPager.setVisibility(View.GONE);
-//            image.setVisibility(View.VISIBLE);
-//        }
+       }
+        else {
+            mPager.setVisibility(View.GONE);
+            image.setVisibility(View.VISIBLE);
+        }*/
+        mPager.setVisibility(View.GONE);
+        image.setVisibility(View.VISIBLE);
         init();
+        if (!uuid.equals(recipeModel.getUser().getId())){
+            edit.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
+        }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(getApplicationContext(), UpdateRecipeActivity.class);
                 //intent.putExtra("model",recipeModel);
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +90,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //DatabaseHelper databaseHelper = new DatabaseHelper(RecipeDetailsActivity.this);
-                                //databaseHelper.deleteRecipe(recipeModel.getId());
-                                Toast.makeText(RecipeDetailsActivity.this,"Recipe Deleted Successfully",Toast.LENGTH_LONG).show();
-                                LocalBroadcastManager.getInstance(RecipeDetailsActivity.this).sendBroadcast(new Intent("delete_recipe"));
+                                FirebaseDatabase.getInstance().getReference().child("Recipess").child(recipe.getRecipeId()).removeValue();
                                 dialog.dismiss();
                                 finish();
                             }
@@ -129,7 +136,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
        /* mPager.setAdapter(new SlidingImage_Adapter(this, recipeModel.getImagesModelArrayList(),"not"));*/
 
-        CirclePageIndicator indicator = (CirclePageIndicator)
+       /* CirclePageIndicator indicator = (CirclePageIndicator)
                 findViewById(R.id.indicator);
 
         indicator.setViewPager(mPager);
@@ -158,6 +165,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
             }
         });
-
+*/
     }
 }

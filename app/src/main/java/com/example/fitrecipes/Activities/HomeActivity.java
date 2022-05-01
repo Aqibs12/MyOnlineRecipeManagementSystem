@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.ImagesModel;
-import com.example.fitrecipes.Models.MyRecyclerViewAdapter;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.glide.slider.library.SliderLayout;
@@ -56,7 +57,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    private RecipeModel recipeModel;
     private SliderLayout sliderLayout;
     private RecyclerView recyclerView;
     ArrayList<RecipeModel> recipeModelArrayList;
@@ -75,19 +75,24 @@ public class HomeActivity extends AppCompatActivity {
     private EditText et_search;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference, databaseReference3;
+    private DatabaseReference databaseReference, databaseReference3, databaseReference2;
     private static final String USERS = "users";
     private String myUri = "";
     private String uuid = "";
     private String USERID = "";
     ArrayList<RecipeModel> recipeModelArrayList2;
     OriginalRecipeAdapter adapter;
+    ProgressBar progressBar;
     String EditRecipeId;
+    private UserModel loggedInUser;
+    private ArrayList<Recipe> recipes;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+        progressBar = findViewById(R.id.progressB);
         databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -111,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
 
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
         List<String> data = new ArrayList<>();
 
@@ -120,10 +125,11 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
 
 
-        List<Recipe> recipes = new ArrayList<>();
+        recipes = new ArrayList<>();
         databaseReference3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                sliderLayout.removeAllSliders();
                 mData.clear();
                 recipes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -132,16 +138,16 @@ public class HomeActivity extends AppCompatActivity {
                     recipes.add(recipe);
                     // here you can access to name property like university.name
                 }
-                for (int i = 0; i < recipes.size(); i++) {
-                    if (uuid.equals(recipes.get(i).getRecipeModel().getId())) {
-                        mData.add(recipes.get(i).getRecipeModel());
+               /* for (int i = 0; i < recipes.size(); i++) {
+                    //if (uuid.equals(recipes.get(i).getRecipeModel().getId())) {
+                        //mData.add(recipes.get(i).getRecipeModel());
                         sliderRecipeList.add(recipes.get(i).getRecipeModel());
-                    }
-                }
-                setSlider();
-                adapter = new OriginalRecipeAdapter(recipes,HomeActivity.this);
-                recyclerView.setAdapter(adapter);
+                    //}
+                }*/
 
+                setSlider();
+                adapter = new OriginalRecipeAdapter(recipes,uuid,HomeActivity.this);
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -154,6 +160,19 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(USERS);
+        databaseReference2 = firebaseDatabase.getReference(USERS).child(USERID);
+        databaseReference2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                progressBar.setVisibility(View.GONE);
+                loggedInUser = snapshot.getValue(UserModel.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         setListeners();
         init();
 
@@ -218,8 +237,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setSlider(){
         sliderLayout.removeAllSliders();
-        for (RecipeModel recipeModel:sliderRecipeList) {
-
+        for (Recipe recipe:recipes) {
+            RecipeModel recipeModel = recipe.getRecipeModel();
             TextSliderView textSliderView = new TextSliderView(context);
             // initialize a SliderLayout
             textSliderView
@@ -238,8 +257,9 @@ public class HomeActivity extends AppCompatActivity {
 
                     // open detail page activity and pass the clicked recipe object in the intent *//*
                     Intent it=new Intent(context, RecipeDetailsActivity.class);
-                    it.putExtra("model",recipeModel);
-     //               startActivity(it);
+                    it.putExtra("recipe",recipe);
+                    it.putExtra("uuid",uuid);
+                    startActivity(it);
                 }
             });
 
@@ -268,7 +288,11 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, AddRecipeActivity.class).putExtra("uuid", USERID));
+                Intent intent = new Intent(context,AddRecipeActivity.class);
+                intent.putExtra("user",loggedInUser);
+                intent.putExtra("uuid",uuid);
+                startActivity(intent);
+                //startActivity(new Intent(context, AddRecipeActivity.class).putExtra("uuid", USERID));
             }
         });
         findViewById(R.id.iv_menu).setOnClickListener(new View.OnClickListener() {

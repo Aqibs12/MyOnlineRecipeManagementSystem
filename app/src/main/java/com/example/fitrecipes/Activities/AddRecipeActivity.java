@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.Recipe;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
 
@@ -76,7 +77,9 @@ public class AddRecipeActivity extends AppCompatActivity {
     ValueEventListener listener;
     ArrayList<String> list;
     ArrayList<RecipeModel> recipeModelArrayList;
+    UserModel userModel;
     ArrayAdapter<String> adapter;
+    String[] category;
     String productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         String[] category = { "Russian", "American", "Thai", "Indonesian",
                 "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
         context = this;
+        userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("images");
@@ -107,7 +111,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
        // databaseReference3 = FirebaseDatabase.getInstance().getReference().child("spinner");
-        category = new ArrayList<String>();
+
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, category);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -218,7 +222,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                                         String TempImageName = name.getText().toString().trim();
                                         String RecipeTime = time.getText().toString().trim();
-                                        String RecipeCategory = spin.toString().trim();
+                                        String RecipeCategory = spin.getSelectedItem().toString();
                                         String Recipe_Description = desc.getText().toString().trim();
                                         String Recipe_Instructions = instructions.getText().toString().trim();
                                         String Recipe_Ingredients = ingredient.getText().toString().trim();
@@ -235,6 +239,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,RecipeCategory,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
+                                        recipeModel.setUser(userModel);
                                         String recipeId = databaseReference.push().getKey();
 
                                         //little changes in line 233
@@ -245,6 +250,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         databaseReference2.child(recipeId).setValue(recipeModel);
 //                                        databaseReference2.child(UUID).setValue(recipeModel);
 //                                        databaseReference2.child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
+                                        finish();
 
                                     }
                                 });

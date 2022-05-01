@@ -77,28 +77,28 @@
         android:orientation="vertical"
         >
 
+        <!--    </androidx.cardview.widget.CardView>-->
         <EditText
             android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_55sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/edit_text_without_stroke"
             android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="@dimen/_16sdp"
             android:fontFamily="@font/poppins_regular"
             android:hint="Email"
-            android:text="aqibs8758@gmail.com"
             android:inputType="textEmailAddress"
             android:paddingStart="30dp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:paddingLeft="30dp"
+            android:shadowRadius="10"
             android:textColor="@color/black"
             android:textColorHint="@android:color/black"
-            android:textSize="@dimen/_13sdp"
-            android:shadowRadius="10"
-            android:paddingLeft="30dp" />
-<!--    </androidx.cardview.widget.CardView>-->
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:textSize="@dimen/_13sdp" />
+
         <EditText
             android:id="@+id/login_password"
             android:layout_width="match_parent"
@@ -106,7 +106,6 @@
             android:background="@drawable/edit_text_without_stroke"
             android:drawablePadding="@dimen/_16sdp"
             android:fontFamily="@font/poppins_regular"
-            android:text="123456"
             android:inputType="textPassword"
             android:paddingStart="30dp"
             android:textCursorDrawable="@drawable/cursor_drawable"
