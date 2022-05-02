@@ -63,7 +63,7 @@ public class MyRecipesActivity extends AppCompatActivity {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RecipeModel recipeModel = postSnapshot.getValue(RecipeModel.class);
                         Recipe recipe = new Recipe(postSnapshot.getKey(), recipeModel);
-                        if (recipeModel.getId() == currentUserID) {
+                      if (recipe.getRecipeModel().getId().equals(currentUserID)) {
                             recipes.add(recipe);
                         }
                     }
