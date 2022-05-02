@@ -25,8 +25,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.UUID;
-
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
     TextView tv_forgotPass, tv_changePass;
@@ -122,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btn_login_guest_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //           loginUser(LoginActivity.this, "", "", "");
             }
         });
         login_email.setOnTouchListener(new View.OnTouchListener() {
