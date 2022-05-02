@@ -63,12 +63,13 @@ public class MyRecipesActivity extends AppCompatActivity {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RecipeModel recipeModel = postSnapshot.getValue(RecipeModel.class);
                         Recipe recipe = new Recipe(postSnapshot.getKey(), recipeModel);
-                        recipes.add(recipe);
+                        if (recipeModel.getId() == currentUserID) {
+                            recipes.add(recipe);
+                        }
                     }
-
                 }
 
-              //  adapter.notifyDataSetChanged();
+               // adapter.notifyDataSetChanged();
                 adapter = new OriginalRecipeAdapter(recipes,uuid,MyRecipesActivity.this);
                 recyclerView.setAdapter(adapter);
             }
