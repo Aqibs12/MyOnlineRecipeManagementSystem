@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -92,6 +93,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_MyRecipes);
+   //     recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.progressB);
         databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
@@ -304,7 +307,11 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(context, MyRecipesActivity.class));
+                Intent intent = new Intent(context,MyRecipesActivity.class);
+                intent.putExtra("user",loggedInUser);
+                intent.putExtra("uuid",uuid);
+                startActivity(intent);
+              //  startActivity(new Intent(context, MyRecipesActivity.class));
             }
         });
 

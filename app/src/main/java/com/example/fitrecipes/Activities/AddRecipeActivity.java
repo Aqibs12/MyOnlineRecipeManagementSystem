@@ -66,7 +66,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
     RecyclerView  rvRecipe;
-    DatabaseReference databaseReference ,databaseReference2,databaseReference3;
+    DatabaseReference databaseReference ,databaseReference2;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog;
     public static String UUID = "";
