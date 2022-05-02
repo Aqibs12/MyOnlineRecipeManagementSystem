@@ -77,7 +77,6 @@ public class MyRecipesActivity extends AppCompatActivity {
                         }
                     }
                 }
-
                // adapter.notifyDataSetChanged();
                 adapter = new OriginalRecipeAdapter(recipes,uuid,MyRecipesActivity.this);
                 recyclerView.setAdapter(adapter);

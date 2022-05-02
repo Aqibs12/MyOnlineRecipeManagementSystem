@@ -20,9 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:fontFamily="@font/poppins_bold"
         android:layout_marginTop="@dimen/_8sdp"
-        android:text="User Name"/>
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_bold"
+        android:text="User Name" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_loggedPic"
@@ -33,15 +34,21 @@
         android:textSize="60sp" />
 
 
-
+    <TextView
+        android:id="@+id/tv_total_recipes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_back"
+        android:layout_alignParentRight="true"
+        android:text="Total Recipes: 12"
+        android:textColor="#515151" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_MyRecipes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_50sdp"
-        android:padding="@dimen/_10sdp"
-        />
+        android:padding="@dimen/_10sdp" />
 
 
 
