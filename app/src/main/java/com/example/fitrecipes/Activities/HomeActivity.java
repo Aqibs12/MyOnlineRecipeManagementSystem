@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -15,6 +18,9 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +46,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,10 +57,12 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +75,9 @@ public class HomeActivity extends AppCompatActivity {
     TextView name, phone, emailAddress, tv_changePass;
     ImageView iv_pic, iv_edPic;
     RecipeAdapter recipeAdapter;
+    private Uri filePathUri;
+    ProgressDialog progressDialog;
+
     //    EditText etSearch;
     SearchView etSearch;
     public Uri imageUri;
@@ -75,8 +87,8 @@ public class HomeActivity extends AppCompatActivity {
     Context context;
     private EditText et_search;
     private FirebaseAuth mAuth;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference, databaseReference3, databaseReference2;
+    private FirebaseDatabase firebaseDatabase,firebaseDatabase1;
+    private DatabaseReference databaseReference, databaseReference3, databaseReference2,databaseReference4;
     private static final String USERS = "users";
     private String myUri = "";
     private String uuid = "";
@@ -94,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview_MyRecipes);
-   //     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //     recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.progressB);
         databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
@@ -106,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
         context = this;
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
-
+        progressDialog = new ProgressDialog(HomeActivity.this);
         TextView name1 = findViewById(R.id.name);
         etSearch = findViewById(R.id.et_search);
         sliderLayout = findViewById(R.id.slider);
@@ -118,6 +130,21 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList = new ArrayList();
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
+        firebaseDatabase1 = FirebaseDatabase.getInstance();
+        //    databaseReference3 = firebaseDatabase1.getReference().child("Recipess");
+        firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String image = snapshot.getValue(String.class);
+                Picasso.get().load(image).into(iv_pic);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
@@ -139,17 +166,9 @@ public class HomeActivity extends AppCompatActivity {
                     RecipeModel university = postSnapshot.getValue(RecipeModel.class);
                     Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
-                    // here you can access to name property like university.name
                 }
-               /* for (int i = 0; i < recipes.size(); i++) {
-                    //if (uuid.equals(recipes.get(i).getRecipeModel().getId())) {
-                        //mData.add(recipes.get(i).getRecipeModel());
-                        sliderRecipeList.add(recipes.get(i).getRecipeModel());
-                    //}
-                }*/
-
                 setSlider();
-                adapter = new OriginalRecipeAdapter(recipes,uuid,HomeActivity.this);
+                adapter = new OriginalRecipeAdapter(recipes, uuid, HomeActivity.this);
                 recyclerView.setAdapter(adapter);
             }
 
@@ -158,6 +177,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         mAuth = FirebaseAuth.getInstance();
@@ -207,15 +227,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         //things added stop
-        StorageReference riversRef = storageReference.child("images");
-        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            final String[] photoLink = {""};
 
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
-            }
-        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             final String[] photoLink = {""};
 
@@ -326,8 +338,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 choosePicture();
             }
+
         });
+
     }
+
 
     private void init() {
 
@@ -415,6 +430,7 @@ public class HomeActivity extends AppCompatActivity {
 
         }
     }
+
 
     private void signOutUser() {
         mAuth.signOut();

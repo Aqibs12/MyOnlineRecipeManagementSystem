@@ -8,7 +8,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
@@ -22,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MyRecipesActivity extends AppCompatActivity {
@@ -33,18 +38,20 @@ public class MyRecipesActivity extends AppCompatActivity {
     private String uuid = "";
     private String USERID = "";
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference1;
     private static final String USERS = "users";
     private String currentUserID = "";
     private UserModel loggedInUser;
     ValueEventListener listener;
     private ArrayList<Recipe> recipes;
+    TextView tvLoggedUser;
+    ImageView iv_LoggedUserPic, iv_BackPress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
-        recyclerView = findViewById(R.id.recyclerview_MyRecipes);
+        init();
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         uuid = LoginActivity.UUID;
@@ -53,7 +60,9 @@ public class MyRecipesActivity extends AppCompatActivity {
         USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("Recipess");
-  //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
+        databaseReference1 = firebaseDatabase.getReference().child("users");
+
+        //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
         recipes = new ArrayList<>();
         listener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,5 +88,37 @@ public class MyRecipesActivity extends AppCompatActivity {
 
             }
         });
+
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            final String[] photoLink = {""};
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (uuid.equals(ds.getKey())) {
+                        tvLoggedUser.setText(ds.child("name").getValue(String.class));
+                        Glide.with(iv_LoggedUserPic).load(photoLink[0]).into(iv_LoggedUserPic);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        iv_BackPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+}
+
+    private void init(){
+        recyclerView = findViewById(R.id.recyclerview_MyRecipes);
+        iv_BackPress = findViewById(R.id.iv_back);
+        iv_LoggedUserPic = findViewById(R.id.iv_loggedPic);
+        tvLoggedUser = findViewById(R.id.tv_loggedInUser);
     }
 }
