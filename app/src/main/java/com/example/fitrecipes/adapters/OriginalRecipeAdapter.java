@@ -1,4 +1,4 @@
-package com.example.fitrecipes.Activities.adapters;
+package com.example.fitrecipes.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
-import com.example.fitrecipes.Models.RecipeModel;
-import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 
 import java.util.ArrayList;

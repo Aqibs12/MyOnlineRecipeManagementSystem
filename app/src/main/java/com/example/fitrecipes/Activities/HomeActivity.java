@@ -4,11 +4,8 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -18,18 +15,14 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
+import com.example.fitrecipes.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.ImagesModel;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeAdapter;
@@ -46,7 +39,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,8 +53,6 @@ import com.squareup.picasso.Picasso;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,7 +135,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
         List<String> data = new ArrayList<>();
@@ -331,9 +320,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context, ProfileActivity.class));
+
             }
         });
-        findViewById(R.id.iv_edit).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_profilePic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choosePicture();
@@ -402,7 +392,7 @@ public class HomeActivity extends AppCompatActivity {
                                         Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
                                         ImagesModel imageUploadInfo = new ImagesModel(uuid,
                                                 photoLink[0]);
-                                        databaseReference.child("recipes").setValue(imageUploadInfo);
+                                        databaseReference.child("profile").setValue(imageUploadInfo);
                                     }
                                 });
                             }

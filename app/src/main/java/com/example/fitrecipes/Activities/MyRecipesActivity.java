@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.fitrecipes.Activities.adapters.OriginalRecipeAdapter;
+import com.example.fitrecipes.adapters.OriginalRecipeAdapter;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.UserModel;
@@ -24,8 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
