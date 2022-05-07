@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         //     recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressBar = findViewById(R.id.progressB);
         databaseReference3 = FirebaseDatabase.getInstance().getReference();
+        databaseReference4 = FirebaseDatabase.getInstance().getReference();
 
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withMenuLayout(R.layout.activity_drawer)
@@ -142,6 +143,7 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
+        databaseReference4 = firebaseDatabase.getReference().child("Profile");
 
 
         recipes = new ArrayList<>();
@@ -218,7 +220,6 @@ public class HomeActivity extends AppCompatActivity {
         //things added stop
 
         databaseReference.addValueEventListener(new ValueEventListener() {
-            final String[] photoLink = {""};
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -227,8 +228,25 @@ public class HomeActivity extends AppCompatActivity {
                         emailAddress.setText(ds.child("email").getValue(String.class));
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
-                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
-          //              Glide.with(HomeActivity.this).load(photoLink[0]).into(iv_pic);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        databaseReference4.addValueEventListener(new ValueEventListener() {
+            final String[] photoLink = {""};
+
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (uuid.equals(ds.getKey())) {
+                        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/fit-recipes-6edce.appspot.com/o/1651906685417.jpg").into(iv_pic);
+
                     }
                 }
             }
@@ -388,11 +406,15 @@ public class HomeActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         photoLink[0] = uri.toString();
-                                        Glide.with(iv_pic).load(photoLink[0]).into(iv_pic);
+                                        Picasso.get().load(photoLink[0]).into(iv_pic);
                                         Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
                                         ImagesModel imageUploadInfo = new ImagesModel(uuid,
                                                 photoLink[0]);
-                                        databaseReference.child("profile").setValue(imageUploadInfo);
+                                        databaseReference4.child(uuid).setValue(imageUploadInfo);
+                                      //  databaseReference.child("profile").setValue(imageUploadInfo);
+
+
+
                                     }
                                 });
                             }
