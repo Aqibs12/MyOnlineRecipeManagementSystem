@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -72,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     //    EditText etSearch;
-    SearchView etSearch;
+    EditText etSearch;
     public Uri imageUri;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -126,7 +128,7 @@ public class HomeActivity extends AppCompatActivity {
         sliderRecipeList = new ArrayList();
         firebaseDatabase1 = FirebaseDatabase.getInstance();
         //    databaseReference3 = firebaseDatabase1.getReference().child("Recipess");
-        firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
+        /*firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String image = snapshot.getValue(String.class);
@@ -138,7 +140,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
         List<String> data = new ArrayList<>();
@@ -148,31 +150,7 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
         databaseReference4 = firebaseDatabase.getReference("Profile").child(USERID);
 
-
-
-
         recipes = new ArrayList<>();
-        databaseReference3.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                sliderLayout.removeAllSliders();
-                mData.clear();
-                recipes.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RecipeModel university = postSnapshot.getValue(RecipeModel.class);
-                    Recipe recipe = new Recipe(postSnapshot.getKey(), university);
-                    recipes.add(recipe);
-                }
-                setSlider();
-                adapter = new OriginalRecipeAdapter(recipes, uuid, HomeActivity.this);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
@@ -183,9 +161,32 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
                 loggedInUser = snapshot.getValue(UserModel.class);
                 findViewById(R.id.fab).setVisibility(View.VISIBLE);
+
+
+                databaseReference3.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        sliderLayout.removeAllSliders();
+                        mData.clear();
+                        recipes.clear();
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            RecipeModel university = postSnapshot.getValue(RecipeModel.class);
+                            Recipe recipe = new Recipe(postSnapshot.getKey(), university);
+                            recipes.add(recipe);
+                        }
+                        setSlider();
+                        adapter = new OriginalRecipeAdapter(recipes, uuid, HomeActivity.this);
+                        recyclerView.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
             }
 
@@ -198,17 +199,25 @@ public class HomeActivity extends AppCompatActivity {
         init();
 
         // search function
-        etSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
-                processSearch(s);
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                processSearch(s);
-                return false;
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (adapter != null) {
+
+                    adapter.getFilter().filter(s);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (adapter != null) {
+                    adapter.getFilter().filter(s);
+                }
             }
         });
         //search function end
@@ -252,7 +261,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String id = snapshot.child("id").getValue(String.class);
                 String image = snapshot.child("userImage").getValue(String.class);
-                Picasso.get().load(image).into(iv_pic);
+                if(image!= null)
+                    Picasso.get().load(image).into(iv_pic);
             }
 
             @Override
@@ -311,15 +321,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void processSearch(String s) {
-        FirebaseRecyclerOptions<RecipeModel> options = new FirebaseRecyclerOptions.Builder<RecipeModel>().
-                setQuery(FirebaseDatabase.getInstance().getReference()
-                        .child("Recipess").orderByChild("name").startAt(s).
-                                endAt(s + "\uf8ff"), RecipeModel.class).build();
-        recipeAdapter = new RecipeAdapter(options);
-        recipeAdapter.startListening();
-        recyclerView.setAdapter(recipeAdapter);
-    }
 
     private void setListeners() {
         findViewById(R.id.tv_logout).setOnClickListener(new View.OnClickListener() {

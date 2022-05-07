@@ -140,7 +140,7 @@
                 android:layout_marginRight="@dimen/_12sdp"
                 android:orientation="horizontal">
 
-                <SearchView
+                <EditText
                     android:id="@+id/et_search"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"
@@ -150,7 +150,7 @@
                     android:hint="Search by ingredients or recipe name"
                     android:paddingStart="@dimen/_16sdp"
                     android:paddingLeft="@dimen/_16sdp"
-                    android:src="@drawable/ic_baseline_search_24"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
                     android:text=""
                     android:textColorHint="@color/textcolor"
                     android:textCursorDrawable="@drawable/cursor_drawable"
