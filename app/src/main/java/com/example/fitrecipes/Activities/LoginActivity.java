@@ -120,7 +120,31 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btn_login_guest_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String guestUserEmail = "guest@gmail.com";
+                String password = "123456";
+
+                myauth.signInWithEmailAndPassword(guestUserEmail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
+                        btnlogin.setVisibility(View.VISIBLE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                            try {
+                                String id = task.getResult().getUser().getUid();
+                                UUID = task.getResult().getUser().getUid();
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid", UUID));
+                                finish();
+                            }catch (Exception e){}
+
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
+
         });
         login_email.setOnTouchListener(new View.OnTouchListener() {
             @Override
