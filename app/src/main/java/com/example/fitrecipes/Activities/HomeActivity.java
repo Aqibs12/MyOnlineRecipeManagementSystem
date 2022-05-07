@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -54,6 +55,8 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -143,7 +146,9 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
-        databaseReference4 = firebaseDatabase.getReference().child("Profile");
+        databaseReference4 = firebaseDatabase.getReference("Profile").child("IyBxybzLHmTz2UGW2LzjuTk5Mz92");
+
+
 
 
         recipes = new ArrayList<>();
@@ -243,12 +248,9 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    if (uuid.equals(ds.getKey())) {
-                        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/fit-recipes-6edce.appspot.com/o/1651906685417.jpg").into(iv_pic);
-
-                    }
-                }
+                String id = snapshot.child("id").getValue(String.class);
+                String image = snapshot.child("userImage").getValue(String.class);
+                Picasso.get().load(image).into(iv_pic);
             }
 
             @Override
@@ -258,8 +260,24 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setSlider(){
+        int sliderLimit = 2;
         sliderLayout.removeAllSliders();
-        for (Recipe recipe:recipes) {
+        ArrayList <Recipe> sliderAllRecipes = new ArrayList<>();
+        sliderAllRecipes.addAll(recipes);
+        Collections.shuffle(sliderAllRecipes);
+        ArrayList<Recipe> sliderSelectedRecipes = new ArrayList<>();
+        if(sliderAllRecipes.size()<=sliderLimit)
+        {
+            sliderSelectedRecipes.addAll(sliderAllRecipes);
+        }
+        else {
+            for(int i = 0; i<sliderLimit;i++){
+                sliderSelectedRecipes.add(sliderAllRecipes.get(i));
+            }
+        }
+
+
+        for (Recipe recipe:sliderSelectedRecipes) {
             RecipeModel recipeModel = recipe.getRecipeModel();
             TextSliderView textSliderView = new TextSliderView(context);
             // initialize a SliderLayout
@@ -330,6 +348,7 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("user",loggedInUser);
                 intent.putExtra("uuid",uuid);
                 startActivity(intent);
+                slidingRootNav.closeMenu();
               //  startActivity(new Intent(context, MyRecipesActivity.class));
             }
         });
