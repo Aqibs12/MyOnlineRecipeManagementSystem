@@ -68,14 +68,14 @@
         android:layout_marginTop="@dimen/_40sdp"
         android:layout_below="@+id/relativeLayout"
         android:gravity="center"/>
+
     <LinearLayout
-        android:layout_below="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/tv"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <!--    </androidx.cardview.widget.CardView>-->
         <EditText
@@ -89,11 +89,11 @@
             android:drawableLeft="@drawable/ic_email"
             android:drawablePadding="@dimen/_16sdp"
             android:fontFamily="@font/poppins_regular"
-            android:text="aqibs8758@gmail.com"
             android:inputType="textEmailAddress"
             android:paddingStart="30dp"
             android:paddingLeft="30dp"
             android:shadowRadius="10"
+            android:hint="Email"
             android:textColor="@color/black"
             android:textColorHint="@android:color/black"
             android:textCursorDrawable="@drawable/cursor_drawable"
@@ -103,34 +103,34 @@
             android:id="@+id/login_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_55sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/edit_text_without_stroke"
+            android:drawableLeft="@drawable/ic_lock"
             android:drawablePadding="@dimen/_16sdp"
-            android:text="123456"
             android:fontFamily="@font/poppins_regular"
+            android:hint="Password"
             android:inputType="textPassword"
             android:paddingStart="30dp"
-            android:textCursorDrawable="@drawable/cursor_drawable"
-            android:drawableLeft="@drawable/ic_lock"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingLeft="30dp"
             android:textColor="@color/black"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
             android:textColorHint="@android:color/black"
-            android:textSize="@dimen/_13sdp"
-            android:paddingLeft="30dp" />
+            android:textCursorDrawable="@drawable/cursor_drawable"
+            android:textSize="@dimen/_13sdp" />
 
         <TextView
             android:id="@+id/tv_frogot_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:gravity="end"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Forgot Password?"
             android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="end"
+            android:text="Forgot Password?"
             android:textColor="@color/black"
-            android:textSize="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_16sdp" />
+            android:textSize="@dimen/_12sdp" />
 
         <ProgressBar
             android:id="@+id/progressB"
@@ -140,8 +140,8 @@
             android:background="@drawable/loading_bar"
             android:foregroundTint="@color/black"
             android:padding="@dimen/_10sdp"
-            android:visibility="gone"
             android:progressTint="@color/white"
+            android:visibility="gone"
 
             />
 
@@ -149,61 +149,59 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="Login"
-            android:onClick="dashBoardLogin"
-            android:textColor="@color/white"
-            android:padding="@dimen/_8sdp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ButtonRounded"
-            android:backgroundTint="@color/red"
             android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:textAllCaps="false"
+            android:backgroundTint="@color/red"
             android:fontFamily="@font/poppins_bold"
+            android:onClick="dashBoardLogin"
+            android:padding="@dimen/_8sdp"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
-            />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ButtonRounded" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login_guest_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guest User"
-            android:textColor="@color/white"
-            android:padding="@dimen/_8sdp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ButtonRounded"
-            android:backgroundTint="#FFC107"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:textAllCaps="false"
+            android:backgroundTint="#FFC107"
             android:fontFamily="@font/poppins_bold"
+            android:padding="@dimen/_8sdp"
+            android:text="Guest User"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
-            />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ButtonRounded" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:weightSum="1"
-            >
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:weightSum="1">
 
             <TextView
-                android:layout_weight="0.4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="end"
                 android:text="Don't have an account?"
                 android:textSize="@dimen/_12sdp"
-                android:gravity="end"
                 app:layout_constraintEnd_toStartOf="@+id/textView"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:layout_weight="0.7"
                 android:id="@+id/tv_signUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:fontFamily="@font/poppins_bold"
                 android:text=" Sign Up"
                 android:textColor="@color/purple_700"
-                android:fontFamily="@font/poppins_bold"
                 android:textSize="@dimen/_12sdp"
                 tools:layout_editor_absoluteX="318dp" />
 
