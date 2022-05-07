@@ -439,7 +439,7 @@ public class HomeActivity extends AppCompatActivity {
                                         Snackbar.make(findViewById(android.R.id.content), "Image Uploaded.", Snackbar.LENGTH_LONG).show();
                                         ImagesModel imageUploadInfo = new ImagesModel(uuid,
                                                 photoLink[0]);
-                                        databaseReference4.child(uuid).setValue(imageUploadInfo);
+                                        databaseReference4.setValue(imageUploadInfo);
                                       //  databaseReference.child("profile").setValue(imageUploadInfo);
 
 
