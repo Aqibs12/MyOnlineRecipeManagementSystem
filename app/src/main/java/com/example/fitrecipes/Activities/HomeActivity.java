@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity {
         List<RecipeModel> mData = new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
-        databaseReference4 = firebaseDatabase.getReference("Profile").child("IyBxybzLHmTz2UGW2LzjuTk5Mz92");
+        databaseReference4 = firebaseDatabase.getReference("Profile").child(USERID);
 
 
 
@@ -364,6 +364,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         findViewById(R.id.iv_profilePic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+
+        });
+
+        findViewById(R.id.iv_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 choosePicture();
