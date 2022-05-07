@@ -50,12 +50,10 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
 
-
-
-
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
+        if(exampleListFull.get(position).getRecipeModel().getUser()!=null)
         holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
 
         holder.img.setOnClickListener(new View.OnClickListener() {

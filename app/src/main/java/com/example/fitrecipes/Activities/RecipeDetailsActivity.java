@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,6 +30,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     String ingToshow="";
     private static ViewPager mPager;
     private static int currentPage = 0;
+    UserModel userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         ing=findViewById(R.id.ing);
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
+        userModel = (UserModel) getIntent().getSerializableExtra("user");
         uuid = getIntent().getStringExtra("uuid");
        /* for (int i=0;i<recipeModel.getIngredientModelArrayList().size();i++){
             ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
@@ -77,8 +80,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getApplicationContext(), UpdateRecipeActivity.class);
+                //Intent intent= new Intent(getApplicationContext(), UpdateRecipeActivity.class);
                 //intent.putExtra("model",recipeModel);
+
                 //startActivity(intent);
             }
         });

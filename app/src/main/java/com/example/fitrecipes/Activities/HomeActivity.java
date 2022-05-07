@@ -185,6 +185,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 progressBar.setVisibility(View.GONE);
                 loggedInUser = snapshot.getValue(UserModel.class);
+                findViewById(R.id.fab).setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -260,7 +262,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setSlider(){
-        int sliderLimit = 2;
+        int sliderLimit = 8;
         sliderLayout.removeAllSliders();
         ArrayList <Recipe> sliderAllRecipes = new ArrayList<>();
         sliderAllRecipes.addAll(recipes);
@@ -299,6 +301,7 @@ public class HomeActivity extends AppCompatActivity {
                     Intent it=new Intent(context, RecipeDetailsActivity.class);
                     it.putExtra("recipe",recipe);
                     it.putExtra("uuid",uuid);
+                    it.putExtra("user",loggedInUser);
                     startActivity(it);
                 }
             });
