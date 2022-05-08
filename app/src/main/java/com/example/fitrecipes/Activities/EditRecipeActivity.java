@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fitrecipes.Models.Recipe;
+import com.example.fitrecipes.Models.RecipeModel;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +29,9 @@ public class EditRecipeActivity extends AppCompatActivity {
     private DatabaseReference productsRef;
     DatabaseReference reference;
     String RecipeID;
+    UserModel loggedInUser;
+    Recipe recipe;
+    RecipeModel recipeModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +40,11 @@ public class EditRecipeActivity extends AppCompatActivity {
         uuid = LoginActivity.UUID;
         USERID = getIntent().getExtras().getString("uuid");
         RecipeID = getIntent().getExtras().getString("rid");
-        reference = FirebaseDatabase.getInstance().getReference("users");
-        productsRef = FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeID);
+
+        loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
+        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        recipeModel = recipe.getRecipeModel();
+
         btnSubmit.
                 setOnClickListener(new View.OnClickListener() {
           

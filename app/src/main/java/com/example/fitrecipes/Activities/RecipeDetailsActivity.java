@@ -73,15 +73,18 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         mPager.setVisibility(View.GONE);
         image.setVisibility(View.VISIBLE);
         init();
-        if (!uuid.equals(recipeModel.getUser().getId())){
-            edit.setVisibility(View.GONE);
-            btnDelete.setVisibility(View.GONE);
+        if (recipeModel.getUser() != null) {
+            if (!uuid.equals(recipeModel.getUser().getId())) {
+                edit.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+            }
         }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent= new Intent(getApplicationContext(), UpdateRecipeActivity.class);
-                //intent.putExtra("model",recipeModel);
+                Intent intent= new Intent(getApplicationContext(), EditRecipeActivity.class);
+                intent.putExtra("recipe",recipe);
+                intent.putExtra("user",userModel);
 
                 //startActivity(intent);
             }
