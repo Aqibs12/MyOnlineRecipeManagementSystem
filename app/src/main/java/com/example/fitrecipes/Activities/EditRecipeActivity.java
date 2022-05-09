@@ -28,20 +28,20 @@ public class EditRecipeActivity extends AppCompatActivity {
     private String uuid = "";
     private String USERID = "";
     private DatabaseReference productsRef;
-    DatabaseReference reference;
-
+    private FirebaseDatabase firebaseDatabase;
     Recipe recipe;
     RecipeModel recipeModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_recipe);
-        init();
         uuid = LoginActivity.UUID;
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
+      //  productsRef = FirebaseDatabase.getInstance().getReference();
+//        productsRef = firebaseDatabase.getReference().child("Recipess");
     /*    USERID = getIntent().getExtras().getString(recipeModel.getUser().getId());
         RecipeID = getIntent().getExtras().getString(recipe.getRecipeId());
 
@@ -98,10 +98,16 @@ public class EditRecipeActivity extends AppCompatActivity {
         R_ingred = findViewById(R.id.edit_tv_R_Ing);
         R_srv_peop = findViewById(R.id.edit_tv_R_people);
         R_Desc = findViewById(R.id.edit_tv_R_desc);
-        R_Url = findViewById(R.id.edit_tv_R_url);
+     //   R_Url = findViewById(R.id.edit_tv_R_url);
         btnSubmit = findViewById(R.id.edit_btn_submit);
 
         R_name.setText(recipeModel.getName());
+        R_time.setText(recipeModel.getRecipeT());
+        R_instr.setText(recipeModel.getRecipeI());
+        R_ingred.setText(recipeModel.getRecipeIng());
+        R_srv_peop.setText(recipeModel.getRecipe_people());
+        R_Desc.setText(recipeModel.getRecipeD());
+
 
     }
 }

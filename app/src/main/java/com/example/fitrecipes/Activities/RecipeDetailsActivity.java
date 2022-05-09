@@ -18,6 +18,7 @@ import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
@@ -30,6 +31,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     String ingToshow="";
     private static ViewPager mPager;
     private static int currentPage = 0;
+    String USERID;
+    String loggedInUser;
     UserModel userModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inst=findViewById(R.id.inst);
         cat=findViewById(R.id.cat);
         ing=findViewById(R.id.ing);
+        uuid = LoginActivity.UUID;
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
         userModel = (UserModel) getIntent().getSerializableExtra("user");
+        loggedInUser = userModel.getId();
         uuid = getIntent().getStringExtra("uuid");
        /* for (int i=0;i<recipeModel.getIngredientModelArrayList().size();i++){
             ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
@@ -74,9 +79,10 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         image.setVisibility(View.VISIBLE);
         init();
         if (recipeModel.getUser() != null) {
-            if (!uuid.equals(recipeModel.getUser().getId())) {
+            if (!loggedInUser.equals(recipeModel.getUser().getId())) {
                 edit.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.GONE);
+
             }
         }
         edit.setOnClickListener(new View.OnClickListener() {

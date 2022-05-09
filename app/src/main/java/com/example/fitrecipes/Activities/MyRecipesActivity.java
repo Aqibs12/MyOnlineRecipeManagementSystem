@@ -76,7 +76,7 @@ public class MyRecipesActivity extends AppCompatActivity {
                 }
                // adapter.notifyDataSetChanged();
                 ((TextView) findViewById(R.id.tv_total_recipes)).setText("Total Recipes: "+recipes.size());
-                adapter = new OriginalRecipeAdapter(recipes,uuid,MyRecipesActivity.this);
+                adapter = new OriginalRecipeAdapter(recipes,userModel,MyRecipesActivity.this);
                 recyclerView.setAdapter(adapter);
             }
 
