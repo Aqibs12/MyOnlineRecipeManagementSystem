@@ -29,8 +29,7 @@ public class EditRecipeActivity extends AppCompatActivity {
     private String USERID = "";
     private DatabaseReference productsRef;
     DatabaseReference reference;
-    String RecipeID;
-    String loggedInUser;
+
     Recipe recipe;
     RecipeModel recipeModel;
     @Override
@@ -41,10 +40,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         uuid = LoginActivity.UUID;
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
-        RecipeID = recipe.getRecipeId();
-        userModel = (UserModel) getIntent().getSerializableExtra("users");
-        loggedInUser = uuid;
-        uuid = getIntent().getStringExtra("uuid");
+        userModel = (UserModel) getIntent().getSerializableExtra("user");
+        init();
     /*    USERID = getIntent().getExtras().getString(recipeModel.getUser().getId());
         RecipeID = getIntent().getExtras().getString(recipe.getRecipeId());
 
@@ -70,7 +67,7 @@ public class EditRecipeActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Write down Recipe Description.", Toast.LENGTH_LONG).show();
                 } else {
                     HashMap<String, Object> productMap = new HashMap<>();
-                    productMap.put("id", RecipeID);
+                    productMap.put("id", recipe.getRecipeId());
                     productMap.put("name", RecipeName);
        //             productMap.put("recipe_image", RecipeImg);
                     productMap.put("recipeD", RecipeD);
@@ -103,5 +100,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         R_Desc = findViewById(R.id.edit_tv_R_desc);
         R_Url = findViewById(R.id.edit_tv_R_url);
         btnSubmit = findViewById(R.id.edit_btn_submit);
+
+        R_name.setText(recipeModel.getName());
+
     }
 }

@@ -177,7 +177,7 @@ public class HomeActivity extends AppCompatActivity {
                             recipes.add(recipe);
                         }
                         setSlider();
-                        adapter = new OriginalRecipeAdapter(recipes, uuid, HomeActivity.this);
+                        adapter = new OriginalRecipeAdapter(recipes, loggedInUser, HomeActivity.this);
                         recyclerView.setAdapter(adapter);
                         progressBar.setVisibility(View.GONE);
                     }

@@ -27,7 +27,6 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     ImageView image,share;
     MaterialButton edit,btnDelete;
     String uuid;
-    private UserModel loggedInUser;
     String ingToshow="";
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -85,10 +84,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent= new Intent(getApplicationContext(), EditRecipeActivity.class);
                 intent.putExtra("recipe",recipe);
-                intent.putExtra("recipess",recipeModel);
-                intent.putExtra("users",userModel);
-                intent.putExtra("user",loggedInUser);
-
+                intent.putExtra("user",userModel);
                 startActivity(intent);
             }
         });

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
+import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 
 import java.util.ArrayList;
@@ -28,14 +29,14 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
     private List<Recipe> exampleList;
     public List<Recipe> exampleListFull;
-    String uuid;
-    Context context;
 
-    public OriginalRecipeAdapter(List<Recipe> exampleList, String uuid, Context context)
+    Context context;
+    UserModel userModel;
+    public OriginalRecipeAdapter(List<Recipe> exampleList, UserModel userModel, Context context)
     {
         this.exampleList = exampleList;
         this.context =  context;
-        this.uuid = uuid;
+        this.userModel = userModel;
         this.exampleListFull=exampleList;
 
     }
@@ -61,7 +62,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
             public void onClick(View v) {
                 Intent intent= new Intent(context, RecipeDetailsActivity.class);
                 intent.putExtra("recipe",exampleListFull.get(holder.getAdapterPosition()));
-                intent.putExtra("uuid",uuid);
+                intent.putExtra("user",userModel);
                 context.startActivity(intent);
             }
         });
