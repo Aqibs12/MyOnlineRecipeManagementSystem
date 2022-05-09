@@ -24,12 +24,13 @@ import java.util.HashMap;
 public class EditRecipeActivity extends AppCompatActivity {
     EditText R_name, R_time, R_instr, R_ingred, R_srv_peop, R_Desc, R_Url;
     Button btnSubmit;
+    UserModel userModel;
     private String uuid = "";
     private String USERID = "";
     private DatabaseReference productsRef;
     DatabaseReference reference;
     String RecipeID;
-    UserModel loggedInUser;
+    String loggedInUser;
     Recipe recipe;
     RecipeModel recipeModel;
     @Override
@@ -38,12 +39,18 @@ public class EditRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_recipe);
         init();
         uuid = LoginActivity.UUID;
-        USERID = getIntent().getExtras().getString("uuid");
-        RecipeID = getIntent().getExtras().getString("rid");
+        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        recipeModel = recipe.getRecipeModel();
+        RecipeID = recipe.getRecipeId();
+        userModel = (UserModel) getIntent().getSerializableExtra("users");
+        loggedInUser = uuid;
+        uuid = getIntent().getStringExtra("uuid");
+    /*    USERID = getIntent().getExtras().getString(recipeModel.getUser().getId());
+        RecipeID = getIntent().getExtras().getString(recipe.getRecipeId());
 
         loggedInUser = (UserModel) getIntent().getSerializableExtra("user");
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
-        recipeModel = recipe.getRecipeModel();
+        recipeModel = recipe.getRecipeModel();*/
 
         btnSubmit.
                 setOnClickListener(new View.OnClickListener() {
