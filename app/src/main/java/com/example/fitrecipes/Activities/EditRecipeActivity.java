@@ -40,7 +40,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         recipeModel = recipe.getRecipeModel();
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
-      //  productsRef = FirebaseDatabase.getInstance().getReference();
+        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeId());
 //        productsRef = firebaseDatabase.getReference().child("Recipess");
     /*    USERID = getIntent().getExtras().getString(recipeModel.getUser().getId());
         RecipeID = getIntent().getExtras().getString(recipe.getRecipeId());
@@ -79,6 +79,9 @@ public class EditRecipeActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             Toast.makeText(EditRecipeActivity.this, "Changes Applied", Toast.LENGTH_SHORT).show();
+                            finish();
+                            /*Intent intent = new Intent(EditRecipeActivity.this,HomeActivity.class);
+                            startActivity(intent);*/
                             /*Intent it = new Intent(EditRecipeActivity.this, HomeActivity.class);
                             it.putExtra("EditUUID",RecipeID);
                             startActivity(it);
