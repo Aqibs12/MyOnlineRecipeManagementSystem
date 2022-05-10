@@ -148,6 +148,7 @@
             android:textSize="20sp" />
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/edit_tv_R_url"
             android:layout_width="match_parent"
             android:layout_marginTop="8dp"

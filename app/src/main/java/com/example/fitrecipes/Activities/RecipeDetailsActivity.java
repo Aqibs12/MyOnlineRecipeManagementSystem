@@ -92,6 +92,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 intent.putExtra("recipe",recipe);
                 intent.putExtra("user",userModel);
                 startActivity(intent);
+                finish();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {

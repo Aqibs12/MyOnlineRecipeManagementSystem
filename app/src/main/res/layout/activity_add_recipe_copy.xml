@@ -84,6 +84,31 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
 
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/filledTextField"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter something">
+
+                                <!--this is the actual edit text which takes the input-->
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edit_text"
+                                    android:layout_width="match_parent"
+                                    android:text=""
+                                    android:background="@drawable/edit_text_without_strock"
+                                    android:textCursorDrawable="@drawable/cursor_drawable"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:paddingStart="@dimen/_16sdp"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/_16sdp"
+                                    android:layout_height="wrap_content" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+
                             <EditText
                                 android:id="@+id/serving"
                                 android:layout_width="match_parent"

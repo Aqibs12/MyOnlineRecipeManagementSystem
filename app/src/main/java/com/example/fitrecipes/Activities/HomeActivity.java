@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
         firebaseDatabase1 = FirebaseDatabase.getInstance();
-        //    databaseReference3 = firebaseDatabase1.getReference().child("Recipess");
+        //    databaseReference3 = firebaseDatabase1.getReference(Recipess).child(r);
         /*firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
