@@ -234,11 +234,29 @@ public class AddRecipeActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
+    private boolean isValid(){
+        if(filePathUri== null) {
+            // ask user to upload picture
+            //Toast.makeText()
+            return false;
+        }
+
+
+
+
+
+
+
+        return true;
+    }
+
     public void UploadImage() {
 
-        if (filePathUri != null) {
+        if (isValid()) {
             progressDialog.setTitle("Recipe is Uploading...");
             progressDialog.show();
+
 
             try {
                 StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(filePathUri));
