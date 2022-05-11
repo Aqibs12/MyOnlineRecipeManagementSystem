@@ -116,38 +116,18 @@ public class AddRecipeActivity extends AppCompatActivity {
 
        // databaseReference3 = FirebaseDatabase.getInstance().getReference().child("spinner");
 
-
+       /** Category Adapter */
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, category);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
-        int pos = (int) spin.getSelectedItemId();
-        if (pos > 0) {
-            Toast.makeText(context, "Spinner option is selected", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
-        }
-
-
-  /*      adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,serving_people );
+        /** Serving People Adapter */
+        adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,serving_people );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         serving.setAdapter(adapter1);
-        int position = serving.getSelectedItemPosition();
-        if (position > 0) {
-            Toast.makeText(context, "Serving People option is selected", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
-        }
-
+        /** Cooking Time Adapter */
         adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,cook_time );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         time.setAdapter(adapter2);
-        int position1 = time.getSelectedItemPosition();
-        if (position1 > 0) {
-            Toast.makeText(context, "Cook Time option is selected", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
-        }*/
-
 
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +142,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 UploadImage();
 
 
@@ -236,18 +215,59 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private boolean isValid(){
-        if(filePathUri== null) {
-            // ask user to upload picture
-            //Toast.makeText()
+        if (name.getText().toString().isEmpty()){
+            Toast.makeText(context, "Please Enter Recipe Name", Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        if(filePathUri == null) {
+            // ask user to upload picture
+            Toast.makeText(context, "Please Upload Image", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        if (adapter1 != null){
+            int position = serving.getSelectedItemPosition();
+            if (position > 0) {
+                Toast.makeText(context, "Serving People selected", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Please select Sering People", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
+        }
+        if (adapter2 != null){
+            int position1 = time.getSelectedItemPosition();
+            if (position1 > 0) {
+                Toast.makeText(context, "Cook Time selected", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Please select Time", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        if (adapter != null){
+            int pos = (int) spin.getSelectedItemId();
+            if (pos > 0) {
+                Toast.makeText(context, "Category is selected", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Please select Category", Toast.LENGTH_SHORT).show();
+                return false;
+                }
+        }
+            if (desc.getText().toString().isEmpty()){
+                Toast.makeText(context, "Please Enter Recipe Description", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
+            if (instructions.getText().toString().isEmpty()){
+                Toast.makeText(context, "Please Enter Recipe Instructions", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            if (ingredient.getText().toString().isEmpty()){
+                Toast.makeText(context, "Please Enter Recipe Ingredients", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-
-
+        }
         return true;
     }
 
@@ -317,7 +337,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(AddRecipeActivity.this, "Please Select Recipe Image or Add Recipe Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddRecipeActivity.this, "Please Add All Recipe Details", Toast.LENGTH_LONG).show();
         }
     }
 }

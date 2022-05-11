@@ -112,6 +112,11 @@ public class SignUpActivity extends AppCompatActivity {
                     et_emailAddress.setError("Email Address is Invalid");
                     return;
                 }
+                if (et_password.length()<8){
+                    et_password.setError("Please Enter a valid Password with at least 10 Alphabets");
+                    return;
+
+                }
 
                 if (!password.equals(cPassword)) {
                     et_cPassword.setError("Password Does not matches....");
