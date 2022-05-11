@@ -29,7 +29,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     FirebaseUser user;
     private String newPass;
     private String confirmPass;
-/** Working Pending 11-4-22*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

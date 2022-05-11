@@ -59,9 +59,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddRecipeActivity extends AppCompatActivity {
     RecipeAdapter recipeAdapter;
     Context context;
-    Spinner spin;
+    Spinner spin,time,serving;
     CircleImageView profile_image;
-    EditText name, serving, time, desc, instructions, ingredient;
+    EditText name, desc, instructions, ingredient;
     private Uri filePathUri;
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
@@ -78,15 +78,19 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<String> list;
     ArrayList<RecipeModel> recipeModelArrayList;
     UserModel userModel;
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter,adapter1,adapter2;
     String[] category;
     String productRandomKey;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
-        String[] category = { "Russian", "American", "Thai", "Indonesian",
+        String[] category = { "Select","Russian", "American", "Thai", "Indonesian",
                 "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
+        String[] serving_people = { "Select","1", "2", "3", "4",
+                "5","6","7","8","9","10"};
+        String[] cook_time = { "Select","5 Minutes", "10 Minutes", "15 Minutes", "20 Minutes",
+                "25 Minutes","30 Minutes","35 Minutes","40 Minutes","45 Minutes","50 Minutes"};
         context = this;
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
@@ -116,6 +120,34 @@ public class AddRecipeActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, category);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
+        int pos = (int) spin.getSelectedItemId();
+        if (pos > 0) {
+            Toast.makeText(context, "Spinner option is selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
+        }
+
+
+  /*      adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,serving_people );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        serving.setAdapter(adapter1);
+        int position = serving.getSelectedItemPosition();
+        if (position > 0) {
+            Toast.makeText(context, "Serving People option is selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
+        }
+
+        adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,cook_time );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        time.setAdapter(adapter2);
+        int position1 = time.getSelectedItemPosition();
+        if (position1 > 0) {
+            Toast.makeText(context, "Cook Time option is selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Please select item", Toast.LENGTH_SHORT).show();
+        }*/
+
 
         profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +162,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 UploadImage();
+
 
             }
         });
@@ -221,12 +255,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         Glide.with(profile_image).load(photoLink[0]).into(profile_image);
 
                                         String TempImageName = name.getText().toString().trim();
-                                        String RecipeTime = time.getText().toString().trim();
+                                        String RecipeTime = time.getSelectedItem().toString();
                                         String RecipeCategory = spin.getSelectedItem().toString();
                                         String Recipe_Description = desc.getText().toString().trim();
                                         String Recipe_Instructions = instructions.getText().toString().trim();
                                         String Recipe_Ingredients = ingredient.getText().toString().trim();
-                                        String Recipe_No_Serving_People = serving.getText().toString().trim();
+                                        String Recipe_No_Serving_People = serving.getSelectedItem().toString();
                                         //custom lines added
                                         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                                         if (mFirebaseUser != null) {

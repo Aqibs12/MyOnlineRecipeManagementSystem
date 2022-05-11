@@ -33,8 +33,8 @@ public class ValidationChecks
     public boolean validatePasswordLenght(EditText editText, String message)
     {
         String password = editText.getText().toString().trim();
-        if (password.length()<6) {
-            editText.setError("Password Lenght Must Me Be More Thank 6 Charachter");
+        if (password.length()<8) {
+            editText.setError("Password Lenght Must Me Be More Thank 8 Charachter");
             return false;
         } else {
             return true;

@@ -12,17 +12,37 @@
 
     <string name="view_all_recipes"><u>View All Recipes:</u></string>
     <string-array name="array_name">
-        <item>Thai</item>
-        <item>Indian</item>
-        <item>Chinese</item>
-        <item>Russian</item>
-        <item>Italian</item>
-        <item>Pakistani</item>
-        <item>Indonesian</item>
-        <item>Malaysian</item>
-        <item>Afghani</item>
-        <item>African</item>
-        <item>Maxican</item>
+
+
+    </string-array>
+
+    <string-array name="array_name_serving_people">
+        <item>Select</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+
+    </string-array>
+
+    <string-array name="array_name_cooking_time">
+        <item>Select</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>25 minutes</item>
+        <item>30 minutes</item>
+        <item>35 minutes</item>
+        <item>40 minutes</item>
+        <item>45 minutes</item>
+        <item>50 minutes</item>
 
     </string-array>
 
