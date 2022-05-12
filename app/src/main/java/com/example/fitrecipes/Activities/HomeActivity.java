@@ -128,6 +128,7 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
         firebaseDatabase1 = FirebaseDatabase.getInstance();
+
         //    databaseReference3 = firebaseDatabase1.getReference(Recipess).child(r);
         /*firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,15 +162,18 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference(USERS);
         databaseReference2 = firebaseDatabase.getReference(USERS).child(USERID);
         databaseReference2.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 loggedInUser = snapshot.getValue(UserModel.class);
                 findViewById(R.id.fab).setVisibility(View.VISIBLE);
-                if (emailAddress.equals(guestUserEmail)){
+               /* if (!emailAddress.getText().toString().equals(guestUserEmail)){
                     loggedInUser = snapshot.getValue(UserModel.class);
-                    findViewById(R.id.btn_edit_profile).setVisibility(View.GONE);
+                    findViewById(R.id.btn_edit_profile).setVisibility(View.VISIBLE);
 
-                }
+                }*/
+
+
                 databaseReference3.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

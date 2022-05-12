@@ -134,6 +134,9 @@ public class LoginActivity extends AppCompatActivity {
                                 String id = task.getResult().getUser().getUid();
                                 UUID = task.getResult().getUser().getUid();
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid", UUID));
+                               /* Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                                intent.putExtra("guest@gmail.com",guestUserEmail);
+                                startActivity(intent);*/
                                 finish();
                             }catch (Exception e){}
 
