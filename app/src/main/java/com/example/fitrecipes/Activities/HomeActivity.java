@@ -94,6 +94,7 @@ public class HomeActivity extends AppCompatActivity {
     String EditRecipeId;
     private UserModel loggedInUser;
     private ArrayList<Recipe> recipes;
+    String guestUserEmail = "guest@gmail.com";
 
 
     @Override
@@ -150,6 +151,7 @@ public class HomeActivity extends AppCompatActivity {
         databaseReference3 = firebaseDatabase.getReference().child("Recipess");
         databaseReference4 = firebaseDatabase.getReference("Profile").child(USERID);
 
+
         recipes = new ArrayList<>();
 
         Intent intent = getIntent();
@@ -163,8 +165,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 loggedInUser = snapshot.getValue(UserModel.class);
                 findViewById(R.id.fab).setVisibility(View.VISIBLE);
+                if (emailAddress.equals(guestUserEmail)){
+                    loggedInUser = snapshot.getValue(UserModel.class);
+                    findViewById(R.id.btn_edit_profile).setVisibility(View.GONE);
 
-
+                }
                 databaseReference3.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -244,6 +249,7 @@ public class HomeActivity extends AppCompatActivity {
                         emailAddress.setText(ds.child("email").getValue(String.class));
                         name.setText(ds.child("name").getValue(String.class));
                         phone.setText(ds.child("phone").getValue(String.class));
+
                     }
                 }
             }
