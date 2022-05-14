@@ -113,7 +113,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
                 if (et_password.length()<8){
-                    et_password.setError("Please Enter a valid Password with at least 10 Alphabets");
+                    et_password.setError("Please Enter a valid Password with at least 8 Alphabets");
                     return;
 
                 }

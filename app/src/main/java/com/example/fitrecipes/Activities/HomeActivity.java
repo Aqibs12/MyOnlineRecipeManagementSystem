@@ -167,11 +167,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 loggedInUser = snapshot.getValue(UserModel.class);
                 findViewById(R.id.fab).setVisibility(View.VISIBLE);
-               /* if (!emailAddress.getText().toString().equals(guestUserEmail)){
+                emailAddress.setText(snapshot.child("email").getValue(String.class));
+                if (emailAddress.getText().equals(guestUserEmail) ){
                     loggedInUser = snapshot.getValue(UserModel.class);
-                    findViewById(R.id.btn_edit_profile).setVisibility(View.VISIBLE);
+                    findViewById(R.id.btn_edit_profile).setVisibility(View.GONE);
 
-                }*/
+                }
 
 
                 databaseReference3.addValueEventListener(new ValueEventListener() {
