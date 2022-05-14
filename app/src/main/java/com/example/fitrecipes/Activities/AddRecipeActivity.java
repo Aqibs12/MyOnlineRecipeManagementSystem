@@ -84,12 +84,12 @@ public class AddRecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe);
-        String[] category = { "Select","Russian", "American", "Thai", "Indonesian",
+        setContentView(R.layout.activity_add_recipe_modifications);
+        String[] category = { "Category","Russian", "American", "Thai", "Indonesian",
                 "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
-        String[] serving_people = { "Select","1", "2", "3", "4",
+        String[] serving_people = { "Serving People","1", "2", "3", "4",
                 "5","6","7","8","9","10"};
-        String[] cook_time = { "Select","5 Minutes", "10 Minutes", "15 Minutes", "20 Minutes",
+        String[] cook_time = { "Cook Time","5 Minutes", "10 Minutes", "15 Minutes", "20 Minutes",
                 "25 Minutes","30 Minutes","35 Minutes","40 Minutes","45 Minutes","50 Minutes"};
         context = this;
         userModel = (UserModel) getIntent().getSerializableExtra("user");
