@@ -101,6 +101,16 @@ public class AddRecipeActivity extends AppCompatActivity {
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
 
+        addIng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ingredient.getText().toString().isEmpty()){
+                    Toast.makeText(context, "Please Add Some ingredients", Toast.LENGTH_SHORT).show();
+                }else
+                Toast.makeText(context, "Ingredients Added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
 

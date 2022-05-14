@@ -184,12 +184,12 @@
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
+
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/adding"
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_1sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
                                 android:text="Add Ingredient"
                                 android:layout_gravity="end"
                                 android:textColor="@color/white"
@@ -205,6 +205,7 @@
 
 
                             <androidx.recyclerview.widget.RecyclerView
+                                android:visibility="gone"
                                 android:id="@+id/recyclerIngreditent"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
