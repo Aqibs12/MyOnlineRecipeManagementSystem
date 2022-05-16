@@ -87,7 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 String id = task.getResult().getUser().getUid();
                                 UUID = task.getResult().getUser().getUid();
-                                startActivity(new Intent(getApplicationContext(), SendOTPActivity.class).putExtra("uuid", UUID));
+                                startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid", UUID));
+                               // startActivity(new Intent(getApplicationContext(), SendOTPActivity.class).putExtra("uuid", UUID));
                                 finish();
                             }catch (Exception e){}
 
