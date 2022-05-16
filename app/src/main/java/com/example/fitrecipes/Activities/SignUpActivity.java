@@ -73,83 +73,44 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean check = false;
-                //making variable for validations
-                String fullName = et_fullName.getText().toString().trim();
-                String emailAddress = et_emailAddress.getText().toString().trim();
-                String password = et_password.getText().toString().trim();
-                String cPassword = et_cPassword.getText().toString().trim();
-                String phoneNumber = et_phoneNumber.getText().toString().trim();
-                String signUpQ =  sign_up_question.getText().toString().trim();
-                String signUpA = sign_up_ans.getText().toString().trim();
-                //validate data here
-                if (TextUtils.isEmpty(fullName)) {
-                    check = true;
-                    et_fullName.setError("Please Enter your Name");
-                    return;
-                }
-                if (fullName.length() < 3) {
-                    et_fullName.setError("Please Enter Name");
-                    return;
-                }
-                if (sign_up_question.length() < 3) {
-                    sign_up_question.setError("Please Enter Question");
-                    return;
-                }
-                if (sign_up_ans.length() < 3) {
-                    sign_up_ans.setError("Please Enter Answer");
-                    return;
-                }
-                if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 10) {
-                    et_phoneNumber.setError("Please Enter Phone Number");
-                    return;
-                }
-                if (phoneNumber.length() < 9) {
-                    et_phoneNumber.setError("Please Enter a valid Phone Number with at least 10 digits");
-                    return;
-                }
-                if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
-                    et_emailAddress.setError("Email Address is Invalid");
-                    return;
-                }
-                if (et_password.length()<8){
-                    et_password.setError("Please Enter a valid Password with at least 8 Alphabets");
-                    return;
 
-                }
+                if(isValid()) {
+                    String fullName = et_fullName.getText().toString().trim();
+                    String emailAddress = et_emailAddress.getText().toString().trim();
+                    String password = et_password.getText().toString().trim();
+                    String phoneNumber = et_phoneNumber.getText().toString().trim();
+                    String signUpQ =  sign_up_question.getText().toString().trim();
+                    String signUpA = sign_up_ans.getText().toString().trim();
+                    //making variable for validations
+                    myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName,emailAddress,phoneNumber,password,signUpQ,signUpA);
+                                FirebaseDatabase.getInstance().getReference("users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                            startActivity(intent);
 
-                if (!password.equals(cPassword)) {
-                    et_cPassword.setError("Password Does not matches....");
-                    return;
-                }
-                myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName,emailAddress,phoneNumber,password,signUpQ,signUpA);
-                            FirebaseDatabase.getInstance().getReference("users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                        startActivity(intent);
+                                        } else {
 
-                                    } else {
+                                            Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
-                                        Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                                        }
                                     }
-                                }
-                            });
-                        }else {
-                            Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }else {
+                                Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
 
+                }
             }
         });
         et_fullName.setOnTouchListener(new View.OnTouchListener() {
@@ -259,6 +220,58 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isValid(){
+        String fullName = et_fullName.getText().toString().trim();
+        String emailAddress = et_emailAddress.getText().toString().trim();
+        String password = et_password.getText().toString().trim();
+        String cPassword = et_cPassword.getText().toString().trim();
+        String phoneNumber = et_phoneNumber.getText().toString().trim();
+        String signUpQ =  sign_up_question.getText().toString().trim();
+        String signUpA = sign_up_ans.getText().toString().trim();
+        //validate data here
+        if (TextUtils.isEmpty(fullName)) {
+            et_fullName.setError("Please Enter your Name");
+            et_fullName.requestFocus();
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
+            et_emailAddress.setError("Email Address is Invalid");
+            et_emailAddress.requestFocus();
+            return false;
+        }
+
+        if (et_password.length()<8){
+            et_password.setError("Please Enter a valid Password with at least 8 Alphabets");
+            return false;
+        }
+
+        if (!password.equals(cPassword)) {
+            et_cPassword.setError("Password Does not matches....");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 10) {
+            et_phoneNumber.setError("Please Enter Phone Number");
+            return false;
+        }
+        if (phoneNumber.length() < 9) {
+            et_phoneNumber.setError("Please Enter a valid Phone Number with at least 10 digits");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(signUpQ)) {
+            sign_up_question.setError("Please Enter Question");
+           return false;
+        }
+        if (TextUtils.isEmpty(signUpA)) {
+            sign_up_ans.setError("Please Enter Answer");
+            return false;
+        }
+
+        return true;
     }
 
 
