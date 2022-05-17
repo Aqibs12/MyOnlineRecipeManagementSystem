@@ -128,21 +128,6 @@ public class HomeActivity extends AppCompatActivity {
         recipeModelArrayList2 = new ArrayList();
         sliderRecipeList = new ArrayList();
         firebaseDatabase1 = FirebaseDatabase.getInstance();
-
-        //    databaseReference3 = firebaseDatabase1.getReference(Recipess).child(r);
-        /*firebaseDatabase1.getReference().child("image").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String image = snapshot.getValue(String.class);
-                Picasso.get().load(image).into(iv_pic);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
 
         List<String> data = new ArrayList<>();
@@ -173,8 +158,6 @@ public class HomeActivity extends AppCompatActivity {
                     findViewById(R.id.btn_edit_profile).setVisibility(View.GONE);
 
                 }
-
-
                 databaseReference3.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -372,9 +355,18 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context, ProfileActivity.class));
-
+                slidingRootNav.closeMenu();
             }
         });
+
+        findViewById(R.id.btn_credits).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, ActivityCredits.class));
+                slidingRootNav.closeMenu();
+            }
+        });
+
         findViewById(R.id.iv_profilePic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

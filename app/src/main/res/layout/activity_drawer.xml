@@ -111,6 +111,17 @@
             android:drawableLeft="@drawable/ic_baseline_edit_24"
             android:text="Edit Profile" />
 
+        <Button
+            android:id="@+id/btn_credits"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/btn_edit_profile"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#980804"
+            android:drawableLeft="@drawable/ic_baseline_info_24"
+            android:text="App Credits" />
+
         <TextView
             android:id="@+id/tv_logout"
             android:layout_width="wrap_content"
