@@ -38,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button btn_signUp;
     private FirebaseAuth myauth;
     private DatabaseReference mDatabase;
+    String inPut = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
 
     @Override
@@ -245,29 +246,35 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (et_password.length()<8){
             et_password.setError("Please Enter a valid Password with at least 8 Alphabets");
+            et_password.requestFocus();
             return false;
         }
 
         if (!password.equals(cPassword)) {
             et_cPassword.setError("Password Does not matches....");
+            et_cPassword.requestFocus();
             return false;
         }
 
-        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 10) {
+        if (TextUtils.isEmpty(phoneNumber) || phoneNumber.length() < 9) {
             et_phoneNumber.setError("Please Enter Phone Number");
+            et_phoneNumber.requestFocus();
             return false;
         }
         if (phoneNumber.length() < 9) {
             et_phoneNumber.setError("Please Enter a valid Phone Number with at least 10 digits");
+            et_phoneNumber.requestFocus();
             return false;
         }
 
         if (TextUtils.isEmpty(signUpQ)) {
             sign_up_question.setError("Please Enter Question");
+            sign_up_question.requestFocus();
            return false;
         }
         if (TextUtils.isEmpty(signUpA)) {
             sign_up_ans.setError("Please Enter Answer");
+            sign_up_ans.requestFocus();
             return false;
         }
 

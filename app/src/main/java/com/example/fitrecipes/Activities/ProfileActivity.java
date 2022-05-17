@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ public class ProfileActivity extends Activity {
     DatabaseReference reference;
     MaterialButton btn_update;
     TextView tvTotalRecipes;
-    EditText name,phone,emailAddress,password,question,answer;
+    EditText name, phone, emailAddress, password, question, answer;
     ValidationChecks validationChecks = new ValidationChecks();
     Context context;
     String _USERNAME, _Name, _Email, _Phone, _Password, _Question, _Answer;
@@ -42,12 +44,12 @@ public class ProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         context = this;
-        name=findViewById(R.id.name);
-        answer=findViewById(R.id.answer);
-        question=findViewById(R.id.question);
-        password=findViewById(R.id.password);
-        emailAddress=findViewById(R.id.email);
-        phone=findViewById(R.id.phone);
+        name = findViewById(R.id.name);
+        answer = findViewById(R.id.answer);
+        question = findViewById(R.id.question);
+        password = findViewById(R.id.password);
+        emailAddress = findViewById(R.id.email);
+        phone = findViewById(R.id.phone);
         tvTotalRecipes = findViewById(R.id.tv_total_recipes);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(USERS);
@@ -55,8 +57,7 @@ public class ProfileActivity extends Activity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    if(LoginActivity.UUID.equals(ds.getKey()))
-                    {
+                    if (LoginActivity.UUID.equals(ds.getKey())) {
                         _USERNAME = ds.getKey();
                         _Email = ds.child("email").getValue(String.class);
                         _Name = ds.child("name").getValue(String.class);
@@ -83,92 +84,142 @@ public class ProfileActivity extends Activity {
             }
         });
         reference = FirebaseDatabase.getInstance().getReference("users");
-        btn_update=findViewById(R.id.btn_update);
+        btn_update = findViewById(R.id.btn_update);
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validationCheck();
-                if (isEmailChanged() || isNameChanged() || isPhoneChange() || isPasswordChanged() || isQuestionChanged() || isAnswerChanged()){
+                if (isValid()) {
+
+
+                    validationCheck();
+                    if (isEmailChanged() || isNameChanged() || isPhoneChange() || isPasswordChanged() || isQuestionChanged() || isAnswerChanged()) {
 //                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
 //                    startActivity(intent);
-                    onBackPressed();
-                    Toast.makeText(context, "Data has been changed", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
+                        Toast.makeText(context, "Data has been changed", Toast.LENGTH_SHORT).show();
 
-                }else
-                    Toast.makeText(context, "Data is same and can not be changed", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(context, "Data is same and can not be changed", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            private boolean isEmailChanged() {
+                if (!_Email.equals(emailAddress.getText().toString())) {
+                    reference.child(_USERNAME).child("email").setValue(emailAddress.getText().toString());
+                    _Email = emailAddress.getText().toString();
+                    return true;
+
+                } else
+                    return false;
+
+            }
+
+            private boolean isNameChanged() {
+                if (!_Name.equals(name.getText().toString())) {
+                    reference.child(_USERNAME).child("name").setValue(name.getText().toString());
+                    _Name = name.getText().toString();
+                    return true;
+
+                } else
+                    return false;
+
+            }
+
+            private boolean isPhoneChange() {
+                if (!_Phone.equals(phone.getText().toString())) {
+                    reference.child(_USERNAME).child("phone").setValue(phone.getText().toString());
+                    _Phone = phone.getText().toString();
+                    return true;
+                } else
+                    return false;
+
+            }
+
+            private boolean isPasswordChanged() {
+                if (!_Password.equals(password.getText().toString())) {
+                    reference.child(_USERNAME).child("password").setValue(password.getText().toString());
+                    _Password = password.getText().toString();
+                    return true;
+                } else
+                    return false;
+
+            }
+
+            private boolean isQuestionChanged() {
+                if (!_Question.equals(question.getText().toString())) {
+                    reference.child(_USERNAME).child("security_question").setValue(password.getText().toString());
+                    _Question = question.getText().toString();
+                    return true;
+                } else
+                    return false;
+            }
+
+            private boolean isAnswerChanged() {
+                if (!_Answer.equals(answer.getText().toString())) {
+                    reference.child(_USERNAME).child("security_answer").setValue(password.getText().toString());
+                    _Answer = answer.getText().toString();
+                    return true;
+                } else
+                    return false;
+            }
+
+
+            private void validationCheck() {
+                if ((validationChecks.validateAnyName(emailAddress, "Please Enter Email"))
+                        && (validationChecks.validateEmail(emailAddress, "Please Enter Valid Email"))
+                        && (validationChecks.validateAnyName(password, "Please Enter Password"))
+                        && (validationChecks.validateAnyName(name, "Please Enter Name"))
+                        && (validationChecks.validateAnyName(answer, "Please Enter Answer"))
+                        && (validationChecks.validateAnyName(question, "Please Enter Question"))
+                        && (validationChecks.validateAnyName(phone, "Please Enter Phone"))
+                ) {
+                }
+            }
+
+            private boolean isValid() {
+                if (TextUtils.isEmpty(_Name)) {
+                    name.setError("Please Enter your Name");
+                    name.requestFocus();
+                    return false;
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(_Email).matches()) {
+                    emailAddress.setError("Email Address is Invalid");
+                    emailAddress.requestFocus();
+                    return false;
+                }
+
+                if (_Password.length() < 8) {
+                    password.setError("Please Enter a valid Password with at least 8 Alphabets");
+                    password.requestFocus();
+                    return false;
+                }
+
+                if (TextUtils.isEmpty(_Phone) || _Phone.length() < 10) {
+                    phone.setError("Please Enter Phone Number");
+                    phone.requestFocus();
+                    return false;
+                }
+                if (_Phone.length() < 10) {
+                    phone.setError("Please Enter a valid Phone Number with at least 10 digits");
+                    phone.requestFocus();
+                    return false;
+                }
+
+                if (TextUtils.isEmpty(_Question)) {
+                    question.setError("Please Enter Question");
+                    question.requestFocus();
+                    return false;
+                }
+                if (TextUtils.isEmpty(_Answer)) {
+                    answer.setError("Please Enter Answer");
+                    answer.requestFocus();
+                    return false;
+                }
+
+
+                return true;
             }
         });
     }
-
-
-    private boolean isEmailChanged() {
-        if (!_Email.equals(emailAddress.getText().toString())){
-            reference.child(_USERNAME).child("email").setValue(emailAddress.getText().toString());
-            _Email = emailAddress.getText().toString();
-            return true;
-
-        }else
-            return false;
-
-    }
-
-    private boolean isNameChanged() {
-        if (!_Name.equals(name.getText().toString())){
-            reference.child(_USERNAME).child("name").setValue(name.getText().toString());
-            _Name = name.getText().toString();
-            return true;
-
-        }else
-            return false;
-
-    }
-
-    private boolean isPhoneChange() {
-        if (!_Phone.equals(phone.getText().toString())) {
-            reference.child(_USERNAME).child("phone").setValue(phone.getText().toString());
-            _Phone = phone.getText().toString();
-            return true;
-        }else
-            return false;
-
-    }
-
-    private boolean isPasswordChanged() {
-        if (!_Password.equals(password.getText().toString())) {
-            reference.child(_USERNAME).child("password").setValue(password.getText().toString());
-            _Password = password.getText().toString();
-            return true;
-        }else
-            return false;
-
-    }
-    private boolean isQuestionChanged() {
-        if (!_Question.equals(question.getText().toString())) {
-            reference.child(_USERNAME).child("security_question").setValue(password.getText().toString());
-            _Question = question.getText().toString();
-            return true;
-        }else
-            return false;
-    }
-    private boolean isAnswerChanged() {
-        if (!_Answer.equals(answer.getText().toString())) {
-            reference.child(_USERNAME).child("security_answer").setValue(password.getText().toString());
-            _Answer = answer.getText().toString();
-            return true;
-        }else
-            return false;
-    }
-
-
-
-    private void validationCheck() {
-        if ((validationChecks.validateAnyName(emailAddress, "Please Enter Email"))
-                && (validationChecks.validateEmail(emailAddress, "Please Enter Valid Email"))
-                && (validationChecks.validateAnyName(password, "Please Enter Password"))
-                && (validationChecks.validateAnyName(name, "Please Enter Name"))
-                && (validationChecks.validateAnyName(answer, "Please Enter Answer"))
-                && (validationChecks.validateAnyName(question, "Please Enter Question"))
-                && (validationChecks.validateAnyName(phone, "Please Enter Phone"))
-        ){}
-    }
-}
+ }
