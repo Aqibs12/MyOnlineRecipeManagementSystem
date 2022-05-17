@@ -11,10 +11,10 @@
     <string name="my_recipes"><u>My Recipes</u></string>
 
     <string name="view_all_recipes"><u>View All Recipes:</u></string>
-    <string-array name="array_name">
+    <!--<string-array name="array_name">-->
 
 
-    </string-array>
+  <!--  </string-array>
 
     <string-array name="array_name_serving_people">
         <item>Select</item>
@@ -45,7 +45,7 @@
         <item>50 minutes</item>
 
     </string-array>
-
+-->
     <string name="lorem"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit mauris nunc, in pellentesque enim elementum eu. Mauris sodales eleifend lacus vitae vehicula. Aliquam ac enim eu turpis maximus sodales porttitor sed ante. Ut id tortor mauris. Suspendisse at libero lorem. Donec sagittis justo euismod enim sagittis blandit. Mauris egestas sit amet mi eget vehicula. Cras sit amet eros sed massa vestibulum suscipit id nec velit. Sed sollicitudin, nunc eu lobortis molestie, dui neque tempor erat, in laoreet dolor leo a orci. Donec elementum erat ut enim ultrices, non aliquam turpis maximus. Integer pretium non arcu ornare posuere. Phasellus ut nulla cursus, vehicula lorem quis, interdum mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent augue tellus, blandit quis molestie ac, cursus vitae ipsum. Fusce quis elit vel arcu sollicitudin mollis ut non nisi. Quisque enim nisl, tincidunt vitae metus eget, semper tempus tellus.
 
 Duis venenatis mauris dui, a fringilla metus pulvinar in. Duis laoreet libero non consectetur finibus. Ut nec rhoncus est, id suscipit libero. Integer bibendum dolor id lacinia consequat. Cras feugiat nulla at nunc sagittis, vitae commodo dui dictum. In hac habitasse platea dictumst. Donec suscipit vulputate venenatis. Etiam porttitor metus a dolor pretium fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas facilisis lectus sit amet nisl vehicula, id euismod lacus fringilla. Morbi viverra lectus non orci cursus ornare. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.

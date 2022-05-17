@@ -90,7 +90,6 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:background="@drawable/edit_text_without_strock"
-                                android:entries="@array/array_name_serving_people"
                                 android:clickable="false"
                                 android:fontFamily="@font/poppins_regular"
                                 android:hint="Serving persons"
@@ -108,7 +107,6 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Cooking time in minutes"
-                                android:entries="@array/array_name_cooking_time"
                                 android:clickable="false"
                                 android:textColorHint="@color/black"
                                 android:text=""
@@ -130,7 +128,6 @@
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_regular"
-                                android:entries="@array/array_name"
                                 android:paddingStart="@dimen/_16sdp"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />

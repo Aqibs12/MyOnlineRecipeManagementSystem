@@ -70,7 +70,7 @@
                             android:orientation="vertical"
                             android:padding="@dimen/_8sdp">
                             <EditText
-                                android:id="@+id/name"
+                                android:id="@+id/edit_tv_R_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
@@ -84,38 +84,12 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
 
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/filledTextField"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Enter something">
-
-                                <!--this is the actual edit text which takes the input-->
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/edit_text"
-                                    android:layout_width="match_parent"
-                                    android:text=""
-                                    android:background="@drawable/edit_text_without_strock"
-                                    android:textCursorDrawable="@drawable/cursor_drawable"
-                                    android:layout_marginTop="@dimen/_10sdp"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:paddingStart="@dimen/_16sdp"
-                                    android:textSize="@dimen/_12ssp"
-                                    android:paddingLeft="@dimen/_16sdp"
-                                    android:layout_height="wrap_content" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                            <EditText
-                                android:id="@+id/serving"
+                            <Spinner
+                                android:id="@+id/edit_tv_R_people"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_55sdp"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:background="@drawable/edit_text_without_strock"
-
                                 android:clickable="false"
                                 android:fontFamily="@font/poppins_regular"
                                 android:hint="Serving persons"
@@ -127,13 +101,12 @@
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:textSize="@dimen/_12ssp" />
 
-                            <EditText
-                                android:id="@+id/time"
+                            <Spinner
+                                android:id="@+id/edit_tv_R_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Cooking time in minutes"
-
                                 android:clickable="false"
                                 android:textColorHint="@color/black"
                                 android:text=""
@@ -145,23 +118,22 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
                             <Spinner
-                                android:id="@+id/spin"
+                                android:id="@+id/sp_category"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
-                                android:hint="Cooking time"
+                                android:hint="Category"
                                 android:clickable="false"
                                 android:textColorHint="@color/black"
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:layout_marginTop="@dimen/_8sdp"
                                 android:fontFamily="@font/poppins_regular"
-                                android:entries="@array/array_name"
                                 android:paddingStart="@dimen/_16sdp"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
 
                             <EditText
-                                android:id="@+id/desc"
+                                android:id="@+id/edit_tv_R_desc"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_100sdp"
                                 android:background="@drawable/edit_text_without_strock"
@@ -177,7 +149,7 @@
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
                             <EditText
-                                android:id="@+id/instructions"
+                                android:id="@+id/edit_tv_R_Ins"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_100sdp"
                                 android:background="@drawable/edit_text_without_strock"
@@ -194,7 +166,7 @@
                                 android:paddingLeft="@dimen/_16sdp" />
 
                             <EditText
-                                android:id="@+id/ingredients"
+                                android:id="@+id/edit_tv_R_Ing"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_100sdp"
                                 android:background="@drawable/edit_text_without_strock"
@@ -209,12 +181,12 @@
                                 android:textCursorDrawable="@drawable/cursor_drawable"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
+
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/adding"
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_1sdp"
+                                android:layout_marginTop="@dimen/_20sdp"
                                 android:text="Add Ingredient"
                                 android:layout_gravity="end"
                                 android:textColor="@color/white"
@@ -230,16 +202,17 @@
 
 
                             <androidx.recyclerview.widget.RecyclerView
+                                android:visibility="gone"
                                 android:id="@+id/recyclerIngreditent"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 />
                             <com.google.android.material.button.MaterialButton
-                                android:id="@+id/btn"
+                                android:id="@+id/edit_btn_submit"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_16sdp"
-                                android:text="Add recipe"
+                                android:text="Update"
                                 android:textColor="@color/white"
                                 android:padding="@dimen/_8sdp"
                                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ButtonRounded"

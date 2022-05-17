@@ -21,9 +21,11 @@
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable/ic_menu.xml" value="0.174" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable/ic_placeholder.xml" value="0.174" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_add_recipe.xml" value="0.128" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_add_recipe_copy.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_add_recipe_modifications.xml" value="0.10400000000000001" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_change_password.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_confirm_pin_password_avtivity.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_credits.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_drawer.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_edit_recipe.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_login.xml" value="0.25" />
@@ -35,6 +37,9 @@
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_send_otpactivity.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_splash.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_update_recipe.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_update_recipe_.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_update_recipe_modifications.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_verify_otpactivity.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/dialogcontent.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/home_activity.xml" value="0.264" />

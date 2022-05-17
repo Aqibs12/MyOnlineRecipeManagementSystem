@@ -145,7 +145,6 @@
                 android:background="@drawable/edit_text_without_stroke"
                 android:drawablePadding="@dimen/_14sdp"
                 android:fontFamily="@font/poppins_regular"
-
                 android:inputType="text"
                 android:paddingStart="30dp"
                 android:paddingLeft="30dp"
