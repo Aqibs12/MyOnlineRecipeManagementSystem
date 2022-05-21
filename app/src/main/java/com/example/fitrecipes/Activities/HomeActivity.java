@@ -342,11 +342,14 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,MyRecipesActivity.class);
-                intent.putExtra("user",loggedInUser);
-                intent.putExtra("uuid",uuid);
-                startActivity(intent);
-                slidingRootNav.closeMenu();
+                if(loggedInUser!=null){
+                    Intent intent = new Intent(context,MyRecipesActivity.class);
+                    intent.putExtra("user",loggedInUser);
+                    intent.putExtra("uuid",uuid);
+                    startActivity(intent);
+                    slidingRootNav.closeMenu();
+                }
+
               //  startActivity(new Intent(context, MyRecipesActivity.class));
             }
         });

@@ -38,7 +38,6 @@ public class MyRecipesActivity extends AppCompatActivity {
     private DatabaseReference databaseReference,databaseReference1;
     private static final String USERS = "users";
     private String currentUserID = "";
-    private UserModel loggedInUser;
     ValueEventListener listener;
     private ArrayList<Recipe> recipes;
     TextView tvLoggedUser;
@@ -69,12 +68,12 @@ public class MyRecipesActivity extends AppCompatActivity {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         RecipeModel recipeModel = postSnapshot.getValue(RecipeModel.class);
                         Recipe recipe = new Recipe(postSnapshot.getKey(), recipeModel);
-                      if (recipe.getRecipeModel().getId().equals(currentUserID)) {
+                      if (recipe.getRecipeModel().getUser().getId().equals(USERID)) {
                             recipes.add(recipe);
                         }
                     }
                 }
-               // adapter.notifyDataSetChanged();
+
                 ((TextView) findViewById(R.id.tv_total_recipes)).setText("Total Recipes: "+recipes.size());
                 adapter = new OriginalRecipeAdapter(recipes,userModel,MyRecipesActivity.this);
                 recyclerView.setAdapter(adapter);
