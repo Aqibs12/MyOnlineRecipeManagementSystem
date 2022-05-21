@@ -62,7 +62,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }*/
         ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
         Glide.with(getApplicationContext()).load(recipeModel.getRecipe_image()).into(image);
-        name.setText(recipeModel.getName()+"("+recipeModel.getRecipeT()+" min)");
+        name.setText(recipeModel.getName()+" (Est. time: "+recipeModel.getRecipeT()+")");
         desc.setText(recipeModel.getRecipeD());
         inst.setText(recipeModel.getRecipeI());
         cat.setText(recipeModel.getRecipeCategory());

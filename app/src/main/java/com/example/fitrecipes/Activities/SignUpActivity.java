@@ -250,6 +250,34 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
 
+        boolean isUppercase = false;
+        boolean isSpecialCharacter = false;
+        int digits = 0;
+        for(int i = 0; i< et_password.getText().toString().length(); i++){
+            char c = et_password.getText().toString().charAt(i);
+            if (Character.isUpperCase(c))
+                isUppercase = true;
+            if (Character.isDigit(c))
+                digits++;
+            if (String.valueOf(c).matches("[^a-zA-Z0-9]"))
+                isSpecialCharacter = true;
+        }
+        if (!isUppercase) {
+            et_password.setError("Please enter at least 1 upper case letter in password");
+            et_password.requestFocus();
+            return false;
+        }
+        if (digits<=0) {
+            et_password.setError("Please enter at least 2 digits in password");
+            et_password.requestFocus();
+            return false;
+        }
+        if (!isSpecialCharacter) {
+            et_password.setError("Please enter at least 1 special character in password");
+            et_password.requestFocus();
+            return false;
+        }
+
         if (!password.equals(cPassword)) {
             et_cPassword.setError("Password Does not matches....");
             et_cPassword.requestFocus();
