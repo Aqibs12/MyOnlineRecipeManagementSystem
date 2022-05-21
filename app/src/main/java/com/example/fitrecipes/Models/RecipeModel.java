@@ -1,6 +1,7 @@
 package com.example.fitrecipes.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class RecipeModel implements Serializable {
     String id;
@@ -12,6 +13,8 @@ public class RecipeModel implements Serializable {
     String recipe_people;
     String recipe_image;
     String recipeCategory;
+    List<Ingredient> ingredientList;
+
 RecipeModel(){
 
 }
@@ -113,6 +116,11 @@ RecipeModel(){
         this.recipeCategory = recipeCategory;
     }
 
+    public List<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
 
-
+    public void setIngredientList(List<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
 }
