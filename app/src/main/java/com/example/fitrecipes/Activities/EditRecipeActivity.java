@@ -5,9 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -16,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.Ingredient;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
@@ -27,14 +34,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditRecipeActivity extends AppCompatActivity {
+    int Image_Request_Code = 1;
+    private Uri filePathUri;
     EditText R_name, R_instr , R_Desc, R_Url;
     AutoCompleteTextView acIngredient;
     Spinner R_category, R_time, R_srv_people;
     Button btnSubmit;
     UserModel userModel;
+    CircleImageView profile_image;
     private String uuid = "";
     private String USERID = "";
     private DatabaseReference productsRef;
@@ -50,6 +63,7 @@ public class EditRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_recipe_modifications);
+        context = this;
         uuid = LoginActivity.UUID;
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
@@ -93,6 +107,16 @@ public class EditRecipeActivity extends AppCompatActivity {
                 break;
             }
         }
+
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Image"), Image_Request_Code);
+            }
+        });
 
         productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeId());
         btnSubmit.
@@ -151,6 +175,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         R_srv_people = findViewById(R.id.edit_tv_R_people);
         R_Desc = findViewById(R.id.edit_tv_R_desc);
         btnSubmit = findViewById(R.id.edit_btn_submit);
+        profile_image = findViewById(R.id.profile_image);
+        Glide.with(profile_image).load(recipeModel.getRecipe_image()).into(profile_image);
 
         R_name.setText(recipeModel.getName());
         R_instr.setText(recipeModel.getRecipeI());
@@ -332,10 +358,31 @@ public class EditRecipeActivity extends AppCompatActivity {
             Toast.makeText(context, "Please Enter Recipe Instructions", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (acIngredient.getText().toString().isEmpty()) {
-            Toast.makeText(context, "Please Enter Recipe Ingredients", Toast.LENGTH_SHORT).show();
+        if (ingredientsAdapter.dataList.size()<=0){
+            Toast.makeText(context, "Please add Recipe Ingredients", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePathUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathUri);
+                profile_image.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public String GetFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 }
