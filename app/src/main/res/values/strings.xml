@@ -13,6 +13,13 @@
     <string name="view_all_recipes"><u>View All Recipes:</u></string>
     <!--<string-array name="array_name">-->
 
+    <string-array name="array_units">
+        <item>gm</item>
+        <item>kg</item>
+        <item>pint</item>
+        <item>litre</item>
+        <item>tsp</item>
+    </string-array>
 
   <!--  </string-array>
 

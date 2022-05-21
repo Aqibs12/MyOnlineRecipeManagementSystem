@@ -12,11 +12,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Models.Ingredient;
 import com.example.fitrecipes.Models.RecipeAdapter;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.Recipe;
@@ -33,7 +34,7 @@ import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.Util.ValidationChecks;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.example.fitrecipes.adapters.IngredientsAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -49,9 +50,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,7 +60,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     Context context;
     Spinner spin,time,serving;
     CircleImageView profile_image;
-    EditText name, desc, instructions, ingredient;
+    EditText name, desc, instructions;
+    AutoCompleteTextView acIngredient;
     private Uri filePathUri;
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
@@ -79,8 +79,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<RecipeModel> recipeModelArrayList;
     UserModel userModel;
     ArrayAdapter<String> adapter,adapter1,adapter2;
-    String[] category;
+    RecyclerView recyclerView;
     String productRandomKey;
+    private IngredientsAdapter ingredientsAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,7 +207,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         addIng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ingredient.getText().toString().isEmpty()){
+                if (acIngredient.getText().toString().isEmpty()){
                     Toast.makeText(context, "Please Add Some ingredients", Toast.LENGTH_SHORT).show();
                 }else
                 Toast.makeText(context, "Ingredients Added", Toast.LENGTH_SHORT).show();
@@ -297,12 +299,43 @@ public class AddRecipeActivity extends AppCompatActivity {
         desc = findViewById(R.id.desc);
         spin = findViewById(R.id.spin);
         instructions = findViewById(R.id.instructions);
-        ingredient = findViewById(R.id.ingredients);
+        acIngredient = findViewById(R.id.ingredients);
         serving = findViewById(R.id.serving);
         myauth = FirebaseAuth.getInstance().getUid();
         rvRecipe = findViewById(R.id.recyclerImages2);
         rvRecipe.setHasFixedSize(true);
         rvRecipe.setLayoutManager(new LinearLayoutManager(this));
+
+
+        recyclerView = findViewById(R.id.recyclerview);
+        ingredientsAdapter = new IngredientsAdapter(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(ingredientsAdapter);
+
+        String[] ingridients = { "Category","Russian", "American", "Thai", "Indonesian",
+                "African","Afghani","Pakistani","Malaysian","Maxican","Chinese"};
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,ingridients);
+        acIngredient.setAdapter(adapter);
+        acIngredient.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Ingredient ingredient = new Ingredient();
+                ingredient.setName(acIngredient.getText().toString());
+                ingredient.setQuantity(1);
+                ingredient.setUnit(0);
+                boolean isAdded = ingredientsAdapter.add(ingredient);
+                acIngredient.setText("");
+                if(isAdded){
+                    Toast.makeText(AddRecipeActivity.this,"Ingredient is added successfully",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(AddRecipeActivity.this,"Ingredient is already added",Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+
 
     }
     @Override
@@ -374,7 +407,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Toast.makeText(context, "Please Enter Recipe Instructions", Toast.LENGTH_SHORT).show();
                 return false;
             }
-            if (ingredient.getText().toString().isEmpty()){
+            if (acIngredient.getText().toString().isEmpty()){
                 Toast.makeText(context, "Please Enter Recipe Ingredients", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -409,7 +442,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         String RecipeCategory = spin.getSelectedItem().toString();
                                         String Recipe_Description = desc.getText().toString().trim();
                                         String Recipe_Instructions = instructions.getText().toString().trim();
-                                        String Recipe_Ingredients = ingredient.getText().toString().trim();
+                                        String Recipe_Ingredients = acIngredient.getText().toString().trim();
                                         String Recipe_No_Serving_People = serving.getSelectedItem().toString();
                                         //custom lines added
                                         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();

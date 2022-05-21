@@ -22,6 +22,7 @@ public class ActivityCredits extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
+            String abc = "hello";
         });
     }
 }
