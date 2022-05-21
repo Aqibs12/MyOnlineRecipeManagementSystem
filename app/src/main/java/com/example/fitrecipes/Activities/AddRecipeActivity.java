@@ -66,7 +66,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     MaterialButton btn, addIng;
     ValidationChecks validationChecks = new ValidationChecks();
     RecyclerView  rvRecipe;
-    DatabaseReference databaseReference ,databaseReference2;
+    DatabaseReference databaseReference ,databaseReference2,databaseReference3;
     int Image_Request_Code = 1;
     ProgressDialog progressDialog;
     public static String UUID = "";
@@ -91,6 +91,107 @@ public class AddRecipeActivity extends AppCompatActivity {
                 "5","6","7","8","9","10"};
         String[] cook_time = { "Cook Time","5 Minutes", "10 Minutes", "15 Minutes", "20 Minutes",
                 "25 Minutes","30 Minutes","35 Minutes","40 Minutes","45 Minutes","50 Minutes"};
+        String[] Ingredients = {"Egg","Bread","Rye Bread","Wheaten Bread","White Bread","White Bread","Wholewheat Bread",
+                "Wort", "Arrack", "Beer","Bantu Beer","Brandy","Anise Brandy","Apple Brandy",
+                "Armagnac Brandy","Blackberry Brandy","Cherry Brandy","Cognac Brandy","Papaya Brandy","Pear Brandy","Plum Brandy","Raspberry Brandy",
+                "Weinbrand Brandy","Gin","Rum","Whisky","Malt Whisky","Scotch","Champagne","Cider","Sake","Sherry","Coffee","Mate",
+                "Black Tea","Green Tea","Roibos Tea","Barley","Crispbread","Malt","Oats",
+                "Rice","Corn","Corn Oil","Popcorn","Sweetcorn","Butter","Buttermilk","Cheese","Blue Cheese","Camembert Cheese","Cheddar Cheese",
+                "Comte Cheese","Cottage Cheese","Cream Cheese","Domiati Cheese","Emmental Cheese","Feta Cheese","Goat Cheese",
+                "Gruyere Cheese","Limburger Cheese","Mozzarella Cheese","Munster Cheese","Parmesan Cheese","Provolone Cheese","Romano Cheese",
+                "Roquefort Cheese","Russian Cheese","Sheep Cheese","Swiss Cheese","Tilsit Cheese","Ghee","Milk","Milk Fat","Goat Milk","Milk Powder","Sheep Milk",
+                "Skimmed Milk","Yogurt","Achilleas","Arar","Buchu","Cajeput","Camphor","Cascarilla",
+                "Cedar","Chamomile","Citronella Oil","Citrus Peel Oil","Eucalyptus Oil","Fir","Geranium","Grapefruit Peel Oil","Grass",
+                "Hops Oil","Hyacinth","Hyssop Oil","Lemon Grass","Lemon Peel Oil","Lime Peel Oil","Lovage", "Mastic Gum","Mentha Oil",
+                "Myrrh","Neroli Oil","Orange Oil","Orris","Clary Sage","Red Sage","Spanish Sage","Sandalwood","Sea Buckthorns","Sweet Grass",
+                "Valerian","Wattle","Yarrow","Ylang-Ylang","Clam","Crab","Crayfish","Kelp","Krill","Lobster","Mollusc","Oyster","Prawn",
+                "Scallop","Shellfish","Shrimp","Trassi","Squid","Bonito","Caviar","Codfish","Fish","Fatty Fish","Lean Fish","Fish Oil","Smoked Fish",
+                "Salmon","Artichoke","Champaca","Jasmine","Lavendar","Rose","Apple","Apple Sauce","Apricot","Avocado","Babaco","Banana","Beli",
+                "Byrsonima crassifolia","Cashew Apple","Cherimoya","Coconut","Currant","Black Currant","Red Currant","White Currant","Dates",
+                "Durian","Elderberry","Feijoa","Fig","Grape","Guava","Hogplum","Jackfruit","Kiwifruit","Litchi","Loquat","Malay Apple","Mango",
+                "Melon","Musk Melon","Naranjilla","Orange","Bitter Orange","Papaya","Mountain Papaya","Passionfruit","Yellow Passionfruit","Pawpaw", "Peach",
+                "Pear","Bartlett Pear","Prickly Pear","Pepino","Pineapple","Plum","Plumcot","Pumpkin","Quince", "Chinese Quince","Raisin","Roseapple",
+                "Sapodilla","Soursop","Spineless Monkey Orange","Starfruit","Tamarind","Woodapple","Bilberry","Blackberry","Blueberry","Cherry",
+                "Bitter Cherry","Sour Cherry","Sweet Cherry","Cloudberry","Cranberry","Gooseberry","Lingonberry","Loganberry","Raspberry","Strawberry", "Strawberry Jam",
+                "Bergamot","Citrus Fruits","Grapefruit","Kumquat","Lemon","Lime","Mandarin Orange","Satsuma Orange","Tangerine","Vanilla","Mushroom",
+                "Truffle", "Angelic","Artemisia","Basil","Buckwheat","Calamus","Chervil","Coriander","Cornmint","Dill",
+                "Fennel","Fenugreek","Garlic","Lemon Balm","Liqourice","Mint","Rhubarb","Rosemary","Sage",
+                "Spearmint","Scotch Spearmint","Tarragon","Thyme","Beef","Beef Processed","Chicken",
+                "Frankfurter Sausage","Ham","Lamb","Meat","Mutton","Pork","Sukiyaki","Turkey","Almond", "Brazil Nut", "Cocoa", "Beans", "Lima Beans",
+                "Kidney Beans","Peanut","Peas","Soybean","Soybean Oil","Soybean Sauce","Filbert","Hazelnut","Macadamia Nut","Pecans", "Walnut",
+                "Muskmallow","Sesame","Allium","Alpinia","Ceriman","Chicory","Hops","Laurel","Myrtle",
+                "Olive","Pine","Sassafras","Tea","Fermented Tea","Tobacco","Watercress","Creosote","Honey","Macaroni","Mustard Oil","Peanut Butter",
+                "Peanut Oil","Rye","Storax","Vinegar","Anise","Anise Hyssop","Star Anise","Caraway","Cardamom","Cassia","Celery","Cinnamon",
+                "Clove","Cumin","Ginger","Mace","Marjoram","Nutmeg","Oregano","Parsley","Pepper","Saffron",
+                "Turmeric","Green Beans","Chive","Endive","Leek","Lettuce","Okra","Onion","Shallot","Peppermint",
+                "Broccoli","Brussels Sprout","Cabbage","Cauliflower","Horseradish","Mustard","Radish","Turnip",
+                "Kohlrabi","Rutabaga","Wasabi","Capsicum","Cherry Pepper","Tomato","Chayote","Cucumber",
+                "Beetroot","Carrot","Parsnip","Sweet Potato","Asparagus","Cassava",
+                "Potato","Fried Potato","Allspice","Asafoetida","Ashgourd","Bittergourd","Bottlegourd","Canola Oil","Carom Seed",
+                "Chard","Apple Cider Vinegar","Colocasia","Curry Leaf","Drumstick Leaf","Eggplant","Flaxseed","Jalapeno","Kenaf",
+                "Lotus","Nigella Seed","Kewda","Pomegranate","Poppy Seed","Spinach","Turkey Berry","Water Chestnut","White Pepper",
+                "Garcinia Indica","Cluster Bean","Paneer","Pigeon Pea","Basmati Rice","Ricotta Cheese","Silver linden","Redskin onion",
+                "Lemon verbena","Cashew nut","Burdock","Borage","Capers","Safflower","Chestnut","Chickpea","Pummelo","Arabica coffee",
+                "Japanese persimmon","Black crowberry","Rocket salad","Tartary buckwheat","Black huckleberry","Sunflower","Swamp cabbage",
+                "Grass pea","Lentils","Garden cress","Mexican oregano","Lupine","Medlar","Mulberry",
+                "Black mulberry","Evening primrose","Millet","Scarlet bean","Pistachio","Purslane","Red raspberry","Black raspberry","Sorrel",
+                "Summer savory","Winter savory","Cherry tomato","Rowanberry",
+                "Sorghum","Dandelion","Linden","Small leaf linden","Wheat","Sparkleberry","Common verbena","Adzuki bean","Gram bean","Mung bean",
+                "Climbing bean","Muscadine grape","Bayberry","Elliott's blueberry","Canada blueberry","Buffalo currant","Deerberry","Ginseng","Longan",
+                "Rambutan","Red rice","Welsh onion","Hard wheat","Triticale","Komatsuna","Pak choy","Jostaberry","Kai lan","Pineappple sage",
+                "Skunk currant","Breakfast cereal","Pasta","Biscuit","Sourdough","Spirit","Abalone","Abiyuch","Acerola","Acorn","Winter squash","Agar","Red king crab","Alfalfa",
+                "Amaranth","Arrowhead","Arrowroot","Atlantic herring","Atlantic mackerel","Painted comber",
+                "Atlantic pollock","Atlantic wolffish","Bamboo shoots","Striped bass","Beaver","Beech nut","Beluga whale","Bison","Black bear","Alaska blackfish",
+                "Northern bluefin tuna","Bluefish","Wild boar","Bowhead whale","Breadfruit","Rapini","Brown bear","Buffalo","Burbot","Giant butterbur",
+                "American butterfish","Butternut","Butternut squash","Cardoon","Caribou","Natal plum","Carob","Common carp","Channel catfish",
+                "Chia","Chinese chestnut","Garland chrysanthemum","Cisco","Nuttall cockle","Common octopus","Corn salad","Cottonseed",
+                "Catjang pea","Squashberry","Atlantic croaker","Cusk","Cuttlefish","Mule deer","Devilfish","Dock","Dolphin fish",
+                "Freshwater drum","Wild duck","Freshwater eel","Elk","Emu","Oregon yampah","European anchovy","European chestnut",
+                "Turbot","Fireweed","Florida pompano","Ginkgo nuts","Greylag goose","Greenland halibut","Groundcherry","Grouper","Haddock",
+                "Hippoglossus","Horse","Hyacinth bean","Irish moss","Pacific jack mackerel","Japanese chestnut","Jerusalem artichoke",
+                "Jujube","Jute","Kale","King mackerel","Lambsquarters","Leather chiton","Common ling","Lingcod","White lupine",
+                "Malabar spinach","Mammee apple","Purple mangosteen","Alpine sweetvetch","Milkfish","Monkfish","Moose","Moth bean",
+                "Mountain yam","Striped mullet","Muskrat","New Zealand spinach","Nopal","Ocean pout","North Pacific giant octopus",
+                "Ohelo berry","Opossum","Ostrich","Spotted seal","Pacific herring","Pacific rockfish","Common persimmon","Pheasant",
+                "Northern pike","Pili nut","Colorado pinyon","Pitanga","French plantain","American pokeweed","Polar bear","Prairie turnip",
+                "Quinoa","European rabbit","Raccoon","Rainbow smelt","Rainbow trout","Malabar plum","Rose hip","Roselle","Orange roughy",
+                "Sablefish","Pink salmon","Chum salmon","Coho salmon","Sockeye salmon","Chinook salmon","Atlantic salmon","Salmonberry",
+                "Common salsify","Spanish mackerel","Pacific sardine","Scup","Sea cucumber","Steller sea lion","Bearded seal","Ringed seal","Sea trout",
+                "Sesbania flower","American shad","Shark","Sheefish","Sheepshead","Hedge mustard","Snapper",
+                "Spelt","Spirulina","Squab","Squirrel","Greater sturgeon","White sucker","Pumpkinseed sunfish","Swordfish","Taro",
+                "Teff","Tilefish","Mexican groundcherry","Towel gourd","Salmonidae","Walleye","Alaska pollock","Whelk",
+                "Broad whitefish","Whitefish","Whiting","Wild rice","Tea leaf willow","Winged bean","Yam","Jicama","Yautia","Yellowfin tuna",
+                "Yellowtail amberjack","Pollock","Albacore tuna","Atlantic halibut","Smelt","Clupeinae","Spiny lobster","Black-eyed pea",
+                "Deer","Percoidei","Perciformes","Rabbit","Beefalo","Bivalvia","Flatfish","Walrus","Alaska wild rhubarb","Oriental wheat",
+                "Yardlong bean","Great horned owl","Quail","Boysenberry","Rowal","Jew's ear","Shiitake","Purple laver","Wakame","Enokitake",
+                "Epazote","Oyster mushroom","Cloud ear fungus","Maitake","Ostrich fern","Spot croaker","Sourdock","Tinda","Atlantic menhaden",
+                "Agave","Narrowleaf cattail","Jellyfish","Anchovy","Blue whiting","Carp bream","Chanterelle","Sturgeon","Charr","Common dab",
+                "Spiny dogfish","Anatidae","Anguilliformes","True frog","Garfish","Gadiformes","Mountain hare","Lake trout",
+                "Lemon sole","Lumpsucker","Scombridae","Norway haddock","Norway pout","Oil palm","Sago palm",
+                "Persimmon","Pikeperch","Pleuronectidae","Rock ptarmigan","Pacific ocean perch","Black salsify",
+                "True seal","Red algae","Kombu","Snail","True sole","Catfish","Thistle","Common Tuna","Cetacea","Columbidae","Conch",
+                "Berry win","Vodka","Ice cream","Vermouth","Madeira wine","Nougat","Toffee","Cake","Pizza","Ymer","Pastry","DragÌ©e",
+        "Chewing gum","Marzipan","Salad dressing","Salt","Cream","Sugar","Sausage","Meatball","Pate","Meat bouillon","Whey",
+                "Casein","Leavening agent", "Marshmallow","Gelatin","Water","Milk Human","Dumpling","Soup","Syrup","Remoulade",
+        "Chocolate spread","Fruit gum","Meringue","Cocoa butter","Cocoa powder","Chocolate","Hot chocolate","Kefir","Miso","Tofu","Zwieback",
+        "Roe","Icing","Snack bar","Green turtle","Burrito","Hamburger","Taco","Tortilla","Nachos","Salad","Dulce de leche","Topping",
+        "Sweet custard","Egg roll","Heart of palm","Potato chip","Tortilla chip","Corn chip","Hibiscus tea","Stew",
+        "Gelatin dessert","Junket","Falafel","Frybread","Lasagna","Morchella","Pancake","Pectin","Pudding",
+        "Waffle","Soy milk","Meatloaf","Cocktail","Couscous","Bulgur","Coffee mocha","Chimichanga","Semolina",
+        "Tapioca pearl","Tostada","Quesadilla","Baked potato","Hot dog","Spread","Enchilada","Ketchup","Adobo",
+        "Horned melon","Hushpuppy","Fruit juice","Relish","Fruit salad","Soy yogurt","Cold cut","Mixed nuts","Shea tree",
+        "Oil-seed Camellia","Ucuhuba","Phyllo dough","Cooking oil","Pie crust","Pie","Shortening",
+        "Soy cream","Ice cream cone","Molasses","Nance","Natto","Ravioli","Scrapple","Succotash","Tamale","Rice cake",
+        "Tree fern","Evaporated milk","Flour","Pita bread","Focaccia","Bagel",
+        "Piki bread","French toast","Oat bread","Potato bread","Cornbread","Corn grits","Multigrain bread","Rice bread",
+        "Pan dulce","Raisin bread","Wonton wrapper","Trail mix","Greenthread tea","Vegetable juice",
+        "Soft drink","Milkshake","Chocolate mousse","Pupusa","Empanada","Arepa","Ascidians","Gefilte fish",
+        "Yellow pond lily","Fish burger","Pot pie","Fudge","Candy bar","Condensed milk",
+        "Margarine","Hummus","Potato puffs", "Potato gratin","Chinese bayberry","Green zucchini", "Zucchini","Saskatoon berry",
+                "Nanking cherry","Japanese pumpkin","Cucurbita","Anise Oil", "Apple Juice","Coconut Milk", "Coconut Oil","Hops Beer",
+        "Lemon Juice","Brown Rice","Tomato Juice","Tomato Paste","Tomato Puree", "Coriander Seed","Cured Ham",
+        "Yeast","Tequila","Sauerkraut","Baking Powder","Citric Acid","Cooking Spray","Gelatin","Food Coloring"
+};
         context = this;
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
@@ -110,6 +211,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Toast.makeText(context, "Ingredients Added", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
 
