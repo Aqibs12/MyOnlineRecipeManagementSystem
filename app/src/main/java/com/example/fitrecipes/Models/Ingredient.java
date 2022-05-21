@@ -1,6 +1,8 @@
 package com.example.fitrecipes.Models;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     private String name;
     private int quantity;
     private int unit;
@@ -25,7 +27,26 @@ public class Ingredient {
         return unit;
     }
 
+    public String getUnitName(){
+        switch (getUnit()){
+            case 1:
+                return "Kg";
+            case 2:
+                return "Cup";
+            case 3:
+                return "Litre";
+            case 4:
+                return "Tsp";
+            case 5:
+                return "Tbsp";
+            case 0:
+            default:
+                return "Gm";
+        }
+    }
+
     public void setUnit(int unit) {
         this.unit = unit;
     }
+
 }

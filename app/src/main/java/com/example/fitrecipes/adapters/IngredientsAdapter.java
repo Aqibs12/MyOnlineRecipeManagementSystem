@@ -34,6 +34,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         this.context =  context;
         this.dataList = new ArrayList<>();
     }
+    public IngredientsAdapter(Context context,List<Ingredient> ingredientList)
+    {
+        this.context =  context;
+        this.dataList = ingredientList;
+    }
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

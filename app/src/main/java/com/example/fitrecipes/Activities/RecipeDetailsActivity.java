@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Models.Ingredient;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.UserModel;
@@ -66,15 +67,13 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         inst.setText(recipeModel.getRecipeI());
         cat.setText(recipeModel.getRecipeCategory());
         ingTitle.setText("Ingredients("+recipeModel.getRecipe_people()+" Serving)");
-        ing.setText(ingToshow);
-      /*if (recipeModel.getImagesModelArrayList().size()>1){
-            mPager.setVisibility(View.VISIBLE);
-            image.setVisibility(View.GONE);
-       }
-        else {
-            mPager.setVisibility(View.GONE);
-            image.setVisibility(View.VISIBLE);
-        }*/
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Ingredient ingredient: recipeModel.getIngredientList()){
+            stringBuilder.append(ingredient.getName()+" ("+ingredient.getQuantity()+" "+ingredient.getUnitName()+")\n");
+        }
+        ing.setText(stringBuilder.toString());
+
         mPager.setVisibility(View.GONE);
         image.setVisibility(View.VISIBLE);
         init();

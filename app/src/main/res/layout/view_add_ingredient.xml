@@ -31,9 +31,9 @@
 
         <Button
             android:id="@+id/btn_subtract"
-            android:layout_width="40dp"
+            android:layout_width="42dp"
             android:text="-"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:fontFamily="@font/poppins_bold"
             android:layout_height="45dp"/>
 
@@ -55,11 +55,11 @@
 
         <Button
             android:id="@+id/btn_add"
-            android:layout_width="40dp"
+            android:layout_width="42dp"
             android:text="+"
             android:layout_marginLeft="5dp"
             android:backgroundTint="#4CAF50"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:fontFamily="@font/poppins_bold"
             android:layout_height="45dp"/>
 
