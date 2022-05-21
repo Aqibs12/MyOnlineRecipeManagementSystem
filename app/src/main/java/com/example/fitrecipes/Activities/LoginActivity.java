@@ -24,6 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
     EditText login_email, login_password;
@@ -34,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btnlogin;
     ProgressBar progressBar;
     ValidationChecks validationChecks = new ValidationChecks();
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
 
     public static String UUID = "";
 
@@ -42,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         myauth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = firebaseDatabase.getReference().child("Users");
         init();
         setListeners();
     }
@@ -67,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     login_email.requestFocus();
                     return;
                 }
-                if (password.isEmpty() ) {
+                if (password.isEmpty()) {
                     login_password.setError("Please Enter Password");
                     return;
                 }
@@ -77,28 +89,51 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                myauth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.GONE);
-                        btnlogin.setVisibility(View.VISIBLE);
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
-                            try {
-                                String id = task.getResult().getUser().getUid();
-                                UUID = task.getResult().getUser().getUid();
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("uuid", UUID));
-                                finish();
-                            }catch (Exception e){}
 
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                databaseReference.addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            if (UUID.equals(ds.getKey())) {
+                                login_password.setText(ds.child("password").getValue(String.class));
+                            }
                         }
                     }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
                 });
+
+                if (!password.equals(login_password)) {
+
+                    myauth.signInWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressBar.setVisibility(View.GONE);
+                            btnlogin.setVisibility(View.VISIBLE);
+                            if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                try {
+                                    String id = task.getResult().getUser().getUid();
+                                    UUID = task.getResult().getUser().getUid();
+                                    startActivity(new Intent(getApplicationContext(), SendOTPActivity.class).putExtra("uuid", UUID));
+                                    finish();
+                                } catch (Exception e) {
+                                }
+
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
 
-        });
+
+
+                });
         TextView tv_signUp = findViewById(R.id.tv_signUp);
         tv_signUp.setOnClickListener(new View.OnClickListener() {
             @Override

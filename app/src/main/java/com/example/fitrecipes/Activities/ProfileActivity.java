@@ -29,8 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileActivity extends Activity {
     DatabaseReference reference;
     MaterialButton btn_update;
-    TextView tvTotalRecipes,phone,password;
-    EditText name, emailAddress,  question, answer;
+    TextView tvTotalRecipes,phone;
+    EditText name, emailAddress,  question, answer,password;
     ValidationChecks validationChecks = new ValidationChecks();
     Context context;
     String _USERNAME, _Name, _Email, _Phone, _Password, _Question, _Answer;
@@ -168,7 +168,7 @@ public class ProfileActivity extends Activity {
             private void validationCheck() {
                 if ((validationChecks.validateAnyName(emailAddress, "Please Enter Email"))
                         && (validationChecks.validateEmail(emailAddress, "Please Enter Valid Email"))
-                       // && (validationChecks.validateAnyName(password, "Please Enter Password"))
+                        && (validationChecks.validateAnyName(password, "Please Enter Password"))
                         && (validationChecks.validateAnyName(name, "Please Enter Name"))
                         && (validationChecks.validateAnyName(answer, "Please Enter Answer"))
                         && (validationChecks.validateAnyName(question, "Please Enter Question"))

@@ -148,6 +148,7 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Password"
+                                android:visibility="gone"
                                 android:maxLength="20"
                                 android:clickable="false"
                                 android:textColorHint="@color/black"

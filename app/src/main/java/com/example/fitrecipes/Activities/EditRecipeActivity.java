@@ -77,6 +77,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
         recipeModel = recipe.getRecipeModel();
         userModel = (UserModel) getIntent().getSerializableExtra("user");
+        context = this;
         init();
         progressDialog = new ProgressDialog(EditRecipeActivity.this);
         progressDialog.setCancelable(false);
