@@ -30,7 +30,7 @@
                     />
             </RelativeLayout>
 
-           <!-- <androidx.appcompat.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,27 +46,25 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
-                    android:text="@string/view_all_recipes"
+                    android:text="Phone  +92-"
                     android:textColor="#2196F3"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_total_recipes"
+                    android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
-                    android:text="0"
-
+                    android:inputType="phone"
+                    android:text="Phone"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
--->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
@@ -126,22 +124,22 @@
                                 android:paddingStart="@dimen/_16sdp"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_16sdp" />
-                            <EditText
+                <!--            <TextView
                                     android:id="@+id/phone"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_55sdp"
                                     android:background="@drawable/edit_text_without_strock"
-                                    android:hint="Phone"
                                     android:clickable="false"
                                     android:textColorHint="@color/black"
-                                    android:text=""
+
+                                    android:text="Phone"
                                     android:inputType="phone"
                                     android:textCursorDrawable="@drawable/cursor_drawable"
                                     android:layout_marginTop="@dimen/_8sdp"
                                     android:fontFamily="@font/poppins_regular"
                                     android:paddingStart="@dimen/_16sdp"
                                     android:textSize="@dimen/_12ssp"
-                                    android:paddingLeft="@dimen/_16sdp" />
+                                    android:paddingLeft="@dimen/_16sdp" />-->
 
 
                             <EditText
@@ -167,7 +165,7 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Security question"
-                                
+
                                 android:clickable="false"
                                 android:textColorHint="@color/black"
                                 android:text=""
@@ -183,7 +181,7 @@
                                 android:layout_height="@dimen/_55sdp"
                                 android:background="@drawable/edit_text_without_strock"
                                 android:hint="Question answer"
-                                
+
                                 android:clickable="false"
                                 android:textColorHint="@color/black"
                                 android:text=""

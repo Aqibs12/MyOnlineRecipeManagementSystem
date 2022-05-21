@@ -68,13 +68,13 @@ public class EditRecipeActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         R_time.setAdapter(adapter2);
         productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeId());
-   //     if (isValid()) {
-            btnSubmit.
-                    setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View view) {
+        btnSubmit.
+                setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View view) {
+                        if (isValid()) {
                             String RecipeName = R_name.getText().toString();
                             //           String RecipeImg = R_Url.getText().toString();
                             String RecipeD = R_Desc.getText().toString();
@@ -106,8 +106,12 @@ public class EditRecipeActivity extends AppCompatActivity {
                                     }
                                 });
                             }
+                        } else {
+                            Toast.makeText(EditRecipeActivity.this, "Please Add All Recipe Details", Toast.LENGTH_LONG).show();
                         }
-                    });
+                    }
+                });
+
     }
 
 
@@ -126,26 +130,26 @@ public class EditRecipeActivity extends AppCompatActivity {
 //        R_category.getSelectedItem().toString();
         R_instr.setText(recipeModel.getRecipeI());
         R_ingred.setText(recipeModel.getRecipeIng());
-        //      R_srv_people.getSelectedItem().toString();
+      //  R_srv_people.getSelectedItem().toString();
         R_Desc.setText(recipeModel.getRecipeD());
 
 
     }
 
-   /* private boolean isValid() {
+    private boolean isValid() {
 
         if (R_name.getText().toString().isEmpty()) {
             Toast.makeText(context, "Please Enter Recipe Name", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-       *//* if(filePathUri == null) {
+     /*   if(filePathUri == null) {
             // ask user to upload picture
             Toast.makeText(context, "Please Upload Image", Toast.LENGTH_SHORT).show();
             return false;
-        }*//*
-
-        if (adapter1 != null) {
+        }
+*/
+/*        if (adapter1 != null) {
             int position = R_srv_people.getSelectedItemPosition();
             if (position > 0) {
                 Toast.makeText(context, "Serving People selected", Toast.LENGTH_SHORT).show();
@@ -171,24 +175,24 @@ public class EditRecipeActivity extends AppCompatActivity {
                     Toast.makeText(context, "Please select Category", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-            }
-            if (R_Desc.getText().toString().isEmpty()) {
-                Toast.makeText(context, "Please Enter Recipe Description", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            }*/
+        if (R_Desc.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Please Enter Recipe Description", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-            if (R_instr.getText().toString().isEmpty()) {
-                Toast.makeText(context, "Please Enter Recipe Instructions", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (R_ingred.getText().toString().isEmpty()) {
-                Toast.makeText(context, "Please Enter Recipe Ingredients", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            }
+        if (R_instr.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Please Enter Recipe Instructions", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (R_ingred.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Please Enter Recipe Ingredients", Toast.LENGTH_SHORT).show();
+            return false;
+        }
             return true;
 
-        }*/
+        }
+
 
 
 }
