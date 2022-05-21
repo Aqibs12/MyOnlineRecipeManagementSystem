@@ -78,6 +78,7 @@
                                 android:id="@+id/filledTextField1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                app:boxBackgroundMode="none"
                                 android:hint="Recipe name">
                                 <!-- this is the actual edit text which takes the input -->
                                 <com.google.android.material.textfield.TextInputEditText
@@ -148,6 +149,7 @@
                                 android:id="@+id/filledTextField2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                app:boxBackgroundMode="none"
                                 android:hint="Recipe description">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -170,6 +172,7 @@
                                 android:id="@+id/filledTextField3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                app:boxBackgroundMode="none"
                                 android:hint="Recipe instructions">
 
                                 <com.google.android.material.textfield.TextInputEditText
