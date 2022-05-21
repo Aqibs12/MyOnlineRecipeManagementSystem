@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -30,9 +32,15 @@ import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.example.fitrecipes.adapters.IngredientsAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -58,6 +66,7 @@ public class EditRecipeActivity extends AppCompatActivity {
     Context context;
     private IngredientsAdapter ingredientsAdapter;
     private RecyclerView recyclerView;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +78,8 @@ public class EditRecipeActivity extends AppCompatActivity {
         recipeModel = recipe.getRecipeModel();
         userModel = (UserModel) getIntent().getSerializableExtra("user");
         init();
+        progressDialog = new ProgressDialog(EditRecipeActivity.this);
+        progressDialog.setCancelable(false);
         String[] category = {"Category", "Russian", "American", "Thai", "Indonesian",
                 "African", "Afghani", "Pakistani", "Malaysian", "Maxican", "Chinese"};
         String[] serving_people = {"Serving People", "1", "2", "3", "4",
@@ -124,45 +135,85 @@ public class EditRecipeActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        if (isValid()) {
-                            String RecipeName = R_name.getText().toString();
-                            //           String RecipeImg = R_Url.getText().toString();
-                            String RecipeD = R_Desc.getText().toString();
-                            String RecipeI = R_instr.getText().toString();
-                            String RecipeIng = acIngredient.getText().toString();
-                            String RecipeT = R_time.getSelectedItem().toString();
-                            String RecipeCategory = R_category.getSelectedItem().toString();
-                            String RecipePeople = R_srv_people.getSelectedItem().toString();
-                            if (RecipeName.equals("")) {
-                                Toast.makeText(getApplicationContext(), "Write down Recipe Name.", Toast.LENGTH_LONG).show();
-                            } else if (RecipeD.equals("")) {
-                                Toast.makeText(getApplicationContext(), "Write down Recipe Description.", Toast.LENGTH_LONG).show();
-                            } else {
-                                HashMap<String, Object> productMap = new HashMap<>();
-                                productMap.put("id", recipe.getRecipeId());
-                                productMap.put("name", RecipeName);
-                                //             productMap.put("recipe_image", RecipeImg);
-                                productMap.put("recipeD", RecipeD);
-                                productMap.put("recipeI", RecipeI);
-                                productMap.put("recipeIng", RecipeIng);
-                                productMap.put("recipeT", RecipeT);
-                                productMap.put("recipeCategory", RecipeCategory);
-                                productMap.put("recipe_people", RecipePeople);
-                                productMap.put("ingredientList",ingredientsAdapter.dataList);
-                                productsRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(EditRecipeActivity.this, "Changes Applied", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
-                                });
+                        if(isValid()){
+                            progressDialog.setTitle("Recipe is Updating...");
+                            progressDialog.show();
+                            if(filePathUri==null){
+                                updateRecipe();
                             }
-                        } else {
+                            else {
+                                uploadPicture();
+                            }
+                        }
+                        else {
                             Toast.makeText(EditRecipeActivity.this, "Please Add All Recipe Details", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+    }
 
+    private void uploadPicture() {
+            try {
+                StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + GetFileExtension(filePathUri));
+                storageReference2.putFile(filePathUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                final String[] photoLink = {""};
+                                Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        photoLink[0] = uri.toString();
+                                        recipeModel.setRecipe_image(photoLink[0]);
+                                        Glide.with(profile_image).load(photoLink[0]).into(profile_image);
+                                        updateRecipe();
+                                    }
+                                });
+//
+                            }
+                        });
+            }catch (Exception e)
+            {
+                Log.d( "UploadImage",e.getMessage());
+                e.printStackTrace();
+            }
+
+    }
+    private void updateRecipe(){
+            String RecipeName = R_name.getText().toString();
+            //           String RecipeImg = R_Url.getText().toString();
+            String RecipeD = R_Desc.getText().toString();
+            String RecipeI = R_instr.getText().toString();
+            String RecipeIng = acIngredient.getText().toString();
+            String RecipeT = R_time.getSelectedItem().toString();
+            String RecipeCategory = R_category.getSelectedItem().toString();
+            String RecipePeople = R_srv_people.getSelectedItem().toString();
+            if (RecipeName.equals("")) {
+                Toast.makeText(getApplicationContext(), "Write down Recipe Name.", Toast.LENGTH_LONG).show();
+            } else if (RecipeD.equals("")) {
+                Toast.makeText(getApplicationContext(), "Write down Recipe Description.", Toast.LENGTH_LONG).show();
+            } else {
+                HashMap<String, Object> productMap = new HashMap<>();
+                productMap.put("id", recipe.getRecipeId());
+                productMap.put("name", RecipeName);
+                productMap.put("recipe_image", recipeModel.getRecipe_image());
+                productMap.put("recipeD", RecipeD);
+                productMap.put("recipeI", RecipeI);
+                productMap.put("recipeIng", RecipeIng);
+                productMap.put("recipeT", RecipeT);
+                productMap.put("recipeCategory", RecipeCategory);
+                productMap.put("recipe_people", RecipePeople);
+                productMap.put("ingredientList",ingredientsAdapter.dataList);
+                productsRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(EditRecipeActivity.this, "Recipe updated successfully", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        finish();
+                    }
+                });
+            }
     }
 
 
@@ -324,7 +375,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         if (adapter1 != null) {
             int position = R_srv_people.getSelectedItemPosition();
             if (position > 0) {
-                Toast.makeText(context, "Serving People selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Serving People selected", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Please select Sering People", Toast.LENGTH_SHORT).show();
                 return false;
@@ -334,7 +385,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         if (adapter2 != null) {
             int position1 = R_time.getSelectedItemPosition();
             if (position1 > 0) {
-                Toast.makeText(context, "Cook Time selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Cook Time selected", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Please select Time", Toast.LENGTH_SHORT).show();
                 return false;
@@ -343,7 +394,7 @@ public class EditRecipeActivity extends AppCompatActivity {
         if (adapter != null) {
             int pos = (int) R_category.getSelectedItemId();
             if (pos > 0) {
-                Toast.makeText(context, "Category is selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Category is selected", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Please select Category", Toast.LENGTH_SHORT).show();
                 return false;

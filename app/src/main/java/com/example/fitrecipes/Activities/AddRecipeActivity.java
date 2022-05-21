@@ -101,6 +101,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("images");
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Recipess");
         progressDialog = new ProgressDialog(AddRecipeActivity.this);
+        progressDialog.setCancelable(false);
         currentUserID2 = getIntent().getExtras().getString("uuid");
         UUID = getIntent().getExtras().getString("uuid");
 

@@ -255,7 +255,7 @@
                                 android:backgroundTint="@color/red"
                                 android:fontFamily="@font/poppins_bold"
                                 android:padding="@dimen/_8sdp"
-                                android:text="Add recipe"
+                                android:text="Update recipe"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_13ssp"
