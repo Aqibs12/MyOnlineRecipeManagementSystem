@@ -66,13 +66,16 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         desc.setText(recipeModel.getRecipeD());
         inst.setText(recipeModel.getRecipeI());
         cat.setText(recipeModel.getRecipeCategory());
-        ingTitle.setText("Ingredients("+recipeModel.getRecipe_people()+" Serving)");
+        ingTitle.setText("Ingredients("+recipeModel.getRecipeIng()+" Quantity)");
 
         StringBuilder stringBuilder = new StringBuilder();
         for(Ingredient ingredient: recipeModel.getIngredientList()){
             stringBuilder.append(ingredient.getName()+" ("+ingredient.getQuantity()+" "+ingredient.getUnitName()+")\n");
         }
         ing.setText(stringBuilder.toString());
+
+     //   ing.setText((CharSequence) recipeModel.getIngredientList());
+
 
         mPager.setVisibility(View.GONE);
         image.setVisibility(View.VISIBLE);
@@ -122,7 +125,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_SUBJECT, recipeModel.getName()+" recipe");
                 intent.putExtra(Intent.EXTRA_TEXT, recipeModel.getName()+
-                        "\n Ingredients : "+ingToshow+
+                        "\n Ingredients : "+ing.getText()+
+                        "\n Image : "+recipeModel.getRecipe_image()+
+                        "\n Description : "+recipeModel.getRecipeD()+
                         "\n Instructions : "+recipeModel.getRecipeI()
                 );
                 intent.setType("text/plain");

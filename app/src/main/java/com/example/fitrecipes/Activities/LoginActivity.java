@@ -70,9 +70,10 @@ public class LoginActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
-                btnlogin.setVisibility(View.INVISIBLE);
+
                 String emailAddress = login_email.getText().toString().trim();
+                progressBar.setVisibility(View.VISIBLE);
+               // btnlogin.setVisibility(View.INVISIBLE);
                 String password = login_password.getText().toString().trim();
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
                     login_email.setError("Email Address is Invalid");
@@ -124,11 +125,15 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                             } else {
+
                                 Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
+
                     });
+
                 }
+
             }
 
 
@@ -173,14 +178,15 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("guest@gmail.com",guestUserEmail);
                                 startActivity(intent);*/
                                 finish();
-                            }catch (Exception e){}
+                            }catch (Exception e){
+
+                            }
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                            Toast.makeText(LoginActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show(); }
+
                     }
                 });
-
             }
 
         });
