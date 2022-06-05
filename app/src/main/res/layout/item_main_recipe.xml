@@ -30,10 +30,29 @@
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:fitsSystemWindows="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/i3"/>
+
+            <ImageView
+                android:id="@+id/ic_home_item_fav"
+                android:layout_width="22dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_not_fav_heart" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Likes"
+                android:textSize="20sp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="@color/white"
+                android:layout_gravity="end"
+                android:id="@+id/like_text"/>
+
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="@dimen/_130sdp"

@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable-v24/ic_fav_heart.xml" value="0.168" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable-v24/ic_not_fav_heart.xml" value="0.168" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable/edit_text_with_stroke.xml" value="0.174" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.174" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.174" />
@@ -28,6 +30,8 @@
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_credits.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_drawer.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_edit_recipe.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_favourite.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_forgot_password.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_main.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/activity_my_recipes.xml" value="0.25" />
@@ -49,6 +53,7 @@
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/layout_profile.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/recipesrvlayout.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/slidingimages_layout.xml" value="0.25" />
+        <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/layout/view_add_ingredient.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/menu/nav_bottom.xml" value="0.25" />
         <entry key="..\:/Users/Aqib_Saeed/AndroidStudioProjects/MyOnlineRecipeManagementSystem/app/src/main/res/menu/searchmenu.xml" value="0.25" />
       </map>

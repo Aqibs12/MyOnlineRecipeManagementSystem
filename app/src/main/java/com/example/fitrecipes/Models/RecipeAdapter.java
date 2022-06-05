@@ -59,6 +59,7 @@ public class RecipeAdapter extends FirebaseRecyclerAdapter<RecipeModel,RecipeAda
                 holder.tvRecipeSrvPeople.setText("Recipe Serving People"+ model.getRecipe_people());
                 holder.tvRecipeIngredients.setText("Recipe Ingredients" + model.getRecipeIng());
 
+
     }
 
     @NonNull

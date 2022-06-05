@@ -17,8 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
+import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +34,13 @@ import java.util.List;
 
 public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAdapter.RecipeViewHolder> implements Filterable {
 
-
+   // private List<Recipe> mData;
     private List<Recipe> exampleList;
     public List<Recipe> exampleListFull;
+    ImageView like_btn;
+    TextView like_text;
+    DatabaseReference likereference;
+    Boolean testclick=false;
 
     Context context;
     UserModel userModel;
@@ -50,12 +62,51 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-
+        RecipeModel recipeModel = exampleListFull.get(position).getRecipeModel();
+        recipeModel.getId();
+        String RecipeId = exampleListFull.get(position).getRecipeId();
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
         if(exampleListFull.get(position).getRecipeModel().getUser()!=null)
         holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
+        FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        final String userid=firebaseUser.getUid();
+        holder.getlikebuttonstatus(RecipeId,userid);
+        holder.like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testclick=true;
+
+                likereference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(testclick==true)
+                        {
+                            if(snapshot.child(RecipeId).hasChild(userid))
+                            {
+                                likereference.child(RecipeId).child(userid).removeValue();
+                                testclick=false;
+                            }
+                            else
+                            {
+                                likereference.child(RecipeId).child(userid).setValue(true);
+                                testclick=false;
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+        });
+
 
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +130,8 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         ImageView img;
         TextView tvRecipeName,tvUserName,tvCategory;
         CardView wholecard;
+        ImageView like_btn;
+        TextView like_text;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
@@ -86,9 +139,33 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
             tvRecipeName = itemView.findViewById(R.id.tv);
             tvCategory = itemView.findViewById(R.id.tv_category);
             tvUserName = itemView.findViewById(R.id.tv_user_name);
+            like_btn=(ImageView)itemView.findViewById(R.id.ic_home_item_fav);
+            like_text=(TextView)itemView.findViewById(R.id.like_text);
 
         }
+
+        public void getlikebuttonstatus(String recipeId, String userid) {
+            likereference = FirebaseDatabase.getInstance().getReference("likes");
+            likereference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child(recipeId).hasChild(userid)) {
+                        int likecount = (int) snapshot.child(recipeId).getChildrenCount();
+                        like_text.setText(likecount + " likes");
+                        like_btn.setImageResource(R.drawable.ic_fav_heart);
+                    } else {
+                        int likecount = (int) snapshot.child(recipeId).getChildrenCount();
+                        like_text.setText(likecount + " likes");
+                        like_btn.setImageResource(R.drawable.ic_not_fav_heart);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
     }
+
     @Override
     public Filter getFilter() {
         return exampleFilter;

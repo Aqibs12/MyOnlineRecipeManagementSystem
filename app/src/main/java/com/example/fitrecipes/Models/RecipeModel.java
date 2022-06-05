@@ -13,6 +13,7 @@ public class RecipeModel implements Serializable {
     String recipe_people;
     String recipe_image;
     String recipeCategory;
+    String favouriteRecipe;
     List<Ingredient> ingredientList;
 
 RecipeModel(){
@@ -31,6 +32,19 @@ RecipeModel(){
         this.recipe_image = url;
     }
 
+    public RecipeModel(String id, String name, String recipeT, String recipeD, String recipeI, String recipeIng, String recipe_people, String recipe_image, String recipeCategory, String favouriteRecipe, List<Ingredient> ingredientList) {
+        this.id = id;
+        this.name = name;
+        this.recipeT = recipeT;
+        this.recipeD = recipeD;
+        this.recipeI = recipeI;
+        this.recipeIng = recipeIng;
+        this.recipe_people = recipe_people;
+        this.recipe_image = recipe_image;
+        this.recipeCategory = recipeCategory;
+     //   this.favouriteRecipe = favouriteRecipe;
+        this.ingredientList = ingredientList;
+    }
 
     UserModel user;
 
@@ -123,4 +137,12 @@ RecipeModel(){
     public void setIngredientList(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
     }
+
+  /*  public boolean getFavouriteRecipe() {
+        return Boolean.parseBoolean(favouriteRecipe);
+    }
+*/
+    /*public void setFavouriteRecipe(String favouriteRecipe) {
+        this.favouriteRecipe = favouriteRecipe;
+    }*/
 }
