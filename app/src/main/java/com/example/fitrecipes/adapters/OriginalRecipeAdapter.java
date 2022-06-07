@@ -65,6 +65,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     public void addRecipe(Recipe recipe) {
         exampleList.add(recipe);
         notifyDataSetChanged();
+        
     }
 
 
