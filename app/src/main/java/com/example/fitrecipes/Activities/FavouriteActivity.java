@@ -64,7 +64,8 @@ public class FavouriteActivity extends AppCompatActivity {
 
         //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
         recipes = new ArrayList<>();
-
+        adapter = new OriginalRecipeAdapter(loggedInUser, FavouriteActivity.this);
+        recyclerView.setAdapter(adapter);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -78,8 +79,14 @@ public class FavouriteActivity extends AppCompatActivity {
                         recipes.add(recipe);
                     }
                 }
-                adapter = new OriginalRecipeAdapter(recipes, loggedInUser, FavouriteActivity.this);
-                recyclerView.setAdapter(adapter);
+
+                for(Recipe recipe:recipes){
+                    String recipeID = recipe.getRecipeId();
+                    
+                }
+
+
+
             }
 
             @Override
