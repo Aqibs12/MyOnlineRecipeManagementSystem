@@ -83,14 +83,14 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(testclick==true)
                         {
-                            if(snapshot.child(RecipeId).hasChild(userid))
+                            if(snapshot.child(userid).hasChild(RecipeId))
                             {
-                                likereference.child(RecipeId).child(userid).removeValue();
+                                likereference.child(userid).child(RecipeId).removeValue();
                                 testclick=false;
                             }
                             else
                             {
-                                likereference.child(RecipeId).child(userid).setValue(true);
+                                likereference.child(userid).child(RecipeId).setValue(true);
                                 testclick=false;
                             }
 
@@ -145,16 +145,16 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         }
 
         public void getlikebuttonstatus(String recipeId, String userid) {
-            likereference = FirebaseDatabase.getInstance().getReference("likes");
+            likereference = FirebaseDatabase.getInstance().getReference("Favourites");
             likereference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.child(recipeId).hasChild(userid)) {
-                        int likecount = (int) snapshot.child(recipeId).getChildrenCount();
+                    if (snapshot.child(userid).hasChild(recipeId)) {
+                        int likecount = (int) snapshot.child(userid).getChildrenCount();
                         like_text.setText(likecount + " likes");
                         like_btn.setImageResource(R.drawable.ic_fav_heart);
                     } else {
-                        int likecount = (int) snapshot.child(recipeId).getChildrenCount();
+                        int likecount = (int) snapshot.child(userid).getChildrenCount();
                         like_text.setText(likecount + " likes");
                         like_btn.setImageResource(R.drawable.ic_not_fav_heart);
                     }

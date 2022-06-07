@@ -15,8 +15,7 @@ public class RecipeModel implements Serializable {
     String recipeCategory;
     String favouriteRecipe;
     List<Ingredient> ingredientList;
-
-RecipeModel(){
+    RecipeModel(){
 
 }
 
@@ -42,7 +41,6 @@ RecipeModel(){
         this.recipe_people = recipe_people;
         this.recipe_image = recipe_image;
         this.recipeCategory = recipeCategory;
-     //   this.favouriteRecipe = favouriteRecipe;
         this.ingredientList = ingredientList;
     }
 
@@ -138,11 +136,4 @@ RecipeModel(){
         this.ingredientList = ingredientList;
     }
 
-  /*  public boolean getFavouriteRecipe() {
-        return Boolean.parseBoolean(favouriteRecipe);
-    }
-*/
-    /*public void setFavouriteRecipe(String favouriteRecipe) {
-        this.favouriteRecipe = favouriteRecipe;
-    }*/
 }
