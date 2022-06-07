@@ -52,6 +52,22 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         this.exampleListFull=exampleList;
 
     }
+
+    public OriginalRecipeAdapter(UserModel userModel, Context context)
+    {
+        this.exampleList = new ArrayList<>();
+        this.context =  context;
+        this.userModel = userModel;
+        this.exampleListFull=exampleList;
+
+    }
+
+    public void addRecipe(Recipe recipe) {
+        exampleList.add(recipe);
+        notifyDataSetChanged();
+    }
+
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
