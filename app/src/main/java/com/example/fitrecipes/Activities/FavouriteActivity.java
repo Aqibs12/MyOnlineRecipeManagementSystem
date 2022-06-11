@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FavouriteActivity extends AppCompatActivity {
 
@@ -59,7 +60,7 @@ public class FavouriteActivity extends AppCompatActivity {
         currentUserID = firebaseUser.getUid();
         USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("Favourites");
+        databaseReference = firebaseDatabase.getReference().child("Recipess");
         databaseReference1 = firebaseDatabase.getReference().child("users");
 
         //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
@@ -75,16 +76,13 @@ public class FavouriteActivity extends AppCompatActivity {
                     RecipeModel university = postSnapshot.getValue(RecipeModel.class);
                     Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
-                    if (recipe.getRecipeModel().getUser().getId().equals(USERID)) {
-                        recipes.add(recipe);
-                    }
                 }
 
-                for(Recipe recipe:recipes){
+            /*    for(Recipe recipe:recipes){
                     String recipeID = recipe.getRecipeId();
-                    
-                }
 
+                }
+*/
 
 
             }

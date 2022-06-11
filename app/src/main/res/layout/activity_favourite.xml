@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_back"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
         android:text="Total Recipes: 12"
         android:textColor="#515151" />
 

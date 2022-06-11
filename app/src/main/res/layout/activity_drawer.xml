@@ -108,7 +108,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#980804"
-            android:drawableLeft="@drawable/ic_fav_heart"
+            android:drawableLeft="@drawable/ic_not_fav_heart"
             android:text="Favourite Recipes" />
 
         <Button
