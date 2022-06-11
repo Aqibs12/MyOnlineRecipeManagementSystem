@@ -3,24 +3,25 @@ package com.example.fitrecipes.Models;
 import java.io.Serializable;
 
 public class Recipe implements Serializable {
-    String recipeId;
+    String id;
+    //String recipeId;
     RecipeModel recipeModel;
 
     Recipe(){
 
     }
 
-    public Recipe(String recipeId, RecipeModel recipeModel) {
-        this.recipeId = recipeId;
+    public Recipe(String id, RecipeModel recipeModel) {
+        this.id = id;
         this.recipeModel = recipeModel;
     }
 
-    public String getRecipeId() {
-        return recipeId;
+    public String getId() {
+        return id;
     }
 
-    public void setRecipeId(String recipeId) {
-        this.recipeId = recipeId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public RecipeModel getRecipeModel() {

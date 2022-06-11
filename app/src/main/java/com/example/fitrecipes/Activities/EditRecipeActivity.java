@@ -34,8 +34,6 @@ import com.example.fitrecipes.adapters.IngredientsAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -130,7 +128,7 @@ public class EditRecipeActivity extends AppCompatActivity {
             }
         });
 
-        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeId());
+        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getId());
         btnSubmit.
                 setOnClickListener(new View.OnClickListener() {
 
@@ -196,7 +194,7 @@ public class EditRecipeActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Write down Recipe Description.", Toast.LENGTH_LONG).show();
             } else {
                 HashMap<String, Object> productMap = new HashMap<>();
-                productMap.put("id", recipe.getRecipeId());
+                productMap.put("id", recipe.getId());
                 productMap.put("name", RecipeName);
                 productMap.put("recipe_image", recipeModel.getRecipe_image());
                 productMap.put("recipeD", RecipeD);

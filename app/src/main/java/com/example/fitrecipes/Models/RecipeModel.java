@@ -13,7 +13,6 @@ public class RecipeModel implements Serializable {
     String recipe_people;
     String recipe_image;
     String recipeCategory;
-    String favouriteRecipe;
     List<Ingredient> ingredientList;
     RecipeModel(){
 

@@ -19,7 +19,6 @@ import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.auth.User;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
 
@@ -105,7 +104,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                FirebaseDatabase.getInstance().getReference().child("Recipess").child(recipe.getRecipeId()).removeValue();
+                                FirebaseDatabase.getInstance().getReference().child("Recipess").child(recipe.getId()).removeValue();
                                 dialog.dismiss();
                                 finish();
                             }

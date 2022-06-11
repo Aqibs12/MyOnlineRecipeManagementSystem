@@ -60,7 +60,7 @@ public class FavouriteActivity extends AppCompatActivity {
         currentUserID = firebaseUser.getUid();
         USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("Recipess");
+        databaseReference = firebaseDatabase.getReference("Favourites").child(USERID);
         databaseReference1 = firebaseDatabase.getReference().child("users");
 
         //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
@@ -70,21 +70,29 @@ public class FavouriteActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                loggedInUser = dataSnapshot.getValue(UserModel.class);
+                //loggedInUser = dataSnapshot.getValue(UserModel.class);
                 recipes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    RecipeModel university = postSnapshot.getValue(RecipeModel.class);
-                    Recipe recipe = new Recipe(postSnapshot.getKey(), university);
+                    Recipe recipe = postSnapshot.getValue(Recipe.class);
+                    //Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
                 }
+                for(Recipe recipe: recipes) {
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe.getId());
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            RecipeModel recipeModel = snapshot.getValue(RecipeModel.class);
+                            Recipe recipe1 = new Recipe(snapshot.getKey(), recipeModel);
+                            adapter.addRecipe(recipe1);
+                        }
 
-            /*    for(Recipe recipe:recipes){
-                    String recipeID = recipe.getRecipeId();
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
+                        }
+                    });
                 }
-*/
-
-
             }
 
             @Override

@@ -65,7 +65,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     public void addRecipe(Recipe recipe) {
         exampleList.add(recipe);
         notifyDataSetChanged();
-        
+
     }
 
 
@@ -81,7 +81,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         RecipeModel recipeModel = exampleListFull.get(position).getRecipeModel();
         recipeModel.getId();
-        String RecipeId = exampleListFull.get(position).getRecipeId();
+        String RecipeId = exampleListFull.get(position).getId();
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
