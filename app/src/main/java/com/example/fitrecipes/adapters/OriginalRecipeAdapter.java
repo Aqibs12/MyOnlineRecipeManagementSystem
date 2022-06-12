@@ -81,7 +81,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         RecipeModel recipeModel = exampleListFull.get(position).getRecipeModel();
         recipeModel.getId();
-        String RecipeId = exampleListFull.get(position).getId();
+        String RecipeId = exampleListFull.get(position).getRecipeid();
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
@@ -100,14 +100,14 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(testclick==true)
                         {
-                            if(snapshot.child(userid).hasChild(RecipeId))
+                            if(snapshot.child(userid).child(RecipeId).hasChild(RecipeId))
                             {
-                                likereference.child(userid).child(RecipeId).removeValue();
+                                likereference.child(userid).child(RecipeId).child(RecipeId).removeValue();
                                 testclick=false;
                             }
                             else
                             {
-                                likereference.child(userid).child(RecipeId).setValue(true);
+                                likereference.child(userid).child(RecipeId).child(RecipeId).setValue(RecipeId);
                                 testclick=false;
                             }
 
@@ -166,7 +166,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
             likereference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.child(userid).hasChild(recipeId)) {
+                    if (snapshot.child(userid).child(recipeId).hasChild(recipeId)) {
                         int likecount = (int) snapshot.child(userid).getChildrenCount();
                         like_text.setText(likecount + " likes");
                         like_btn.setImageResource(R.drawable.ic_fav_heart);

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.UserModel;
@@ -26,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavouriteActivity extends AppCompatActivity {
 
@@ -42,7 +40,7 @@ public class FavouriteActivity extends AppCompatActivity {
     private static final String USERS = "users";
     private String currentUserID = "";
     ValueEventListener listener;
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe> recipes ;
     private UserModel loggedInUser;
     TextView tvLoggedUser;
     ImageView iv_LoggedUserPic, iv_BackPress;
@@ -77,8 +75,9 @@ public class FavouriteActivity extends AppCompatActivity {
                     //Recipe recipe = new Recipe(postSnapshot.getKey(), university);
                     recipes.add(recipe);
                 }
+
                 for(Recipe recipe: recipes) {
-                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe.getId());
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe.getRecipeid());
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

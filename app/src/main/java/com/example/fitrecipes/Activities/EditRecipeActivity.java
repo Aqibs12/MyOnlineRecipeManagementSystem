@@ -128,7 +128,7 @@ public class EditRecipeActivity extends AppCompatActivity {
             }
         });
 
-        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getId());
+        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeid());
         btnSubmit.
                 setOnClickListener(new View.OnClickListener() {
 
@@ -194,7 +194,7 @@ public class EditRecipeActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Write down Recipe Description.", Toast.LENGTH_LONG).show();
             } else {
                 HashMap<String, Object> productMap = new HashMap<>();
-                productMap.put("id", recipe.getId());
+                productMap.put("id", recipe.getRecipeid());
                 productMap.put("name", RecipeName);
                 productMap.put("recipe_image", recipeModel.getRecipe_image());
                 productMap.put("recipeD", RecipeD);

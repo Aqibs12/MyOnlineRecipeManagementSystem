@@ -104,7 +104,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                FirebaseDatabase.getInstance().getReference().child("Recipess").child(recipe.getId()).removeValue();
+                                FirebaseDatabase.getInstance().getReference().child("Recipess").child(recipe.getRecipeid()).removeValue();
                                 dialog.dismiss();
                                 finish();
                             }

@@ -55,7 +55,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         final String userid=firebaseUser.getUid();
-        String RecipeId = mData.get(position).getId();
+        String RecipeId = mData.get(position).getRecipeid();
         Glide.with(holder.imageView).load(recipeModel.getRecipe_image()).into(holder.imageView);
         holder.tv_Recipe_name.setText(recipeModel.name);
         holder.tvRecipeInstructions.setText(recipeModel.recipeI);

@@ -3,7 +3,7 @@ package com.example.fitrecipes.Models;
 import java.io.Serializable;
 
 public class Recipe implements Serializable {
-    String id;
+    String recipeid;
     //String recipeId;
     RecipeModel recipeModel;
 
@@ -12,16 +12,16 @@ public class Recipe implements Serializable {
     }
 
     public Recipe(String id, RecipeModel recipeModel) {
-        this.id = id;
+        this.recipeid = id;
         this.recipeModel = recipeModel;
     }
 
-    public String getId() {
-        return id;
+    public String getRecipeid() {
+        return recipeid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setRecipeid(String recipeid) {
+        this.recipeid = recipeid;
     }
 
     public RecipeModel getRecipeModel() {
