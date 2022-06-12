@@ -27,7 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class FavouriteActivity extends AppCompatActivity {
-
+    Recipe recipe;
+    RecipeModel recipeModel;
     RecyclerView recyclerView;
     FirebaseAuth firebaseAuth;
     OriginalRecipeAdapter adapter;
@@ -56,6 +57,9 @@ public class FavouriteActivity extends AppCompatActivity {
         uuid = LoginActivity.UUID;
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = firebaseUser.getUid();
+        recipeModel = (RecipeModel) getIntent().getSerializableExtra("recipes");
+        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        recipeModel = recipe.getRecipeModel();
         USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Favourites").child(USERID);
@@ -68,7 +72,6 @@ public class FavouriteActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //loggedInUser = dataSnapshot.getValue(UserModel.class);
                 recipes.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Recipe recipe = postSnapshot.getValue(Recipe.class);
