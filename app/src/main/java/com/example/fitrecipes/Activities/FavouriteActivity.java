@@ -45,6 +45,7 @@ public class FavouriteActivity extends AppCompatActivity {
     private UserModel loggedInUser;
     TextView tvLoggedUser;
     ImageView iv_LoggedUserPic, iv_BackPress;
+    ArrayList<String> favList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,10 @@ public class FavouriteActivity extends AppCompatActivity {
         uuid = LoginActivity.UUID;
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = firebaseUser.getUid();
-        recipeModel = (RecipeModel) getIntent().getSerializableExtra("recipes");
-        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
-        recipeModel = recipe.getRecipeModel();
-        USERID = getIntent().getExtras().getString("uuid");
+   //     recipeModel = (RecipeModel) getIntent().getSerializableExtra("recipes");
+     //   recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+    //    recipeModel = recipe.getRecipeModel();
+   //     USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Favourites").child(USERID);
         databaseReference1 = firebaseDatabase.getReference().child("users");
