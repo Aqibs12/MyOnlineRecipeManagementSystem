@@ -1,5 +1,6 @@
 package com.example.fitrecipes.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -41,7 +42,6 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     TextView like_text;
     DatabaseReference likereference;
     Boolean testclick=false;
-
     Context context;
     UserModel userModel;
     public OriginalRecipeAdapter(List<Recipe> exampleList, UserModel userModel, Context context)
@@ -78,7 +78,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     }
 
     @Override
-    public void onBindViewHolder(RecipeViewHolder holder, int position) {
+    public void onBindViewHolder(RecipeViewHolder holder, @SuppressLint("RecyclerView") int position) {
         RecipeModel recipeModel = exampleListFull.get(position).getRecipeModel();
         recipeModel.getId();
         String RecipeId = exampleListFull.get(position).getRecipeid();
@@ -101,13 +101,15 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
                         if(testclick==true)
                         {
                             if(snapshot.child(userid).child(RecipeId).hasChild(RecipeId))
+
                             {
+                         //       like_btn.setImageResource(R.drawable.ic_fav_heart);
                                 likereference.child(userid).child(RecipeId).child(RecipeId).removeValue();
                                 testclick=false;
                             }
                             else
                             {
-                                likereference.child(userid).child(RecipeId).child(RecipeId).setValue(RecipeId);
+                                likereference.child(userid).child(RecipeId).child(RecipeId).child("id").setValue(RecipeId);
                                 testclick=false;
                             }
 
@@ -142,6 +144,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         return exampleListFull.size();
     }
 
+
     public class RecipeViewHolder extends RecyclerView.ViewHolder
     {
         ImageView img;
@@ -156,8 +159,8 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
             tvRecipeName = itemView.findViewById(R.id.tv);
             tvCategory = itemView.findViewById(R.id.tv_category);
             tvUserName = itemView.findViewById(R.id.tv_user_name);
-            like_btn=(ImageView)itemView.findViewById(R.id.ic_home_item_fav);
-            like_text=(TextView)itemView.findViewById(R.id.like_text);
+         //   like_text=(TextView)itemView.findViewById(R.id.like_text);
+            like_btn=itemView.findViewById(R.id.ic_home_item_fav);
 
         }
 
@@ -167,12 +170,13 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.child(userid).child(recipeId).hasChild(recipeId)) {
-                        int likecount = (int) snapshot.child(userid).getChildrenCount();
-                        like_text.setText(likecount + " likes");
+
+                        /*int likecount = (int) snapshot.child(userid).getChildrenCount();
+                        like_text.setText(likecount + " likes");*/
                         like_btn.setImageResource(R.drawable.ic_fav_heart);
                     } else {
-                        int likecount = (int) snapshot.child(userid).getChildrenCount();
-                        like_text.setText(likecount + " likes");
+                        /*int likecount = (int) snapshot.child(userid).getChildrenCount();
+                        like_text.setText(likecount + " likes");*/
                         like_btn.setImageResource(R.drawable.ic_not_fav_heart);
                     }
                 }

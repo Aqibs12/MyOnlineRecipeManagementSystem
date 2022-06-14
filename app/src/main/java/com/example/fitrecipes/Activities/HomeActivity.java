@@ -326,9 +326,9 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,AddRecipeActivity.class);
-                intent.putExtra("user",loggedInUser);
-                intent.putExtra("uuid",uuid);
+                Intent intent = new Intent(context, AddRecipeActivity.class);
+                intent.putExtra("user", loggedInUser);
+                intent.putExtra("uuid", uuid);
                 startActivity(intent);
                 //startActivity(new Intent(context, AddRecipeActivity.class).putExtra("uuid", USERID));
             }
@@ -342,15 +342,15 @@ public class HomeActivity extends AppCompatActivity {
         findViewById(R.id.btn_my_recipes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(loggedInUser!=null){
-                    Intent intent = new Intent(context,MyRecipesActivity.class);
-                    intent.putExtra("user",loggedInUser);
-                    intent.putExtra("uuid",uuid);
+                if (loggedInUser != null) {
+                    Intent intent = new Intent(context, MyRecipesActivity.class);
+                    intent.putExtra("user", loggedInUser);
+                    intent.putExtra("uuid", uuid);
                     startActivity(intent);
                     slidingRootNav.closeMenu();
                 }
 
-              //  startActivity(new Intent(context, MyRecipesActivity.class));
+                //  startActivity(new Intent(context, MyRecipesActivity.class));
             }
         });
 
@@ -384,29 +384,28 @@ public class HomeActivity extends AppCompatActivity {
             }
 
         });
-            findViewById(R.id.btn_fav_recipes).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (Recipe recipe : recipes) {
-                        RecipeModel recipeModel = recipe.getRecipeModel();
-                        recipeModel.getId();
-                        if (loggedInUser != null) {
-                            Intent intent = new Intent(context, FavouriteActivity.class);
-                            intent.putExtra("user", loggedInUser);
-                            intent.putExtra("uuid", uuid);
-                            intent.putExtra("recipe", recipe);
-                            intent.putExtra("recipes",recipeModel);
-                            startActivity(intent);
-                            slidingRootNav.closeMenu();
-                        }
-              /*  Intent intent =  new Intent(HomeActivity.this,FavouriteActivity.class);
+        findViewById(R.id.btn_fav_recipes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               /* Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);*/
+                for (Recipe recipe : recipes) {
+                    RecipeModel recipeModel = recipe.getRecipeModel();
+                    recipeModel.getId();
+                    if (loggedInUser != null) {
+                        Intent intent = new Intent(context, FavouriteActivity.class);
+                        intent.putExtra("user", loggedInUser);
+                        intent.putExtra("uuid", uuid);
+                        intent.putExtra("recipe", recipe);
+                        intent.putExtra("recipes", recipeModel);
+                        startActivity(intent);
+                        slidingRootNav.closeMenu();
 
                     }
                 }
-            });
-
-
+            }
+        });
     }
 
 
