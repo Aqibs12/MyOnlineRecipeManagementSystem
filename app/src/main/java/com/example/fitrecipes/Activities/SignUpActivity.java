@@ -28,15 +28,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 public class SignUpActivity extends AppCompatActivity {
     private TextView tv_signIn;
-    private EditText et_fullName, et_emailAddress, et_password, et_cPassword, et_phoneNumber,sign_up_question,sign_up_ans;
+    private EditText et_fullName, et_emailAddress, et_password, et_cPassword, et_phoneNumber, sign_up_question, sign_up_ans;
     private Button btn_signUp;
     private FirebaseAuth myauth;
+
+    FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
     String inPut = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
@@ -46,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         myauth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
         initViews();
         onClickListeners();
     }
@@ -62,6 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up_ans = findViewById(R.id.sign_up_ans);
         btn_signUp = findViewById(R.id.btn_signUp);
     }
+
     public void onClickListeners() {
 
         tv_signIn.setOnClickListener(new View.OnClickListener() {
@@ -75,41 +83,15 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(isValid()) {
+                if (isValid()) {
                     String fullName = et_fullName.getText().toString().trim();
                     String emailAddress = et_emailAddress.getText().toString().trim();
                     String password = et_password.getText().toString().trim();
                     String phoneNumber = et_phoneNumber.getText().toString().trim();
-                    String signUpQ =  sign_up_question.getText().toString().trim();
+                    String signUpQ = sign_up_question.getText().toString().trim();
                     String signUpA = sign_up_ans.getText().toString().trim();
-                    //making variable for validations
-                    myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName,emailAddress,phoneNumber,password,signUpQ,signUpA);
-                                FirebaseDatabase.getInstance().getReference("users")
-                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                            startActivity(intent);
+                    phoneValidation(fullName,emailAddress,phoneNumber,password,signUpQ,signUpA);
 
-                                        } else {
-
-                                            Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    }
-                                });
-                            }else {
-                                Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
 
                 }
             }
@@ -223,13 +205,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private boolean isValid(){
+    private boolean isValid() {
         String fullName = et_fullName.getText().toString().trim();
         String emailAddress = et_emailAddress.getText().toString().trim();
         String password = et_password.getText().toString().trim();
         String cPassword = et_cPassword.getText().toString().trim();
         String phoneNumber = et_phoneNumber.getText().toString().trim();
-        String signUpQ =  sign_up_question.getText().toString().trim();
+        String signUpQ = sign_up_question.getText().toString().trim();
         String signUpA = sign_up_ans.getText().toString().trim();
         //validate data here
         if (TextUtils.isEmpty(fullName)) {
@@ -244,7 +226,7 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
 
-        if (et_password.length()<8){
+        if (et_password.length() < 8) {
             et_password.setError("Please Enter a valid Password with at least 8 Alphabets");
             et_password.requestFocus();
             return false;
@@ -253,7 +235,7 @@ public class SignUpActivity extends AppCompatActivity {
         boolean isUppercase = false;
         boolean isSpecialCharacter = false;
         int digits = 0;
-        for(int i = 0; i< et_password.getText().toString().length(); i++){
+        for (int i = 0; i < et_password.getText().toString().length(); i++) {
             char c = et_password.getText().toString().charAt(i);
             if (Character.isUpperCase(c))
                 isUppercase = true;
@@ -267,7 +249,7 @@ public class SignUpActivity extends AppCompatActivity {
             et_password.requestFocus();
             return false;
         }
-        if (digits<=0) {
+        if (digits <= 0) {
             et_password.setError("Please enter at least 2 digits in password");
             et_password.requestFocus();
             return false;
@@ -298,7 +280,7 @@ public class SignUpActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(signUpQ)) {
             sign_up_question.setError("Please Enter Question");
             sign_up_question.requestFocus();
-           return false;
+            return false;
         }
         if (TextUtils.isEmpty(signUpA)) {
             sign_up_ans.setError("Please Enter Answer");
@@ -310,9 +292,66 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void onBackPressed(View view) {
-        onBackPressed();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
+    // another val
+    private void phoneValidation(String fullName, String emailAddress, String phoneNumber2, String password, String signUpQ, String signUpA) {
+      int i;   FirebaseDatabase firebaseDatabase2 = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase2 = firebaseDatabase2.getReference().child("users");
+        //data retrival
+        mDatabase2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> addPhone = new ArrayList<>();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                    String phone = (String) snapshot.child("phone").getValue();
+                    addPhone.add(phone);
+
+                }
+                if (addPhone.contains(phoneNumber2)) {
+                    Toast.makeText(SignUpActivity.this, "Number  exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Number dont Exists", Toast.LENGTH_SHORT).show();
+                    myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                UserModel userModel = new UserModel(FirebaseAuth.getInstance().getCurrentUser().getUid(), fullName, emailAddress, phoneNumber2, password, signUpQ, signUpA);
+                                FirebaseDatabase.getInstance().getReference("users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                                                    startActivity(intent);
+
+                                                } else {
+
+                                                    Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(SignUpActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+            }
+        });
+    }
 }
+
