@@ -42,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText et_fullName, et_emailAddress, et_password, et_cPassword, et_phoneNumber, sign_up_question, sign_up_ans;
     private Button btn_signUp;
     private FirebaseAuth myauth;
+
     FirebaseDatabase firebaseDatabase;
     private DatabaseReference mDatabase;
     String inPut = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
