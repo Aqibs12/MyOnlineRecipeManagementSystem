@@ -123,4 +123,12 @@ RecipeModel(){
     public void setIngredientList(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
     }
+
+    public String getIngredients() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Ingredient ingredient: ingredientList) {
+            stringBuilder.append(ingredient.getName()+" ");
+        }
+        return stringBuilder.toString();
+    }
 }

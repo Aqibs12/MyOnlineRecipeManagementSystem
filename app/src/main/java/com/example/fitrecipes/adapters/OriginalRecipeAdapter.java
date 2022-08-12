@@ -111,7 +111,8 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
                     }*/
                     // name match condition. this might differ depending on your requirement
                     // here we are looking for name or phone number match
-                    if (row.getRecipeModel().getName().toLowerCase().contains(charString.toLowerCase()) || ingToshow.contains(constraint)) {
+                    if (row.getRecipeModel().getName().toLowerCase().contains(charString.toLowerCase())
+                            || row.getRecipeModel().getIngredients().toLowerCase().contains(charString.toLowerCase())) {
                         filteredList.add(row);
                     }
                 }
