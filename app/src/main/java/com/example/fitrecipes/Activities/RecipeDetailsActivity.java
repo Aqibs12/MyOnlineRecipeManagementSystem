@@ -42,6 +42,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     private static ViewPager mPager;
     private static int currentPage = 0;
     String USERID;
+    boolean isFav = false;
     String loggedInUser;
     UserModel userModel;
     String loggedInUserFavouriteRecipe = "";
@@ -151,20 +152,42 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //recipeModel.getUser().getId()
-                Toast.makeText(RecipeDetailsActivity.this, "fav icon clicked", Toast.LENGTH_SHORT).show();
-
-                FirebaseDatabase.getInstance().getReference().child("Favourite")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(recipeModel.getId())
-                        .setValue(recipeModel.getId()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(RecipeDetailsActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                if (isFav) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RecipeDetailsActivity.this);
+                    builder.setMessage("Are you sure you want to remove this Recipe from favourite list?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    FirebaseDatabase.getInstance().getReference().child("Favourite").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(recipeModel.getId()).removeValue();
+                                    ivFav.setColorFilter(getResources().getColor(R.color.black));
+                                    isFav = false;
+                                    dialog.dismiss();
+                                    finish();
                                 }
-                            }
-                        });
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                } else {
+                    FirebaseDatabase.getInstance().getReference().child("Favourite")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(recipeModel.getId())
+                            .setValue(recipeModel.getId()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(RecipeDetailsActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+
 
             }
         });
@@ -184,6 +207,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         Toast.makeText(RecipeDetailsActivity.this, "Id Matched", Toast.LENGTH_SHORT).show();
 
                         ivFav.setColorFilter(getResources().getColor(R.color.red));
+                        isFav = true;
                         /*if(ivFav.getColorFilter()==ivFav.getColorFilter(getResources().getColor(R.color.red))){
 
                         }*/
