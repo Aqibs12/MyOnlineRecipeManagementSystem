@@ -299,7 +299,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     // another val
     private void phoneValidation(String fullName, String emailAddress, String phoneNumber2, String password, String signUpQ, String signUpA) {
-      int i;   FirebaseDatabase firebaseDatabase2 = FirebaseDatabase.getInstance();
+       FirebaseDatabase firebaseDatabase2 = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase2 = firebaseDatabase2.getReference().child("users");
         //data retrival
         mDatabase2.addValueEventListener(new ValueEventListener() {
@@ -313,9 +313,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                 }
                 if (addPhone.contains(phoneNumber2)) {
-                    Toast.makeText(SignUpActivity.this, "Number  exists", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "User already exists", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SignUpActivity.this, "Number dont Exists", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SignUpActivity.this, "Number dont Exists", Toast.LENGTH_SHORT).show();
                     myauth.createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

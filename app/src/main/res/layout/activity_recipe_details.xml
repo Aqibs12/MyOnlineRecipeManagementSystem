@@ -13,7 +13,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="4">
+        android:weightSum="5">
 
         <ImageView
             android:id="@+id/img_back"
@@ -37,7 +37,14 @@
             android:text="Details"
             android:textColor="@color/black"
             android:textSize="@dimen/_17ssp" />
-
+        <ImageView
+            android:id="@+id/favRec"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_weight="0.9"
+            android:onClick="onBackPress"
+            android:src="@drawable/ic_baseline_favorite_24"
+            android:tint="@color/black" />
         <ImageView
             android:id="@+id/share"
             android:layout_width="0dp"
