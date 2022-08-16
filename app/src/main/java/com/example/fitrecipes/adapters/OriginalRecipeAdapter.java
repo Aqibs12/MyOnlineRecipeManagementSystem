@@ -44,9 +44,9 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
     public OriginalRecipeAdapter(UserModel loggedInUser, FavouriteActivity favouriteActivity) {
 
-        this.exampleList = exampleList;
-        this.context =  context;
-        this.userModel = userModel;
+        this.exampleList = new ArrayList<>();
+        this.context =  favouriteActivity;
+        this.userModel = loggedInUser;
         this.exampleListFull=exampleList;
 
     }

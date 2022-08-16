@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavouriteActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -38,8 +37,7 @@ public class FavouriteActivity extends AppCompatActivity {
     private DatabaseReference databaseReference,databaseReference1;
     private static final String USERS = "users";
     private String currentUserID = "";
-    private ArrayList<Recipe> recipes ;
-    private UserModel loggedInUser;
+    private ArrayList<String> recipeIds;
     TextView tvLoggedUser;
     ImageView iv_LoggedUserPic, iv_BackPress;
    // ArrayList<String> favList = new ArrayList<>();
@@ -56,25 +54,25 @@ public class FavouriteActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserID = firebaseUser.getUid();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Favourites").child(USERID);
-        databaseReference1 = firebaseDatabase.getReference().child("users");
+        databaseReference = firebaseDatabase.getReference("Favourite").child(userModel.getId());
+        //databaseReference1 = firebaseDatabase.getReference().child("users");
 
         //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);
-        recipes = new ArrayList<>();
-        adapter = new OriginalRecipeAdapter(loggedInUser, FavouriteActivity.this);
+        recipeIds = new ArrayList<>();
+        adapter = new OriginalRecipeAdapter(userModel, FavouriteActivity.this);
         recyclerView.setAdapter(adapter);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                recipes.clear();
+                recipeIds.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Recipe recipe = postSnapshot.getValue(Recipe.class);
+                    String recipe = postSnapshot.getValue(String.class);
                     //Recipe recipe = new Recipe(postSnapshot.getKey(), university);
-                    recipes.add(recipe);
+                    recipeIds.add(recipe);
                 }
 
-                for(Recipe recipe: recipes) {
-                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe.getRecipeId());
+                for(String recipe: recipeIds) {
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe);
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
