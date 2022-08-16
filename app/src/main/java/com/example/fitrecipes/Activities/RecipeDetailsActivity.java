@@ -180,9 +180,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(RecipeDetailsActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RecipeDetailsActivity.this, "Failed to add recipe to favorites" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -204,7 +204,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 //                    loggedInUserFavouriteRecipe = snapshot.getValue().toString();
 
                     if (loggedInUserFavouriteRecipe.equals(recipeModel.getId())) {
-                        Toast.makeText(RecipeDetailsActivity.this, "Id Matched", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(RecipeDetailsActivity.this, "Id Matched", Toast.LENGTH_SHORT).show();
 
                         ivFav.setColorFilter(getResources().getColor(R.color.red));
                         isFav = true;
