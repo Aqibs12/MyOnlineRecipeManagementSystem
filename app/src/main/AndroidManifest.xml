@@ -23,6 +23,9 @@
             android:name=".Activities.EditRecipeActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.FavouriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.RecipeDetailsActivity"
             android:exported="false" />
         <activity

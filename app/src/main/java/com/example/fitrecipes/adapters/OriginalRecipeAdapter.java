@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.fitrecipes.Activities.FavouriteActivity;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
 import com.example.fitrecipes.Models.UserModel;
@@ -40,6 +41,22 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         this.exampleListFull=exampleList;
 
     }
+
+    public OriginalRecipeAdapter(UserModel loggedInUser, FavouriteActivity favouriteActivity) {
+
+        this.exampleList = exampleList;
+        this.context =  context;
+        this.userModel = userModel;
+        this.exampleListFull=exampleList;
+
+    }
+
+    public void addRecipe(Recipe recipe) {
+        exampleList.add(recipe);
+        notifyDataSetChanged();
+
+    }
+
     @NonNull
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

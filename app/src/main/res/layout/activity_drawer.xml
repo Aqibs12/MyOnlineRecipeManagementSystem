@@ -101,10 +101,21 @@
             android:text="My Recipes" />
 
         <Button
-            android:id="@+id/btn_edit_profile"
+            android:id="@+id/btn_fav_recipes"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/btn_my_recipes"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="#980804"
+            android:drawableLeft="@drawable/ic_not_fav_heart"
+            android:text="Favourite Recipes" />
+
+        <Button
+            android:id="@+id/btn_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/btn_fav_recipes"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="#980804"

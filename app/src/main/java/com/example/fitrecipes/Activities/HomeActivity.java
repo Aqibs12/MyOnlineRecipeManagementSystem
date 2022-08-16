@@ -385,6 +385,29 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
+        findViewById(R.id.btn_fav_recipes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               /* Intent intent = new Intent(HomeActivity.this, FavouriteActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*/
+                for (Recipe recipe : recipes) {
+                    RecipeModel recipeModel = recipe.getRecipeModel();
+                    recipeModel.getId();
+                    if (loggedInUser != null) {
+                        Intent intent = new Intent(context, FavouriteActivity.class);
+                        intent.putExtra("user", loggedInUser);
+                        intent.putExtra("uuid", uuid);
+                        intent.putExtra("recipe", recipe);
+                        intent.putExtra("recipes", recipeModel);
+                        startActivity(intent);
+                        slidingRootNav.closeMenu();
+
+                    }
+                }
+            }
+        });
+
     }
 
 
