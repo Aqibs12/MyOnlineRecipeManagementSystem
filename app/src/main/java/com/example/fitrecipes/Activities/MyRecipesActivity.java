@@ -55,7 +55,7 @@ public class MyRecipesActivity extends AppCompatActivity {
         currentUserID = firebaseUser.getUid();
         USERID = getIntent().getExtras().getString("uuid");
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference().child("Recipess");
+        databaseReference = firebaseDatabase.getReference().child("Recipes");
         databaseReference1 = firebaseDatabase.getReference().child("users");
 
         //      databaseReference = firebaseDatabase.getReference(USERS).child(USERID);

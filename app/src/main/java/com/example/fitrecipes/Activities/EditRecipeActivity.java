@@ -130,7 +130,7 @@ public class EditRecipeActivity extends AppCompatActivity {
             }
         });
 
-        productsRef = FirebaseDatabase.getInstance().getReference("Recipess").child(recipe.getRecipeId());
+        productsRef = FirebaseDatabase.getInstance().getReference("Recipes").child(recipe.getRecipeId());
         btnSubmit.
                 setOnClickListener(new View.OnClickListener() {
 

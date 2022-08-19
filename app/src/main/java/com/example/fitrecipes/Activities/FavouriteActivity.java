@@ -72,7 +72,7 @@ public class FavouriteActivity extends AppCompatActivity {
                 }
 
                 for(String recipe: recipeIds) {
-                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipess").child(recipe);
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("Recipes").child(recipe);
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
