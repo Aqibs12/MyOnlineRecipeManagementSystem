@@ -14,12 +14,12 @@
     <!--<string-array name="array_name">-->
 
     <string-array name="array_units">
-        <item>Gm</item>
-        <item>Kg</item>
-        <item>Cup</item>
-        <item>Litre</item>
-        <item>Tsp</item>
-        <item>Tbsp</item>
+        <item>1Gm</item>
+        <item>1Kg</item>
+        <item>1Cup</item>
+        <item>1Litre</item>
+        <item>1Tsp</item>
+        <item>1Tbsp</item>
     </string-array>
 
   <!--  </string-array>
