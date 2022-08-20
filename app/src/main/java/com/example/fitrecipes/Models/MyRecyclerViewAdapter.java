@@ -58,7 +58,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.tvRecipeTime.setText(recipeModel.recipeT);
 
         holder.delete_icon.setOnClickListener(view -> {
-            FirebaseDatabase.getInstance().getReference().child("Recipess").child(RecipeId).removeValue();
+            FirebaseDatabase.getInstance().getReference().child("Recipes").child(RecipeId).removeValue();
             mData.remove(position);
             notifyDataSetChanged();
         });

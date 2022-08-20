@@ -30,18 +30,18 @@ public class Ingredient implements Serializable {
     public String getUnitName(){
         switch (getUnit()){
             case 1:
-                return "Kg";
+                return "1Kg";
             case 2:
-                return "Cup";
+                return "1Cup";
             case 3:
-                return "Litre";
+                return "1Litre";
             case 4:
-                return "Tsp";
+                return "1Tsp";
             case 5:
-                return "Tbsp";
+                return "1Tbsp";
             case 0:
             default:
-                return "Gm";
+                return "1Gm";
         }
     }
 
