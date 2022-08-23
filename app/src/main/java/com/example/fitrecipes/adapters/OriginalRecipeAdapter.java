@@ -16,38 +16,49 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fitrecipes.Activities.FavouriteActivity;
+import com.example.fitrecipes.Activities.LoginActivity;
 import com.example.fitrecipes.Activities.RecipeDetailsActivity;
 import com.example.fitrecipes.Models.Recipe;
+import com.example.fitrecipes.Models.RecipeModel;
 import com.example.fitrecipes.Models.UserModel;
 import com.example.fitrecipes.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAdapter.RecipeViewHolder> implements Filterable {
-
-
+    String userID1, userID2;
+    String uuid = "";
+    String userName="";
     private List<Recipe> exampleList;
     public List<Recipe> exampleListFull;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference,databaseReferenceUsers;
 
     Context context;
     UserModel userModel;
-    public OriginalRecipeAdapter(List<Recipe> exampleList, UserModel userModel, Context context)
-    {
+
+    public OriginalRecipeAdapter(List<Recipe> exampleList, UserModel userModel, Context context) {
         this.exampleList = exampleList;
-        this.context =  context;
+        this.context = context;
         this.userModel = userModel;
-        this.exampleListFull=exampleList;
+        this.exampleListFull = exampleList;
 
     }
 
     public OriginalRecipeAdapter(UserModel loggedInUser, FavouriteActivity favouriteActivity) {
 
         this.exampleList = new ArrayList<>();
-        this.context =  favouriteActivity;
+        this.context = favouriteActivity;
         this.userModel = loggedInUser;
-        this.exampleListFull=exampleList;
+        this.exampleListFull = exampleList;
 
     }
 
@@ -61,25 +72,59 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_main_recipe,parent,false);
+        View view = layoutInflater.inflate(R.layout.item_main_recipe, parent, false);
         return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
+        // FIREBASE CALL
+//        databaseReference = firebaseDatabase.getReference(USERS);
+        uuid = LoginActivity.UUID;
+
+        //user firebase calls end
+
+        // firebase call end
+        exampleListFull.get(position).getRecipeId();
 
         Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
         holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
-        if(exampleListFull.get(position).getRecipeModel().getUser()!=null)
-        holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
+        if (exampleListFull.get(position).getRecipeModel().getUser() != null){
+//            holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
+            // firebase code start
+            firebaseDatabase = FirebaseDatabase.getInstance();
 
+            databaseReference = firebaseDatabase.getReference().child("users").child(exampleListFull.get(position).getRecipeModel().getUser().getId());
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String userid=(snapshot.child("name").getValue().toString());
+                    userName = snapshot.child("name").getValue().toString();
+                    holder.tvUserName.setText(userName+"");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+//users firebase call
+
+            //firebase code ends
+
+        }
+        if(userName!=null) {
+        }else{
+            holder.tvUserName.setText("abcdefsadsd");
+        }
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context, RecipeDetailsActivity.class);
-                intent.putExtra("recipe",exampleListFull.get(holder.getAdapterPosition()));
-                intent.putExtra("user",userModel);
+                Intent intent = new Intent(context, RecipeDetailsActivity.class);
+                intent.putExtra("recipe", exampleListFull.get(holder.getAdapterPosition()));
+                intent.putExtra("user", userModel);
                 context.startActivity(intent);
             }
         });
@@ -91,11 +136,11 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         return exampleListFull.size();
     }
 
-    public class RecipeViewHolder extends RecyclerView.ViewHolder
-    {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView tvRecipeName,tvUserName,tvCategory;
+        TextView tvRecipeName, tvUserName, tvCategory;
         CardView wholecard;
+
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             img = itemView.findViewById(R.id.img);
@@ -106,6 +151,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
         }
     }
+
     @Override
     public Filter getFilter() {
         return exampleFilter;
@@ -115,14 +161,14 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             String charString = constraint.toString();
-            exampleListFull=new ArrayList<>();
+            exampleListFull = new ArrayList<>();
             if (charString.isEmpty()) {
 
                 exampleListFull.addAll(exampleList);
             } else {
                 List<Recipe> filteredList = new ArrayList<>();
                 for (Recipe row : exampleList) {
-                    String ingToshow="";
+                    String ingToshow = "";
                    /* for (int i=0;i<row.getIngredientModelArrayList().size();i++){
                         ingToshow=ingToshow+"\n"+row.getIngredientModelArrayList().get(i).getIngredient();
                     }*/
@@ -141,6 +187,7 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
             filterResults.values = exampleListFull;
             return filterResults;
         }
+
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
