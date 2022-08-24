@@ -34,12 +34,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private RecipeModel recipeModel;
     private Recipe recipe;
-    TextView name, desc, inst, cat, ing, ingTitle;
+    TextView name, User_name,desc, inst, cat, ing, ingTitle;
     ImageView image, share, ivFav;
     MaterialButton edit, btnDelete;
     String uuid;
+    String userName = "";
     String ingToshow = "";
     private static ViewPager mPager;
+    DatabaseReference databaseReference;
     private static int currentPage = 0;
     String USERID;
     boolean isFav = false;
@@ -73,9 +75,29 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
 
         }*/
-        if(recipeModel!=null) {
+        if (recipeModel != null) {
             ingToshow = ingToshow + "\n" + recipeModel.getRecipeIng();
             Glide.with(getApplicationContext()).load(recipeModel.getRecipe_image()).into(image);
+
+            /*
+             * code to be added here
+             */
+
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(recipeModel.getUser().getId());
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    String userid = (snapshot.child("name").getValue().toString());
+                    userName = snapshot.child("name").getValue().toString();
+                    name.setText(userName + "");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
             name.setText(recipeModel.getName() + " (Est. time: " + recipeModel.getRecipeT() + ")");
             desc.setText(recipeModel.getRecipeD());
             inst.setText(recipeModel.getRecipeI());
@@ -95,11 +117,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         image.setVisibility(View.VISIBLE);
         init();
         if (recipeModel.getUser() != null) {
-            if(loggedInUser!=null){
-            if (!loggedInUser.equals(recipeModel.getUser().getId())) {
-                edit.setVisibility(View.GONE);
-                btnDelete.setVisibility(View.GONE);
-            }
+            if (loggedInUser != null) {
+                if (!loggedInUser.equals(recipeModel.getUser().getId())) {
+                    edit.setVisibility(View.GONE);
+                    btnDelete.setVisibility(View.GONE);
+                }
             }
         }
         edit.setOnClickListener(new View.OnClickListener() {
@@ -179,15 +201,15 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference().child("Favourite")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(recipeModel.getId())
                             .setValue(recipeModel.getId()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                       // Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(RecipeDetailsActivity.this, "Failed to add recipe to favorites" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // Toast.makeText(RecipeDetailsActivity.this, "Recipe added to favourites", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RecipeDetailsActivity.this, "Failed to add recipe to favorites" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
 
@@ -206,7 +228,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 //                    loggedInUserFavouriteRecipe = snapshot.getValue().toString();
 
                     if (loggedInUserFavouriteRecipe.equals(recipeModel.getId())) {
-                       // Toast.makeText(RecipeDetailsActivity.this, "Id Matched", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(RecipeDetailsActivity.this, "Id Matched", Toast.LENGTH_SHORT).show();
 
                         ivFav.setColorFilter(getResources().getColor(R.color.red));
                         isFav = true;
@@ -277,21 +299,20 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 }
 
-/** code to be added here
 
- databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(exampleListFull.get(position).getRecipeModel().getUser().getId());
- databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
-@Override
-public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-String userid = (snapshot.child("name").getValue().toString());
-userName = snapshot.child("name").getValue().toString();
-holder.tvUserName.setText(userName + "");
-}
-
-@Override
-public void onCancelled(@NonNull DatabaseError error) {
-}
-});
+/**
+ * code to be added here
+ * <p>
+ * databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(recipeModel.getUser().getId());
+ * databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+ *
+ * @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
+ * <p>
+ * String userid = (snapshot.child("name").getValue().toString());
+ * userName = snapshot.child("name").getValue().toString();
+ * holder.tvUserName.setText(userName + "");
+ * }
+ * @Override public void onCancelled(@NonNull DatabaseError error) {
+ * }
+ * });
  */

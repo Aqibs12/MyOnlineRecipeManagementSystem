@@ -468,6 +468,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                                         Recipe recipe = new Recipe(recipeId,recipeModel);
                                         databaseReference2.child(recipeId).setValue(recipeModel);
+
 //                                        databaseReference2.child(UUID).setValue(recipeModel);
 //                                        databaseReference2.child(UUID).child(ImageUploadId).setValue(imageUploadInfo);
                                         finish();

@@ -96,6 +96,7 @@ public class FavouriteActivity extends AppCompatActivity {
             }
         });
 
+
         iv_BackPress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
