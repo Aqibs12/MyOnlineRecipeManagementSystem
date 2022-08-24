@@ -95,10 +95,11 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         image.setVisibility(View.VISIBLE);
         init();
         if (recipeModel.getUser() != null) {
+            if(loggedInUser!=null){
             if (!loggedInUser.equals(recipeModel.getUser().getId())) {
                 edit.setVisibility(View.GONE);
                 btnDelete.setVisibility(View.GONE);
-
+            }
             }
         }
         edit.setOnClickListener(new View.OnClickListener() {
