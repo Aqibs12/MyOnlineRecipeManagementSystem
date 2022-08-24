@@ -73,20 +73,21 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             ingToshow=ingToshow+"\n"+recipeModel.getRecipeIng();
 
         }*/
-        ingToshow = ingToshow + "\n" + recipeModel.getRecipeIng();
-        Glide.with(getApplicationContext()).load(recipeModel.getRecipe_image()).into(image);
-        name.setText(recipeModel.getName() + " (Est. time: " + recipeModel.getRecipeT() + ")");
-        desc.setText(recipeModel.getRecipeD());
-        inst.setText(recipeModel.getRecipeI());
-        cat.setText(recipeModel.getRecipeCategory());
-        ingTitle.setText("Ingredients(" + recipeModel.getRecipeIng() + " Quantity)");
+        if(recipeModel!=null) {
+            ingToshow = ingToshow + "\n" + recipeModel.getRecipeIng();
+            Glide.with(getApplicationContext()).load(recipeModel.getRecipe_image()).into(image);
+            name.setText(recipeModel.getName() + " (Est. time: " + recipeModel.getRecipeT() + ")");
+            desc.setText(recipeModel.getRecipeD());
+            inst.setText(recipeModel.getRecipeI());
+            cat.setText(recipeModel.getRecipeCategory());
+            ingTitle.setText("Ingredients(" + recipeModel.getRecipeIng() + " Quantity)");
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Ingredient ingredient : recipeModel.getIngredientList()) {
-            stringBuilder.append(ingredient.getName() + " (" + ingredient.getQuantity() + " " + ingredient.getUnitName() + ")\n");
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Ingredient ingredient : recipeModel.getIngredientList()) {
+                stringBuilder.append(ingredient.getName() + " (" + ingredient.getQuantity() + " " + ingredient.getUnitName() + ")\n");
+            }
+            ing.setText(stringBuilder.toString());
         }
-        ing.setText(stringBuilder.toString());
-
         //   ing.setText((CharSequence) recipeModel.getIngredientList());
 
 
@@ -274,3 +275,22 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 */
     }
 }
+
+/** code to be added here
+
+ databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(exampleListFull.get(position).getRecipeModel().getUser().getId());
+ databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+@Override
+public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+String userid = (snapshot.child("name").getValue().toString());
+userName = snapshot.child("name").getValue().toString();
+holder.tvUserName.setText(userName + "");
+}
+
+@Override
+public void onCancelled(@NonNull DatabaseError error) {
+}
+});
+ */

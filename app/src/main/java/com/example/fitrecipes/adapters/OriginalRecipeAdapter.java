@@ -86,35 +86,36 @@ public class OriginalRecipeAdapter extends RecyclerView.Adapter<OriginalRecipeAd
 
         // firebase call end
         exampleListFull.get(position).getRecipeId();
-
-        Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
-        holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
+if(exampleListFull.get(position).getRecipeModel()!=null) {
+    Glide.with(context).load(exampleListFull.get(position).getRecipeModel().getRecipe_image()).into(holder.img);
+    holder.tvRecipeName.setText(exampleListFull.get(position).getRecipeModel().getName());
         holder.tvCategory.setText(exampleListFull.get(position).getRecipeModel().getRecipeCategory());
-        if (exampleListFull.get(position).getRecipeModel().getUser() != null){
+    if (exampleListFull.get(position).getRecipeModel().getUser() != null) {
 //            holder.tvUserName.setText(exampleListFull.get(position).getRecipeModel().getUser().getName());
-            // firebase code start
-            firebaseDatabase = FirebaseDatabase.getInstance();
+        // firebase code start
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
-            databaseReference = firebaseDatabase.getReference().child("users").child(exampleListFull.get(position).getRecipeModel().getUser().getId());
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference = firebaseDatabase.getReference().child("users").child(exampleListFull.get(position).getRecipeModel().getUser().getId());
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    String userid=(snapshot.child("name").getValue().toString());
-                    userName = snapshot.child("name").getValue().toString();
-                    holder.tvUserName.setText(userName+"");
-                }
+                String userid = (snapshot.child("name").getValue().toString());
+                userName = snapshot.child("name").getValue().toString();
+                holder.tvUserName.setText(userName + "");
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 //users firebase call
 
-            //firebase code ends
+        //firebase code ends
 
-        }
+    }
+}
         if(userName!=null) {
         }else{
             holder.tvUserName.setText("abcdefsadsd");
