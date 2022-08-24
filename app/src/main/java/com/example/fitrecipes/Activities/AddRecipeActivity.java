@@ -455,12 +455,13 @@ public class AddRecipeActivity extends AppCompatActivity {
                                         //
                                         progressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(), "Recipe Uploaded Successfully ", Toast.LENGTH_LONG).show();
-                                        RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,RecipeCategory,
+                                        String recipeId = databaseReference.push().getKey();
+//                                        RecipeModel recipeModel = new RecipeModel(UUID, TempImageName, RecipeTime,RecipeCategory,
+                                        RecipeModel recipeModel = new RecipeModel(recipeId, TempImageName, RecipeTime,RecipeCategory,
                                                 Recipe_Description, Recipe_Instructions, Recipe_Ingredients, Recipe_No_Serving_People,
                                                 photoLink[0]);
                                         recipeModel.setUser(userModel);
                                         recipeModel.setIngredientList(ingredientsAdapter.dataList);
-                                        String recipeId = databaseReference.push().getKey();
 
                                         //little changes in line 233
                                         long time= System.currentTimeMillis();
