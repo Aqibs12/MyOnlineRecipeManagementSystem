@@ -70,8 +70,8 @@ public class ProfileActivity extends Activity {
 
                         emailAddress.setText(_Email);
                         name.setText(_Name);
-                        password.setText(_Password);
-                        phone.setText(_Phone);
+                        /*password.setText(_Password);
+                        phone.setText(_Phone);*/
                         answer.setText(_Answer);
                         question.setText(_Question);
                     }
@@ -148,7 +148,7 @@ public class ProfileActivity extends Activity {
 
             private boolean isQuestionChanged() {
                 if (!_Question.equals(question.getText().toString())) {
-                    reference.child(_USERNAME).child("security_question").setValue(password.getText().toString());
+                    reference.child(_USERNAME).child("security_question").setValue(question.getText().toString());
                     _Question = question.getText().toString();
                     return true;
                 } else
@@ -157,7 +157,7 @@ public class ProfileActivity extends Activity {
 
             private boolean isAnswerChanged() {
                 if (!_Answer.equals(answer.getText().toString())) {
-                    reference.child(_USERNAME).child("security_answer").setValue(password.getText().toString());
+                    reference.child(_USERNAME).child("security_answer").setValue(answer.getText().toString());
                     _Answer = answer.getText().toString();
                     return true;
                 } else
@@ -188,7 +188,6 @@ public class ProfileActivity extends Activity {
                     emailAddress.requestFocus();
                     return false;
                 }
-
                 if (_Password.length() < 8) {
                     password.setError("Please Enter a valid Password with at least 8 Alphabets");
                     password.requestFocus();
