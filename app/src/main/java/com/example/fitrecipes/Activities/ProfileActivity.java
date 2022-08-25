@@ -92,8 +92,8 @@ public class ProfileActivity extends Activity {
 
 
                     validationCheck();
-//                    if (isEmailChanged() || isNameChanged() || isPhoneChange() || isPasswordChanged() || isQuestionChanged() || isAnswerChanged()) {
-                    if (isEmailChanged() || isNameChanged()  || isQuestionChanged() || isAnswerChanged()) {
+                    if (isEmailChanged() || isNameChanged() || isPhoneChange() || isPasswordChanged()  || isAnswerChanged() || isQuestionChanged()) {
+//                    if (isEmailChanged() || isNameChanged()  || isQuestionChanged() || isAnswerChanged()) {
 //                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
 //                    startActivity(intent);
                         onBackPressed();
@@ -127,7 +127,7 @@ public class ProfileActivity extends Activity {
 
             }
 
-            /*private boolean isPhoneChange() {
+            private boolean isPhoneChange() {
                 if (!_Phone.equals(phone.getText().toString())) {
                     reference.child(_USERNAME).child("phone").setValue(phone.getText().toString());
                     _Phone = phone.getText().toString();
@@ -145,15 +145,6 @@ public class ProfileActivity extends Activity {
                 } else
                     return false;
 
-            }*/
-
-            private boolean isQuestionChanged() {
-                if (!_Question.equals(question.getText().toString())) {
-                    reference.child(_USERNAME).child("security_question").setValue(question.getText().toString());
-                    _Question = question.getText().toString();
-                    return true;
-                } else
-                    return false;
             }
 
             private boolean isAnswerChanged() {
@@ -164,12 +155,22 @@ public class ProfileActivity extends Activity {
                 } else
                     return false;
             }
+            private boolean isQuestionChanged() {
+                if (!_Question.equals(question.getText().toString())) {
+                    reference.child(_USERNAME).child("security_question").setValue(question.getText().toString());
+                    _Question = question.getText().toString();
+                    return true;
+                } else
+                    return false;
+            }
+
+
 
 
             private void validationCheck() {
                 if ((validationChecks.validateAnyName(emailAddress, "Please Enter Email"))
                         && (validationChecks.validateEmail(emailAddress, "Please Enter Valid Email"))
-//                        && (validationChecks.validateAnyName(password, "Please Enter Password"))
+                        && (validationChecks.validateAnyName(password, "Please Enter Password"))
                         && (validationChecks.validateAnyName(name, "Please Enter Name"))
                         && (validationChecks.validateAnyName(answer, "Please Enter Answer"))
                         && (validationChecks.validateAnyName(question, "Please Enter Question"))
@@ -189,13 +190,13 @@ public class ProfileActivity extends Activity {
                     emailAddress.requestFocus();
                     return false;
                 }
-                /*if (_Password.length() < 8) {
+                if (_Password.length() < 8) {
                     password.setError("Please Enter a valid Password with at least 8 Alphabets");
                     password.requestFocus();
                     return false;
-                }*/
+                }
 
-                /*if (TextUtils.isEmpty(_Phone) || _Phone.length() < 10) {
+                if (TextUtils.isEmpty(_Phone) || _Phone.length() < 10) {
                     phone.setError("Please Enter Phone Number");
                     phone.requestFocus();
                     return false;
@@ -204,18 +205,19 @@ public class ProfileActivity extends Activity {
                     phone.setError("Please Enter a valid Phone Number with at least 10 digits");
                     phone.requestFocus();
                     return false;
-                }*/
-
-                if (TextUtils.isEmpty(_Question)) {
-                    question.setError("Please Enter Question");
-                    question.requestFocus();
-                    return false;
                 }
+
                 if (TextUtils.isEmpty(_Answer)) {
                     answer.setError("Please Enter Answer");
                     answer.requestFocus();
                     return false;
                 }
+                if (TextUtils.isEmpty(_Question)) {
+                    question.setError("Please Enter Question");
+                    question.requestFocus();
+                    return false;
+                }
+
 
 
                 return true;
