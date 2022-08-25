@@ -237,7 +237,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                         }*/
                     }
                 } catch (Exception e) {
-                    Toast.makeText(RecipeDetailsActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(RecipeDetailsActivity.this, "Error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
