@@ -70,8 +70,8 @@ public class ProfileActivity extends Activity {
 
                         emailAddress.setText(_Email);
                         name.setText(_Name);
-                        /*password.setText(_Password);
-                        phone.setText(_Phone);*/
+                        password.setText(_Password);
+                        phone.setText(_Phone);
                         answer.setText(_Answer);
                         question.setText(_Question);
                     }
@@ -174,7 +174,7 @@ public class ProfileActivity extends Activity {
                         && (validationChecks.validateAnyName(name, "Please Enter Name"))
                         && (validationChecks.validateAnyName(answer, "Please Enter Answer"))
                         && (validationChecks.validateAnyName(question, "Please Enter Question"))
-                     //   && (validationChecks.validateAnyName(phone, "Please Enter Phone"))
+                      //  && (validationChecks.validateAnyName(phone, "Please Enter Phone"))
                 ) {
                 }
             }
