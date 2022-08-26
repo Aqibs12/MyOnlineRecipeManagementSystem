@@ -83,6 +83,16 @@
                 android:fontFamily="@font/poppins_bold"
                 android:text="Juni aprico &amp; Orange rice pudding(10 min)"
                 android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/Recipename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+
+                android:text="Juni aprico &amp; Orange rice pudding(10 min)"
+                android:textColor="@color/black" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/ln"
