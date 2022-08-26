@@ -90,7 +90,8 @@
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Juni aprico &amp; Orange rice pudding(10 min)"
                 android:textColor="@color/black" />
 
