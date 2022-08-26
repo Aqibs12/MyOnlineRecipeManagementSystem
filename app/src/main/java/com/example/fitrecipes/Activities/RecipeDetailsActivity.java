@@ -34,7 +34,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private RecipeModel recipeModel;
     private Recipe recipe;
-    TextView name, User_name,desc, inst, cat, ing, ingTitle;
+    TextView name, recipeName,desc, inst, cat, ing, ingTitle;
     ImageView image, share, ivFav;
     MaterialButton edit, btnDelete;
     String uuid;
@@ -60,6 +60,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btn_delete);
         image = findViewById(R.id.img);
         name = findViewById(R.id.name);
+        recipeName = findViewById(R.id.Recipename);
         desc = findViewById(R.id.desc);
         inst = findViewById(R.id.inst);
         cat = findViewById(R.id.cat);
@@ -98,7 +99,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-            name.setText(recipeModel.getName() + " (Est. time: " + recipeModel.getRecipeT() + ")");
+            recipeName.setText(recipeModel.getName() + " (Est. time: " + recipeModel.getRecipeT() + ")");
             desc.setText(recipeModel.getRecipeD());
             inst.setText(recipeModel.getRecipeI());
             cat.setText(recipeModel.getRecipeCategory());

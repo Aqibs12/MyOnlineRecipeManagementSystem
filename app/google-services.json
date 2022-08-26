@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "1025077434993-ql5t8gfkrvo3qbc47fu2fnb0fv9gmpfo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.fitrecipe",
-            "certificate_hash": "97bb3d8d6715c0847bbc48267465116164c9b6ac"
-          }
-        },
-        {
           "client_id": "1025077434993-ppk5qgbkbdj9mdlln6nhf4rct2oilkpc.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -51,6 +43,46 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1025077434993-1r6fh0ubmste1hldki64n8nst3o4r2ae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitrecipes",
+            "certificate_hash": "003af546ffc5c6e9d6804d5e32baadc9d92095d4"
+          }
+        },
+        {
+          "client_id": "1025077434993-387gnecrt3b1ao1gu25mrea1ntegjtta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitrecipes",
+            "certificate_hash": "97bb3d8d6715c0847bbc48267465116164c9b6ac"
+          }
+        },
+        {
+          "client_id": "1025077434993-668fb8qo26m7ml98tehvhl1v3hhrkmmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitrecipes",
+            "certificate_hash": "c24f39346edf43cf62e31e12e7ba00ad17f052c8"
+          }
+        },
+        {
+          "client_id": "1025077434993-g81siv19he0grst3ldett0lt606heorv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitrecipes",
+            "certificate_hash": "d37400f011f9981fe3087782b3d350251accb5d1"
+          }
+        },
+        {
+          "client_id": "1025077434993-pj74e2435t2qp57aoh8afmb2ft3k8fu8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fitrecipes",
+            "certificate_hash": "ff29922155dab0c37772e3c7b0c47a4e142779a2"
+          }
+        },
         {
           "client_id": "1025077434993-ppk5qgbkbdj9mdlln6nhf4rct2oilkpc.apps.googleusercontent.com",
           "client_type": 3
